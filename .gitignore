@@ -1,0 +1,17 @@
+.gradle/
+build/
+run/
+run-data/
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+bin/
+.classpath
+.project
+.settings/
+logs/
+*.md
+*.code-workspace
+launch-test-client.bat
