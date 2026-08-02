@@ -1,0 +1,20 @@
+{
+  "item.darkechoes.echo_diamond_axe": "Echo Diamond Axe",
+  "item.darkechoes.echo_diamond_boots": "Echo Diamond Boots",
+  "item.darkechoes.echo_diamond_chestplate": "Echo Diamond Chestplate",
+  "item.darkechoes.echo_diamond_helmet": "Echo Diamond Helmet",
+  "item.darkechoes.echo_diamond_leggings": "Echo Diamond Leggings",
+  "item.darkechoes.echo_diamond_sword": "Echo Diamond Sword",
+  "item.darkechoes.resonance_crystal": "Resonance Crystal",
+  "mod.darkechoes.name": "Dark Echoes",
+  "tooltip.darkechoes.armor_progression": "%s Level %s: +%s%% armor - Level %s in %s %s",
+  "tooltip.darkechoes.armor_progression_max": "%s Level %s: +%s%% armor - Max Level",
+  "tooltip.darkechoes.echo_fusion": "Echo Fusion",
+  "tooltip.darkechoes.hit.many": "hits",
+  "tooltip.darkechoes.hit.one": "hit",
+  "tooltip.darkechoes.kill.many": "kills",
+  "tooltip.darkechoes.kill.one": "kill",
+  "tooltip.darkechoes.progression_pending": "Progressing against %s - Lock in %s %s",
+  "tooltip.darkechoes.weapon_progression": "%s Level %s: +%s%% dmg - Level %s in %s %s",
+  "tooltip.darkechoes.weapon_progression_max": "%s Level %s: +%s%% dmg - Max Level"
+}
