@@ -3,6 +3,7 @@ package com.duncanois.darkechoes;
 import com.duncanois.darkechoes.combat.CombatEvents;
 import com.duncanois.darkechoes.combat.CombatRules;
 import com.duncanois.darkechoes.config.CombatConfig;
+import com.duncanois.darkechoes.registry.ModBlocks;
 import com.duncanois.darkechoes.registry.ModDataComponents;
 import com.duncanois.darkechoes.registry.ModItems;
 import com.duncanois.darkechoes.registry.ModRecipes;
@@ -27,6 +28,9 @@ public final class DarkEchoes {
         ModDataComponents.COMPONENTS.register(modBus);
         ModItems.ITEMS.register(modBus);
         ModRecipes.SERIALIZERS.register(modBus);
+        ModBlocks.BLOCKS.register(modBus);
+        ModBlocks.BLOCK_ENTITY_TYPES.register(modBus);
+        ModBlocks.BLOCK_TYPE.register(modBus);
         modContainer.registerConfig(ModConfig.Type.SERVER, CombatConfig.SPEC);
         modBus.addListener(DarkEchoes::onConfigLoading);
         modBus.addListener(DarkEchoes::onConfigReloading);

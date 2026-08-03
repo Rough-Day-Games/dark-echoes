@@ -3,6 +3,7 @@ package com.duncanois.darkechoes.registry;
 import com.duncanois.darkechoes.DarkEchoes;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.equipment.ArmorMaterials;
@@ -28,6 +29,8 @@ public final class ModItems {
             "echo_diamond_leggings", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.LEGGINGS));
     public static final DeferredItem<Item> ECHO_DIAMOND_BOOTS = ITEMS.registerSimpleItem(
             "echo_diamond_boots", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.BOOTS));
+
+    public static final DeferredItem<BlockItem> T_ONE_AUGSTATION = ITEMS.registerSimpleBlockItem(ModBlocks.T_ONE_AUGSTATION);
 
     private ModItems() {
     }

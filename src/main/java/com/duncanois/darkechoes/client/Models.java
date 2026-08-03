@@ -1,6 +1,7 @@
 package com.duncanois.darkechoes.client;
 
 import com.duncanois.darkechoes.DarkEchoes;
+import com.duncanois.darkechoes.registry.ModBlocks;
 import com.duncanois.darkechoes.registry.ModItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -14,8 +15,8 @@ import net.minecraft.world.item.Items;
 import java.util.Collections;
 import java.util.Optional;
 
-public class ItemModels extends ModelProvider {
-    public ItemModels(PackOutput output) {
+public class Models extends ModelProvider {
+    public Models(PackOutput output) {
         super(output, DarkEchoes.MOD_ID);
     }
 
@@ -72,5 +73,7 @@ public class ItemModels extends ModelProvider {
                         Optional.empty(),
                         Collections.emptyList()
                 ));
+
+        blockModels.createNonTemplateModelBlock(ModBlocks.T_ONE_AUGSTATION.get());
     }
 }

@@ -19,6 +19,7 @@ public class LangProvider extends LanguageProvider {
         add(ModItems.ECHO_DIAMOND_BOOTS.get(), "Echo Diamond Boots");
         add(ModItems.ECHO_DIAMOND_SWORD.get(), "Echo Diamond Sword");
         add(ModItems.ECHO_DIAMOND_AXE.get(), "Echo Diamond Axe");
+        add(ModItems.T_ONE_AUGSTATION.get(), "Augmentation Station: Tier One");
 
         add("mod.darkechoes.name", "Dark Echoes");
         add("tooltip.darkechoes.armor_progression", "%s Level %s: +%s%% armor - Level %s in %s %s");

@@ -24,7 +24,7 @@ public class DataGen {
                         )
                 ), lookupProvider
         ));
-        event.createProvider(ItemModels::new);
+        event.createProvider(Models::new);
         event.createProvider(LangProvider::new);
     }
 }
