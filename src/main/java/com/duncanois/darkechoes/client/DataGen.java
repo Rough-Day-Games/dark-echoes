@@ -26,5 +26,6 @@ public class DataGen {
         ));
         event.createProvider(Models::new);
         event.createProvider(LangProvider::new);
+        event.createProvider(ModItemTags::new);
     }
 }

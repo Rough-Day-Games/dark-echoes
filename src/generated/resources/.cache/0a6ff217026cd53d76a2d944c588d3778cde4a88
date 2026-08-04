@@ -1,6 +1,10 @@
-// 26.1.2	2026-08-03T19:10:59.3842878	Model Definitions - darkechoes
+// 26.1.2	2026-08-04T17:39:12.9135013	Model Definitions - darkechoes
 19246461e4652a9d5bae3721e2d2f269fe7dd5e1 assets/darkechoes/blockstates/augment_station/t_one.json
+e5e16e6bad6d08e775d3942c233edd0e83e5a770 assets/darkechoes/blockstates/augment_station/t_three.json
+9536306815f2c8da51a5e8d92a93d8a2db033196 assets/darkechoes/blockstates/augment_station/t_two.json
 0b161b07650f810db6df097c717f178acea94ac5 assets/darkechoes/items/augment_station/t_one.json
+d88cf99655715cd936e2b2b43288efbfdde81429 assets/darkechoes/items/augment_station/t_three.json
+a400089c166ecdb21d0e1bcc16e46cee8bcaff2e assets/darkechoes/items/augment_station/t_two.json
 fb432383421fd8f6f1c9173764033312c3b6479c assets/darkechoes/items/echo_diamond_axe.json
 dccf5624d9aa43e19e0c1c78fa5ae0182b6a9258 assets/darkechoes/items/echo_diamond_boots.json
 0b218e8a6c9ee5bcb12d5ac030af20b6fca06e15 assets/darkechoes/items/echo_diamond_chestplate.json

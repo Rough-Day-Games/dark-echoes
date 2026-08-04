@@ -20,6 +20,8 @@ public class LangProvider extends LanguageProvider {
         add(ModItems.ECHO_DIAMOND_SWORD.get(), "Echo Diamond Sword");
         add(ModItems.ECHO_DIAMOND_AXE.get(), "Echo Diamond Axe");
         add(ModItems.T_ONE_AUGSTATION.get(), "Augmentation Station: Tier One");
+        add(ModItems.T_TWO_AUGSTATION.get(), "Augmentation Station: Tier Two");
+        add(ModItems.T_THREE_AUGSTATION.get(), "Augmentation Station: Tier Three");
 
         add("mod.darkechoes.name", "Dark Echoes");
         add("tooltip.darkechoes.armor_progression", "%s Level %s: +%s%% armor - Level %s in %s %s");
@@ -32,5 +34,7 @@ public class LangProvider extends LanguageProvider {
         add("tooltip.darkechoes.progression_pending", "Progressing against %s - Lock in %s %s");
         add("tooltip.darkechoes.weapon_progression", "%s Level %s: +%s%% dmg - Level %s in %s %s");
         add("tooltip.darkechoes.weapon_progression_max", "%s Level %s: +%s%% dmg - Max Level");
+        add("menu.title.darkechoes.augstation_t1", "Augmentation Station: Tier One");
+        add("container.augment_station", "Augmentation Station");
     }
 }

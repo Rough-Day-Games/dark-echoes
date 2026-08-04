@@ -31,6 +31,8 @@ public final class ModItems {
             "echo_diamond_boots", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.BOOTS));
 
     public static final DeferredItem<BlockItem> T_ONE_AUGSTATION = ITEMS.registerSimpleBlockItem(ModBlocks.T_ONE_AUGSTATION);
+    public static final DeferredItem<BlockItem> T_TWO_AUGSTATION = ITEMS.registerSimpleBlockItem(ModBlocks.T_TWO_AUGSTATION);
+    public static final DeferredItem<BlockItem> T_THREE_AUGSTATION = ITEMS.registerSimpleBlockItem(ModBlocks.T_THREE_AUGSTATION);
 
     private ModItems() {
     }

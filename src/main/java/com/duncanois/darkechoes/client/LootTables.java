@@ -33,7 +33,7 @@ public class LootTables implements LootTableSubProvider {
                                 .add(LootItem.lootTableItem(Items.SCULK_CATALYST))
                         )
                         .withPool(LootPool.lootPool()
-//                                TODO should the resonance crystal drop rate increase with the looting enchantment?
+//                                TODO should the resonance crystal drop rate increase with the looting enchantment? yes
                                 .when(LootItemRandomChanceCondition.randomChance(0.1F))
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(ModItems.RESONANCE_CRYSTAL))

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "darkechoes:block/augment_station/t_three" },
+    "facing=east":  { "model": "darkechoes:block/augment_station/t_three", "y": 90 },
+    "facing=south": { "model": "darkechoes:block/augment_station/t_three", "y": 180 },
+    "facing=west":  { "model": "darkechoes:block/augment_station/t_three", "y": 270 }
+  }
+}

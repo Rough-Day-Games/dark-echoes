@@ -1,5 +1,7 @@
 {
   "block.darkechoes.augment_station.t_one": "Augmentation Station: Tier One",
+  "block.darkechoes.augment_station.t_three": "Augmentation Station: Tier Three",
+  "block.darkechoes.augment_station.t_two": "Augmentation Station: Tier Two",
   "item.darkechoes.echo_diamond_axe": "Echo Diamond Axe",
   "item.darkechoes.echo_diamond_boots": "Echo Diamond Boots",
   "item.darkechoes.echo_diamond_chestplate": "Echo Diamond Chestplate",
@@ -7,6 +9,7 @@
   "item.darkechoes.echo_diamond_leggings": "Echo Diamond Leggings",
   "item.darkechoes.echo_diamond_sword": "Echo Diamond Sword",
   "item.darkechoes.resonance_crystal": "Resonance Crystal",
+  "menu.title.darkechoes.augstation_t1": "Augmentation Station: Tier One",
   "mod.darkechoes.name": "Dark Echoes",
   "tooltip.darkechoes.armor_progression": "%s Level %s: +%s%% armor - Level %s in %s %s",
   "tooltip.darkechoes.armor_progression_max": "%s Level %s: +%s%% armor - Max Level",
@@ -17,5 +20,6 @@
   "tooltip.darkechoes.kill.one": "kill",
   "tooltip.darkechoes.progression_pending": "Progressing against %s - Lock in %s %s",
   "tooltip.darkechoes.weapon_progression": "%s Level %s: +%s%% dmg - Level %s in %s %s",
-  "tooltip.darkechoes.weapon_progression_max": "%s Level %s: +%s%% dmg - Max Level"
+  "tooltip.darkechoes.weapon_progression_max": "%s Level %s: +%s%% dmg - Max Level",
+  "container.augment_station": "Augmentation Station"
 }

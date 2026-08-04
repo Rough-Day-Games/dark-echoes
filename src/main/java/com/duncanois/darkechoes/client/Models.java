@@ -6,11 +6,18 @@ import com.duncanois.darkechoes.registry.ModItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.renderer.block.dispatch.Variant;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
 import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -75,5 +82,7 @@ public class Models extends ModelProvider {
                 ));
 
         blockModels.createNonTemplateModelBlock(ModBlocks.T_ONE_AUGSTATION.get());
+        blockModels.createNonTemplateModelBlock(ModBlocks.T_TWO_AUGSTATION.get());
+        blockModels.createNonTemplateModelBlock(ModBlocks.T_THREE_AUGSTATION.get());
     }
 }

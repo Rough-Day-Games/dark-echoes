@@ -3,11 +3,11 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "darkechoes:block/augment_station/t_one/base",
-		"1": "darkechoes:block/augment_station/t_one/wall",
-		"2": "darkechoes:block/augment_station/t_one/shelf_stand",
-		"3": "darkechoes:block/augment_station/t_one/drawer",
-		"particle": "darkechoes:block/augment_station/t_one/base"
+		"0": "darkechoes:block/augment_station/t_three/base",
+		"1": "darkechoes:block/augment_station/t_three/wall",
+		"2": "darkechoes:block/augment_station/t_three/shelf_stand",
+		"3": "darkechoes:block/augment_station/t_three/drawer",
+		"particle": "darkechoes:block/augment_station/t_three/base"
 	},
 	"elements": [
 		{

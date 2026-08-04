@@ -1,5 +1,6 @@
 package com.duncanois.darkechoes;
 
+import com.duncanois.darkechoes.client.ModMenus;
 import com.duncanois.darkechoes.combat.CombatEvents;
 import com.duncanois.darkechoes.combat.CombatRules;
 import com.duncanois.darkechoes.config.CombatConfig;
@@ -31,6 +32,7 @@ public final class DarkEchoes {
         ModBlocks.BLOCKS.register(modBus);
         ModBlocks.BLOCK_ENTITY_TYPES.register(modBus);
         ModBlocks.BLOCK_TYPE.register(modBus);
+        ModMenus.MENU_TYPE.register(modBus);
         modContainer.registerConfig(ModConfig.Type.SERVER, CombatConfig.SPEC);
         modBus.addListener(DarkEchoes::onConfigLoading);
         modBus.addListener(DarkEchoes::onConfigReloading);
