@@ -27,15 +27,15 @@ public final class Progression {
     }
 
     public static boolean isEchoWeapon(ItemStack stack) {
-        return stack != null && (stack.is(ModItems.ECHO_DIAMOND_SWORD.get())
-                || stack.is(ModItems.ECHO_DIAMOND_AXE.get()));
+        return stack != null && (stack.is(ModItems.ECHO_SWORD.get())
+                || stack.is(ModItems.ECHO_AXE.get()));
     }
 
     public static boolean isEchoArmor(ItemStack stack) {
-        return stack != null && (stack.is(ModItems.ECHO_DIAMOND_HELMET.get())
-                || stack.is(ModItems.ECHO_DIAMOND_CHESTPLATE.get())
-                || stack.is(ModItems.ECHO_DIAMOND_LEGGINGS.get())
-                || stack.is(ModItems.ECHO_DIAMOND_BOOTS.get()));
+        return stack != null && (stack.is(ModItems.ECHO_HELMET.get())
+                || stack.is(ModItems.ECHO_CHESTPLATE.get())
+                || stack.is(ModItems.ECHO_LEGGINGS.get())
+                || stack.is(ModItems.ECHO_BOOTS.get()));
     }
 
     public static ItemStack fuse(ItemStack original) {
@@ -124,12 +124,12 @@ public final class Progression {
     }
 
     private static Item fusedItem(ItemStack stack) {
-        if (stack.is(Items.DIAMOND_SWORD)) return ModItems.ECHO_DIAMOND_SWORD.get();
-        if (stack.is(Items.DIAMOND_AXE)) return ModItems.ECHO_DIAMOND_AXE.get();
-        if (stack.is(Items.DIAMOND_HELMET)) return ModItems.ECHO_DIAMOND_HELMET.get();
-        if (stack.is(Items.DIAMOND_CHESTPLATE)) return ModItems.ECHO_DIAMOND_CHESTPLATE.get();
-        if (stack.is(Items.DIAMOND_LEGGINGS)) return ModItems.ECHO_DIAMOND_LEGGINGS.get();
-        if (stack.is(Items.DIAMOND_BOOTS)) return ModItems.ECHO_DIAMOND_BOOTS.get();
+        if (stack.is(Items.DIAMOND_SWORD)) return ModItems.ECHO_SWORD.get();
+        if (stack.is(Items.DIAMOND_AXE)) return ModItems.ECHO_AXE.get();
+        if (stack.is(Items.DIAMOND_HELMET)) return ModItems.ECHO_HELMET.get();
+        if (stack.is(Items.DIAMOND_CHESTPLATE)) return ModItems.ECHO_CHESTPLATE.get();
+        if (stack.is(Items.DIAMOND_LEGGINGS)) return ModItems.ECHO_LEGGINGS.get();
+        if (stack.is(Items.DIAMOND_BOOTS)) return ModItems.ECHO_BOOTS.get();
         return null;
     }
 

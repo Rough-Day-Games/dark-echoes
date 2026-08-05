@@ -11,15 +11,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ModItemTags extends ItemTagsProvider {
     public static TagKey<Item> AWAKENING_ITEMS = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "awakening_items"));
-    public static TagKey<Item> TIER_ONE_TOOLS = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "tools/tier_one"));
-    public static TagKey<Item> TIER_TWO_TOOLS = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "tools/tier_two"));
-    public static TagKey<Item> TIER_THREE_TOOLS = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "tools/tier_three"));
+    public static TagKey<Item> AUGMENTABLE_GEAR = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "augmentable_gear"));
+    public static TagKey<Item> TIER_ONE_GEAR = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "gear/tier_one"));
+    public static TagKey<Item> TIER_TWO_GEAR = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "gear/tier_two"));
+    public static TagKey<Item> TIER_THREE_GEAR = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "gear/tier_three"));
     public ModItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, DarkEchoes.MOD_ID);
     }
@@ -31,7 +31,7 @@ public class ModItemTags extends ItemTagsProvider {
                 Items.ECHO_SHARD
         ));
 
-        tag(TIER_ONE_TOOLS).addAll(List.of(
+        tag(TIER_ONE_GEAR).addAll(List.of(
                 Items.WOODEN_SWORD,
                 Items.WOODEN_PICKAXE,
                 Items.WOODEN_AXE,
@@ -61,7 +61,7 @@ public class ModItemTags extends ItemTagsProvider {
                 Items.COPPER_BOOTS
         ));
 
-        tag(TIER_TWO_TOOLS).addAll(List.of(
+        tag(TIER_TWO_GEAR).addAll(List.of(
                 Items.IRON_SWORD,
                 Items.IRON_PICKAXE,
                 Items.IRON_AXE,
@@ -91,7 +91,7 @@ public class ModItemTags extends ItemTagsProvider {
                 Items.DIAMOND_BOOTS
         ));
 
-        tag(TIER_THREE_TOOLS).addAll(List.of(
+        tag(TIER_THREE_GEAR).addAll(List.of(
                 Items.NETHERITE_SWORD,
                 Items.NETHERITE_PICKAXE,
                 Items.NETHERITE_AXE,
@@ -100,7 +100,23 @@ public class ModItemTags extends ItemTagsProvider {
                 Items.NETHERITE_HELMET,
                 Items.NETHERITE_CHESTPLATE,
                 Items.NETHERITE_LEGGINGS,
-                Items.NETHERITE_BOOTS
+                Items.NETHERITE_BOOTS,
+                ModItems.ECHO_SWORD.get(),
+                ModItems.ECHO_AXE.get(),
+                ModItems.ECHO_HELMET.get(),
+                ModItems.ECHO_CHESTPLATE.get(),
+                ModItems.ECHO_LEGGINGS.get(),
+                ModItems.ECHO_BOOTS.get()
         ));
+
+        tag(AUGMENTABLE_GEAR).addTag(
+                TIER_ONE_GEAR
+        );
+        tag(AUGMENTABLE_GEAR).addTag(
+                TIER_TWO_GEAR
+        );
+        tag(AUGMENTABLE_GEAR).addTag(
+                TIER_THREE_GEAR
+        );
     }
 }

@@ -1,35 +1,42 @@
 package com.duncanois.darkechoes.registry.blocks;
 
+import com.duncanois.darkechoes.registry.blocks.entities.BaseAugStationBE;
+import com.duncanois.darkechoes.registry.blocks.entities.TierThreeAugStationBE;
 import com.mojang.math.OctahedralGroup;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import static com.duncanois.darkechoes.registry.ModBlocks.AUGMENT_STATION_CODEC;
+import static com.duncanois.darkechoes.registry.ModBlocks.AUGSTATION_BE;
 
-public class BaseAugStationBlock extends Block {
+public abstract class BaseAugStationBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public BaseAugStationBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
-    }
-
-    @Override
-    protected @NonNull MapCodec<? extends Block> codec() {
-        return AUGMENT_STATION_CODEC.get();
     }
 
     @Override
@@ -53,6 +60,22 @@ public class BaseAugStationBlock extends Block {
             return Shapes.rotate(Block.box(0f, 0f, 0f, 16f, 32f, 32f), OctahedralGroup.BLOCK_ROT_Y_90);
         }
         return Block.box(0f, 0f, 0f, 16f, 32f, 32f);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof BaseAugStationBE be) {
+                serverPlayer.openMenu(be);
+            }
+        }
+        return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
+        return level.isClientSide() ? null : createTickerHelper(type, AUGSTATION_BE.get(), BaseAugStationBE::serverTick);
     }
 
 //    TODO rework into multiblock

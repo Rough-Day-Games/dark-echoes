@@ -8,6 +8,12 @@
     "minecraft:netherite_helmet",
     "minecraft:netherite_chestplate",
     "minecraft:netherite_leggings",
-    "minecraft:netherite_boots"
+    "minecraft:netherite_boots",
+    "darkechoes:echo_sword",
+    "darkechoes:echo_axe",
+    "darkechoes:echo_helmet",
+    "darkechoes:echo_chestplate",
+    "darkechoes:echo_leggings",
+    "darkechoes:echo_boots"
   ]
 }

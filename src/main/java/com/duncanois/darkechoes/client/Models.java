@@ -6,18 +6,12 @@ import com.duncanois.darkechoes.registry.ModItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.client.renderer.block.dispatch.Variant;
-import net.minecraft.client.renderer.block.dispatch.VariantMutator;
 import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
-import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -30,53 +24,53 @@ public class Models extends ModelProvider {
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
         itemModels.createFlatItemModel(ModItems.RESONANCE_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_DIAMOND_HELMET.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_DIAMOND_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_DIAMOND_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_DIAMOND_BOOTS.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_DIAMOND_SWORD.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_DIAMOND_AXE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_HELMET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_BOOTS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_SWORD.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_AXE.get(), ModelTemplates.FLAT_ITEM);
 
 //        TODO replace the getModelLocation params once we have proper textures
         itemModels.itemModelOutput.accept(ModItems.RESONANCE_CRYSTAL.get(),
                 new CuboidItemModelWrapper.Unbaked(
-                        ModelLocationUtils.getModelLocation(Items.DIAMOND),
+                        ModelLocationUtils.getModelLocation(ModItems.RESONANCE_CRYSTAL.get()),
                         Optional.empty(),
                         Collections.emptyList()
                 ));
-        itemModels.itemModelOutput.accept(ModItems.ECHO_DIAMOND_HELMET.get(),
+        itemModels.itemModelOutput.accept(ModItems.ECHO_HELMET.get(),
                 new CuboidItemModelWrapper.Unbaked(
-                        ModelLocationUtils.getModelLocation(Items.DIAMOND_HELMET),
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_HELMET.get()),
                         Optional.empty(),
                         Collections.emptyList()
                 ));
-        itemModels.itemModelOutput.accept(ModItems.ECHO_DIAMOND_CHESTPLATE.get(),
+        itemModels.itemModelOutput.accept(ModItems.ECHO_CHESTPLATE.get(),
                 new CuboidItemModelWrapper.Unbaked(
-                        ModelLocationUtils.getModelLocation(Items.DIAMOND_CHESTPLATE),
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_CHESTPLATE.get()),
                         Optional.empty(),
                         Collections.emptyList()
                 ));
-        itemModels.itemModelOutput.accept(ModItems.ECHO_DIAMOND_LEGGINGS.get(),
+        itemModels.itemModelOutput.accept(ModItems.ECHO_LEGGINGS.get(),
                 new CuboidItemModelWrapper.Unbaked(
-                        ModelLocationUtils.getModelLocation(Items.DIAMOND_LEGGINGS),
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_LEGGINGS.get()),
                         Optional.empty(),
                         Collections.emptyList()
                 ));
-        itemModels.itemModelOutput.accept(ModItems.ECHO_DIAMOND_BOOTS.get(),
+        itemModels.itemModelOutput.accept(ModItems.ECHO_BOOTS.get(),
                 new CuboidItemModelWrapper.Unbaked(
-                        ModelLocationUtils.getModelLocation(Items.DIAMOND_BOOTS),
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_BOOTS.get()),
                         Optional.empty(),
                         Collections.emptyList()
                 ));
-        itemModels.itemModelOutput.accept(ModItems.ECHO_DIAMOND_SWORD.get(),
+        itemModels.itemModelOutput.accept(ModItems.ECHO_SWORD.get(),
                 new CuboidItemModelWrapper.Unbaked(
-                        ModelLocationUtils.getModelLocation(Items.DIAMOND_SWORD),
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_SWORD.get()),
                         Optional.empty(),
                         Collections.emptyList()
                 ));
-        itemModels.itemModelOutput.accept(ModItems.ECHO_DIAMOND_AXE.get(),
+        itemModels.itemModelOutput.accept(ModItems.ECHO_AXE.get(),
                 new CuboidItemModelWrapper.Unbaked(
-                        ModelLocationUtils.getModelLocation(Items.DIAMOND_AXE),
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_AXE.get()),
                         Optional.empty(),
                         Collections.emptyList()
                 ));

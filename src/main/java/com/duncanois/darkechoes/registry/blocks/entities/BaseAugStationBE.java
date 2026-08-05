@@ -1,5 +1,10 @@
 package com.duncanois.darkechoes.registry.blocks.entities;
 
+import com.duncanois.darkechoes.client.ModItemTags;
+import com.duncanois.darkechoes.client.menus.BaseAugStationMenu;
+import com.duncanois.darkechoes.registry.blocks.TierOneAugStationBlock;
+import com.duncanois.darkechoes.registry.blocks.TierThreeAugStationBlock;
+import com.duncanois.darkechoes.registry.blocks.TierTwoAugStationBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -10,18 +15,20 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-import static com.duncanois.darkechoes.registry.ModBlocks.AUGMENTSTATION_BE;
+import static com.duncanois.darkechoes.registry.ModBlocks.*;
 
 public class BaseAugStationBE extends BaseContainerBlockEntity implements Container {
     private NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
 
     public BaseAugStationBE(BlockPos worldPosition, BlockState blockState) {
-        super(AUGMENTSTATION_BE.get(), worldPosition, blockState);
+        super(AUGSTATION_BE.get(), worldPosition, blockState);
     }
 
     @Override
@@ -41,7 +48,7 @@ public class BaseAugStationBE extends BaseContainerBlockEntity implements Contai
 
     @Override
     protected AbstractContainerMenu createMenu(int i, Inventory inventory) {
-        return null;
+        return new BaseAugStationMenu(i, inventory, this);
     }
 
     @Override
@@ -60,6 +67,25 @@ public class BaseAugStationBE extends BaseContainerBlockEntity implements Contai
         super.loadAdditional(input);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(input, this.items);
+    }
+
+    @Override
+    public boolean canPlaceItem(int slot, ItemStack itemStack) {
+        if (slot == 0) {
+            Block baseBlock = getBlockState().getBlock();
+            return switch (baseBlock) {
+                case TierOneAugStationBlock _ -> itemStack.is(ModItemTags.TIER_ONE_GEAR);
+                case TierTwoAugStationBlock _ -> itemStack.is(ModItemTags.TIER_TWO_GEAR);
+                case TierThreeAugStationBlock _ -> itemStack.is(ModItemTags.TIER_THREE_GEAR);
+                default -> false;
+            };
+        } else {
+            return itemStack.is(ModItemTags.AWAKENING_ITEMS);
+        }
+    }
+
+    public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BaseAugStationBE blockEntity) {
+        setChanged(level, blockPos, blockState);
     }
 
     @Override

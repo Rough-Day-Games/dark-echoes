@@ -15,20 +15,20 @@ public final class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(DarkEchoes.MOD_ID);
 
     public static final DeferredItem<Item> RESONANCE_CRYSTAL = ITEMS.registerSimpleItem("resonance_crystal");
-    public static final DeferredItem<Item> ECHO_DIAMOND_SWORD = ITEMS.registerSimpleItem(
-            "echo_diamond_sword", properties -> echo(properties).sword(ToolMaterial.DIAMOND, 3.0F, -2.4F));
-    public static final DeferredItem<AxeItem> ECHO_DIAMOND_AXE = ITEMS.registerItem(
-            "echo_diamond_axe",
+    public static final DeferredItem<Item> ECHO_SWORD = ITEMS.registerSimpleItem(
+            "echo_sword", properties -> echo(properties).sword(ToolMaterial.DIAMOND, 3.0F, -2.4F));
+    public static final DeferredItem<AxeItem> ECHO_AXE = ITEMS.registerItem(
+            "echo_axe",
             properties -> new AxeItem(ToolMaterial.DIAMOND, 5.0F, -3.0F, properties),
             ModItems::echo);
-    public static final DeferredItem<Item> ECHO_DIAMOND_HELMET = ITEMS.registerSimpleItem(
-            "echo_diamond_helmet", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET));
-    public static final DeferredItem<Item> ECHO_DIAMOND_CHESTPLATE = ITEMS.registerSimpleItem(
-            "echo_diamond_chestplate", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.CHESTPLATE));
-    public static final DeferredItem<Item> ECHO_DIAMOND_LEGGINGS = ITEMS.registerSimpleItem(
-            "echo_diamond_leggings", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.LEGGINGS));
-    public static final DeferredItem<Item> ECHO_DIAMOND_BOOTS = ITEMS.registerSimpleItem(
-            "echo_diamond_boots", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.BOOTS));
+    public static final DeferredItem<Item> ECHO_HELMET = ITEMS.registerSimpleItem(
+            "echo_helmet", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.HELMET));
+    public static final DeferredItem<Item> ECHO_CHESTPLATE = ITEMS.registerSimpleItem(
+            "echo_chestplate", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.CHESTPLATE));
+    public static final DeferredItem<Item> ECHO_LEGGINGS = ITEMS.registerSimpleItem(
+            "echo_leggings", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.LEGGINGS));
+    public static final DeferredItem<Item> ECHO_BOOTS = ITEMS.registerSimpleItem(
+            "echo_boots", properties -> echo(properties).humanoidArmor(ArmorMaterials.DIAMOND, ArmorType.BOOTS));
 
     public static final DeferredItem<BlockItem> T_ONE_AUGSTATION = ITEMS.registerSimpleBlockItem(ModBlocks.T_ONE_AUGSTATION);
     public static final DeferredItem<BlockItem> T_TWO_AUGSTATION = ITEMS.registerSimpleBlockItem(ModBlocks.T_TWO_AUGSTATION);

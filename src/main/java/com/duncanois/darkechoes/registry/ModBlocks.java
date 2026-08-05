@@ -1,12 +1,10 @@
 package com.duncanois.darkechoes.registry;
 
 import com.duncanois.darkechoes.DarkEchoes;
-import com.duncanois.darkechoes.registry.blocks.BaseAugStationBlock;
+import com.duncanois.darkechoes.registry.blocks.TierOneAugStationBlock;
 import com.duncanois.darkechoes.registry.blocks.TierThreeAugStationBlock;
 import com.duncanois.darkechoes.registry.blocks.TierTwoAugStationBlock;
 import com.duncanois.darkechoes.registry.blocks.entities.BaseAugStationBE;
-import com.duncanois.darkechoes.registry.blocks.TierOneAugStationBlock;
-import com.duncanois.darkechoes.registry.blocks.entities.TierThreeAugStationBE;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -24,18 +22,6 @@ public class ModBlocks {
     public static final DeferredRegister<MapCodec<? extends Block>> BLOCK_TYPE = DeferredRegister.create(BuiltInRegistries.BLOCK_TYPE, DarkEchoes.MOD_ID);
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(DarkEchoes.MOD_ID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, DarkEchoes.MOD_ID);
-
-    public static final Supplier<MapCodec<BaseAugStationBlock>> AUGMENT_STATION_CODEC = BLOCK_TYPE.register(
-            "augment_station", () -> BlockBehaviour.simpleCodec(BaseAugStationBlock::new)
-    );
-
-//    public static final DeferredBlock<AugmentStations> T_ONE_AUGSTATION = BLOCKS.register("tier_one_augmentstation",
-//            registryName -> new AugmentStations(BlockBehaviour.Properties.of()
-//                    .setId(ResourceKey.create(Registries.BLOCK, registryName))
-//                    .destroyTime(2.0f)
-//                    .explosionResistance(10.0f)
-//                    .sound(SoundType.WOOD)
-//            ));
 
     public static final DeferredBlock<TierOneAugStationBlock> T_ONE_AUGSTATION = BLOCKS.register("augment_station/t_one",
             (registryName) -> new TierOneAugStationBlock(BlockBehaviour.Properties.of()
@@ -59,7 +45,7 @@ public class ModBlocks {
                     .sound(SoundType.METAL)
             )
     );
-    public static final Supplier<BlockEntityType<BaseAugStationBE>> AUGMENTSTATION_BE = BLOCK_ENTITY_TYPES.register(
+    public static final Supplier<BlockEntityType<BaseAugStationBE>> AUGSTATION_BE = BLOCK_ENTITY_TYPES.register(
             "augmentstation_block_entity",
             () -> new BlockEntityType<>(
                     BaseAugStationBE::new,
@@ -67,5 +53,4 @@ public class ModBlocks {
                     T_ONE_AUGSTATION.get(), T_TWO_AUGSTATION.get(), T_THREE_AUGSTATION.get()
             )
     );
-
 }

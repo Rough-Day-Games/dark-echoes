@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "darkechoes:item/echo_diamond_axe"
+    "layer0": "darkechoes:item/echo_helmet"
   }
 }
