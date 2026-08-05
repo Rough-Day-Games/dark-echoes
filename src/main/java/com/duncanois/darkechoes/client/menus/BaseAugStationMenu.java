@@ -43,7 +43,8 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else if (slotIndex >= 2 && slotIndex < 38) {
-                if (ToolSlot.mayPlaceItem(selected)) {
+                if (augmentStation.canPlaceItem(TOOL_SLOT, stack)) {
+//                    TODO add better check on this, echo sword can be quick moved to below tier three but flashes for a milisecond
                     if (!moveItemStackTo(stack, TOOL_SLOT, 1, false)) {
                         return ItemStack.EMPTY;
                     }
