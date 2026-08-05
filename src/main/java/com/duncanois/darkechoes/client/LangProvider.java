@@ -34,6 +34,8 @@ public class LangProvider extends LanguageProvider {
         add("tooltip.darkechoes.progression_pending", "Progressing against %s - Lock in %s %s");
         add("tooltip.darkechoes.weapon_progression", "%s Level %s: +%s%% dmg - Level %s in %s %s");
         add("tooltip.darkechoes.weapon_progression_max", "%s Level %s: +%s%% dmg - Max Level");
-        add("container.augment_station", "Augmentation Station");
+        add("container.augment_station", "AugmenStation");
+        add("button.darkechoes.augstation.initawakening", "Awaken");
+//        add("dark_echoes_tab.title", "Dark Echoes");
     }
 }

@@ -72,13 +72,14 @@ public class BaseAugStationBE extends BaseContainerBlockEntity implements Contai
     @Override
     public boolean canPlaceItem(int slot, ItemStack itemStack) {
         if (slot == 0) {
-            Block baseBlock = getBlockState().getBlock();
-            return switch (baseBlock) {
-                case TierOneAugStationBlock _ -> itemStack.is(ModItemTags.TIER_ONE_GEAR);
-                case TierTwoAugStationBlock _ -> itemStack.is(ModItemTags.TIER_TWO_GEAR);
-                case TierThreeAugStationBlock _ -> itemStack.is(ModItemTags.TIER_THREE_GEAR);
-                default -> false;
-            };
+//            Block baseBlock = getBlockState().getBlock();
+//            return switch (baseBlock) {
+//                case TierOneAugStationBlock _ -> itemStack.is(ModItemTags.TIER_ONE_GEAR);
+//                case TierTwoAugStationBlock _ -> itemStack.is(ModItemTags.TIER_TWO_GEAR);
+//                case TierThreeAugStationBlock _ -> itemStack.is(ModItemTags.TIER_THREE_GEAR);
+//                default -> false;
+//            };
+            return itemStack.is(ModItemTags.AUGMENTABLE_GEAR);
         } else {
             return itemStack.is(ModItemTags.AWAKENING_ITEMS);
         }

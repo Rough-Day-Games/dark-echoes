@@ -22,6 +22,11 @@ public final class ModDataComponents {
             COMPONENTS.registerComponentType("mob_progression", builder -> builder
                     .persistent(MobProgression.CODEC)
                     .networkSynchronized(MobProgression.STREAM_CODEC));
+// TODO might change to something more complicated
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> AUGMENT_SLOTS =
+            COMPONENTS.registerComponentType("augment_slots", builder -> builder
+                    .persistent(Codec.intRange(-1, 10))
+                    .networkSynchronized(ByteBufCodecs.VAR_INT));
 
     private ModDataComponents() {
     }

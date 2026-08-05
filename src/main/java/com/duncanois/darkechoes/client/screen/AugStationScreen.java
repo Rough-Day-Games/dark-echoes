@@ -6,10 +6,14 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+
+import static com.duncanois.darkechoes.registry.ModDataComponents.AUGMENT_SLOTS;
 
 public class AugStationScreen extends AbstractContainerScreen<BaseAugStationMenu> {
     private static final Identifier BACKGROUND_LOC = Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "textures/gui/container/augment_station_menu.png");
@@ -54,9 +58,14 @@ public class AugStationScreen extends AbstractContainerScreen<BaseAugStationMenu
         super.extractRenderState(graphics, mouseX, mouseY, a);
 
 //        TODO add more item details of adaptation, and make sure to update GUI
-        Slot tool = menu.getSlot(0);
-        if (tool.hasItem()) {
-            graphics.text(this.font, tool.getItem().getItemName(), this.leftPos + 99, this.topPos + 6, 0xFF404040, false);
+        Slot gearSlot = menu.getSlot(0);
+        if (gearSlot.hasItem()) {
+            ItemStack gear = gearSlot.getItem();
+            Integer augment_slots = gear.getItem().components().getOrDefault(AUGMENT_SLOTS, -1);
+            DarkEchoes.LOGGER.info("DarkEchoes: augment_slots = {}", augment_slots);
+            graphics.text(this.font, gear.getItemName(), this.leftPos + 100, this.topPos + 7, 0xFF404040, false);
+            graphics.fakeItem(gearSlot.getItem(), this.leftPos + 112, this.topPos + 25);
+            graphics.text(this.font, "Augment Slots: " + augment_slots, this.leftPos + 101, this.topPos + 45, 0xFF404040, false);
         }
     }
 
