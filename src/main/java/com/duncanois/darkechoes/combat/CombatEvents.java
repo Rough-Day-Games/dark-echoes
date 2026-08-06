@@ -4,15 +4,19 @@ import com.duncanois.darkechoes.DarkEchoes;
 import com.duncanois.darkechoes.config.CombatConfig;
 import com.duncanois.darkechoes.progression.MobProgression;
 import com.duncanois.darkechoes.progression.Progression;
+import com.duncanois.darkechoes.registry.ModDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
@@ -35,6 +39,11 @@ public final class CombatEvents {
         Entity attacker = source.getEntity();
         ItemStack weapon = weapon(source);
 
+        if (Boolean.TRUE.equals(weapon.get(ModDataComponents.FRAGILE))) {
+            attacker.level().playLocalSound(attacker, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.AMBIENT, 10, 10);
+            weapon.hurtAndBreak(4, (LivingEntity) attacker, ((LivingEntity) attacker).getMainHandItem().getEquipmentSlot());
+//            Enchantments.UNBREAKING;
+        }
         double outgoing = CombatRules.outgoingMultiplier(attacker, source);
         double incoming = CombatRules.incomingMultiplier(target, source);
         double item = CombatRules.itemMultiplier(weapon);
@@ -71,6 +80,11 @@ public final class CombatEvents {
 
     @SubscribeEvent
     public static void onTooltip(ItemTooltipEvent event) {
+        if (Boolean.TRUE.equals(event.getItemStack().get(ModDataComponents.FRAGILE))) {
+            event.getToolTip().add(Component.translatable("tooltip.darkechoes.fragile").withStyle(ChatFormatting.RED));
+        } else if (Boolean.TRUE.equals(event.getItemStack().get(ModDataComponents.WEAKENED))) {
+            event.getToolTip().add(Component.translatable("tooltip.darkechoes.weakened").withStyle(ChatFormatting.GRAY));
+        }
         ItemStack stack = event.getItemStack();
         if (!Progression.isFused(stack)) {
             return;

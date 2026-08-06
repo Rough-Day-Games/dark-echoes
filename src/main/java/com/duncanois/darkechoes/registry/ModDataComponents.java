@@ -27,6 +27,12 @@ public final class ModDataComponents {
             COMPONENTS.registerComponentType("augment_slots", builder -> builder
                     .persistent(Codec.intRange(-1, 10))
                     .networkSynchronized(ByteBufCodecs.VAR_INT));
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> FRAGILE =
+            COMPONENTS.registerComponentType("fragile", builder -> builder
+                    .persistent(Codec.BOOL));
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> WEAKENED =
+            COMPONENTS.registerComponentType("weakened", builder -> builder
+                    .persistent(Codec.BOOL));
 
     private ModDataComponents() {
     }

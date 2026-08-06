@@ -7,9 +7,16 @@ import com.duncanois.darkechoes.combat.CombatRules;
 import com.duncanois.darkechoes.config.CombatConfig;
 import com.duncanois.darkechoes.registry.*;
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -23,6 +30,8 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import org.slf4j.Logger;
+
+import java.util.Optional;
 
 @Mod(DarkEchoes.MOD_ID)
 @EventBusSubscriber(modid = DarkEchoes.MOD_ID)
@@ -62,20 +71,5 @@ public final class DarkEchoes {
         if (event.getConfig().getSpec() == CombatConfig.SPEC) {
             CombatRules.reload();
         }
-    }
-
-    @SubscribeEvent // on the mod event bus
-    public static void modifyComponents(ModifyDefaultComponentsEvent event) {
-//        TODO WIP!!! still figuring out what "Components not bound yet" means
-//        event.modifyMatching(
-//                (item, components) -> item.getDefaultInstance().is(ModItemTags.AUGMENTABLE_GEAR),
-//                builder -> builder.set(ModDataComponents.AUGMENT_SLOTS, 0)
-//        );
-//        event.modifyMatching(
-//                (item, components) -> item.getDefaultInstance().is(ModItemTags.AUGMENTABLE_GEAR),
-//                (components, context, item) -> {
-//                    components.set(ModDataComponents.AUGMENT_SLOTS, 0);
-//                }
-//        );
     }
 }

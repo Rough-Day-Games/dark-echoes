@@ -9,7 +9,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
@@ -21,6 +25,7 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 
 import static com.duncanois.darkechoes.registry.ModBlocks.*;
 
@@ -53,7 +58,7 @@ public class BaseAugStationBE extends BaseContainerBlockEntity implements Contai
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        return this.saveWithoutMetadata(registries);
+        return this.saveWithFullMetadata(registries);
     }
 
     @Override
@@ -85,8 +90,13 @@ public class BaseAugStationBE extends BaseContainerBlockEntity implements Contai
         }
     }
 
+//    TODO overkill? maybe not necessary? an attempt to fix client desync
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BaseAugStationBE blockEntity) {
-        setChanged(level, blockPos, blockState);
+        if (!level.isClientSide()) {
+            blockEntity.setChanged();
+            level.sendBlockUpdated(blockPos, blockState, blockState, Block.UPDATE_ALL);
+            setChanged(level, blockPos, blockState);
+        }
     }
 
     @Override
