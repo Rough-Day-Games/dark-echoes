@@ -14,16 +14,7 @@ import java.util.Set;
 public class DataGen {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent.Client event) {
-        event.createProvider((out, lookupProvider) -> new LootTableProvider(
-                out,
-                Set.of(),
-                List.of(
-                        new LootTableProvider.SubProviderEntry(
-                                LootTables::new,
-                                LootContextParamSets.EMPTY
-                        )
-                ), lookupProvider
-        ));
+        event.createProvider(GlobalLootModProvider::new);
         event.createProvider(Models::new);
         event.createProvider(LangProvider::new);
         event.createProvider(ModItemTags::new);

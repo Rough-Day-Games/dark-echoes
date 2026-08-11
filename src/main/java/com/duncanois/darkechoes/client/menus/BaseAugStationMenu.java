@@ -1,7 +1,10 @@
 package com.duncanois.darkechoes.client.menus;
 
 import com.duncanois.darkechoes.client.ModItemTags;
+import com.duncanois.darkechoes.helpers.AugStationData;
 import com.duncanois.darkechoes.registry.ModDataComponents;
+import com.duncanois.darkechoes.registry.ModItems;
+import com.duncanois.darkechoes.registry.blocks.BaseAugStationBlock;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.world.Container;
@@ -9,12 +12,17 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.transfer.item.ItemStackResourceHandler;
 
 import static com.duncanois.darkechoes.client.ModMenus.AUGMENT_STATION_MENU;
+import static com.duncanois.darkechoes.registry.ModBlocks.T_ONE_AUGSTATION;
 
 public class BaseAugStationMenu extends AbstractContainerMenu {
     public static final int GEAR_SLOT_INDEX = 0;
@@ -22,15 +30,17 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
     private final Container augmentStation;
     public final Slot awaken_slot;
     public final Slot gear_slot;
+    public Block augStationBlock;
 
     public BaseAugStationMenu(int containerId, Inventory playerInv) {
-        this(containerId, playerInv, new SimpleContainer(2));
+        this(containerId, playerInv, new SimpleContainer(2), ContainerLevelAccess.NULL);
     }
 
-    public BaseAugStationMenu(int containerId, Inventory playerInv, Container augmentStation) {
+    public BaseAugStationMenu(int containerId, Inventory playerInv, Container augmentStation, ContainerLevelAccess access) {
         super(AUGMENT_STATION_MENU.get(), containerId);
         checkContainerSize(augmentStation, 2);
         this.augmentStation = augmentStation;
+        augStationBlock = access.evaluate(((level, blockPos) -> level.getBlockState(blockPos).getBlock())).orElse(Blocks.AIR);
         this.addSlot(new GearSlot(augmentStation, GEAR_SLOT_INDEX, 68, 60));
         this.addSlot(new AwakenSlot(augmentStation, AWAKEN_SLOT_INDEX, 14, 60));
         this.addStandardInventorySlots(playerInv, 36, 137);
@@ -80,18 +90,22 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
         return augmentStation.stillValid(player);
     }
 
-//    TODO plz fix client desync
     public void awakenGear() {
-        if (!awaken_slot.hasItem()) {
-            ItemStack awakened_gear = gear_slot.getItem();
-                    awakened_gear.set(ModDataComponents.FRAGILE.get(), true);
-                    awakened_gear.set(ModDataComponents.AUGMENT_SLOTS.get(), -1);
-            augmentStation.setItem(GEAR_SLOT_INDEX, awakened_gear);
-            super.slotsChanged(this.augmentStation);
-            augmentStation.setChanged();
-            gear_slot.setChanged();
+        boolean isFragile = awaken_slot.getItem().has(ModDataComponents.FRAGILE);
+        boolean isWeakened = awaken_slot.getItem().has(ModDataComponents.WEAKENED);
+        int augment_slots = awaken_slot.getItem().has(ModDataComponents.AUGMENT_SLOTS) ? awaken_slot.getItem().get(ModDataComponents.AUGMENT_SLOTS) : 0;
+        if (awaken_slot.hasItem()) {
+                if (awaken_slot.getItem().is(Items.ECHO_SHARD)) {
+                    isWeakened = true;
+                    augment_slots--;
+                } else if (awaken_slot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
+                    augment_slots++;
+                }
+        } else {
+            isFragile = true;
+            augment_slots--;
         }
-
+            ClientPacketDistributor.sendToServer(new AugStationData(isFragile, isWeakened, augment_slots));
     }
 
     public static class GearSlot extends Slot {
@@ -100,7 +114,7 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
         }
 
         public static boolean mayPlaceItem(ItemStack stack) {
-            return true;
+            return stack.is(ModItemTags.AUGMENTABLE_GEAR);
         }
 
         public boolean mayPlace(ItemStack stack) {

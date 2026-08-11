@@ -1,9 +1,7 @@
 package com.duncanois.darkechoes.registry.blocks;
 
 import com.duncanois.darkechoes.registry.blocks.entities.BaseAugStationBE;
-import com.duncanois.darkechoes.registry.blocks.entities.TierThreeAugStationBE;
 import com.mojang.math.OctahedralGroup;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,7 +12,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;

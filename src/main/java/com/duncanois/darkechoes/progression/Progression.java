@@ -1,5 +1,6 @@
 package com.duncanois.darkechoes.progression;
 
+import com.duncanois.darkechoes.client.ModItemTags;
 import com.duncanois.darkechoes.config.CombatConfig;
 import com.duncanois.darkechoes.registry.ModDataComponents;
 import com.duncanois.darkechoes.registry.ModItems;
@@ -18,32 +19,28 @@ public final class Progression {
     private Progression() {
     }
 
-    public static boolean canFuse(ItemStack stack) {
-        return stack != null && (isDiamondWeapon(stack) || isDiamondArmor(stack));
+//    public static boolean canFuse(ItemStack stack) {
+//        return stack != null && (isDiamondWeapon(stack) || isDiamondArmor(stack));
+//    }
+
+    public static boolean isAwakened(ItemStack stack) {
+        return isAwakenedTool(stack) || isAwakenedArmor(stack);
     }
 
-    public static boolean isFused(ItemStack stack) {
-        return isEchoWeapon(stack) || isEchoArmor(stack);
+    public static boolean isAwakenedTool(ItemStack stack) {
+        return stack != null && stack.has(ModDataComponents.AUGMENT_SLOTS) && stack.is(ModItemTags.AUGMENTABLE_TOOL);
     }
 
-    public static boolean isEchoWeapon(ItemStack stack) {
-        return stack != null && (stack.is(ModItems.ECHO_SWORD.get())
-                || stack.is(ModItems.ECHO_AXE.get()));
+    public static boolean isAwakenedArmor(ItemStack stack) {
+        return stack != null && stack.has(ModDataComponents.AUGMENT_SLOTS) && stack.is(ModItemTags.AUGMENTABLE_ARMOR);
     }
 
-    public static boolean isEchoArmor(ItemStack stack) {
-        return stack != null && (stack.is(ModItems.ECHO_HELMET.get())
-                || stack.is(ModItems.ECHO_CHESTPLATE.get())
-                || stack.is(ModItems.ECHO_LEGGINGS.get())
-                || stack.is(ModItems.ECHO_BOOTS.get()));
-    }
-
-    public static ItemStack fuse(ItemStack original) {
-        Item result = fusedItem(original);
-        return result == null
-                ? ItemStack.EMPTY
-                : TransmuteRecipe.createWithOriginalComponents(new ItemStackTemplate(result), original);
-    }
+//    public static ItemStack fuse(ItemStack original) {
+//        Item result = fusedItem(original);
+//        return result == null
+//                ? ItemStack.EMPTY
+//                : TransmuteRecipe.createWithOriginalComponents(new ItemStackTemplate(result), original);
+//    }
 
     public static MobProgression data(ItemStack stack) {
         return stack == null || stack.isEmpty()
@@ -52,7 +49,7 @@ public final class Progression {
     }
 
     public static int weaponLevel(ItemStack weapon, Entity target) {
-        if (!isEchoWeapon(weapon) || !(target instanceof Mob)) {
+        if (!isAwakenedTool(weapon) || !(target instanceof Mob)) {
             return 0;
         }
         MobProgression progression = data(weapon);
@@ -66,7 +63,7 @@ public final class Progression {
     }
 
     public static void recordWeaponKill(ItemStack weapon, LivingEntity target) {
-        if (!isEchoWeapon(weapon) || !(target instanceof Mob)) {
+        if (!isAwakenedTool(weapon) || !(target instanceof Mob)) {
             return;
         }
         advance(weapon, entityId(target), CombatConfig.KILLS_PER_LEVEL.getAsInt());
@@ -81,7 +78,7 @@ public final class Progression {
         for (EquipmentSlot slot : armorSlots()) {
             ItemStack stack = wearer.getItemBySlot(slot);
             MobProgression progression = data(stack);
-            if (isEchoArmor(stack) && progression.target().equals(targetId)) {
+            if (isAwakenedArmor(stack) && progression.target().equals(targetId)) {
                 levels += progression.level(
                         CombatConfig.ARMOR_HITS_PER_LEVEL.getAsInt(),
                         CombatConfig.MAX_MOB_PROGRESSION_LEVEL.getAsInt());
@@ -97,7 +94,7 @@ public final class Progression {
         String targetId = entityId(attacker);
         for (EquipmentSlot slot : armorSlots()) {
             ItemStack stack = wearer.getItemBySlot(slot);
-            if (isEchoArmor(stack)) {
+            if (isAwakenedArmor(stack)) {
                 advance(stack, targetId, CombatConfig.ARMOR_HITS_PER_LEVEL.getAsInt());
             }
         }

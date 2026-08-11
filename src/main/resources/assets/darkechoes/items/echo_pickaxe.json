@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "darkechoes:item/resonance_crystal"
+    "model": "darkechoes:item/echo_pickaxe"
   }
 }

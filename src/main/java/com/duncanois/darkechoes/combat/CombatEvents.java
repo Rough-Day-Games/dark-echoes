@@ -16,7 +16,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
@@ -86,18 +85,18 @@ public final class CombatEvents {
             event.getToolTip().add(Component.translatable("tooltip.darkechoes.weakened").withStyle(ChatFormatting.GRAY));
         }
         ItemStack stack = event.getItemStack();
-        if (!Progression.isFused(stack)) {
+        if (!Progression.isAwakened(stack)) {
             return;
         }
 
         event.getToolTip().add(Component.translatable("tooltip.darkechoes.echo_fusion")
                 .withStyle(ChatFormatting.AQUA));
         MobProgression progression = Progression.data(stack);
-        int actionsPerLevel = Progression.isEchoWeapon(stack)
+        int actionsPerLevel = Progression.isAwakenedTool(stack)
                 ? CombatConfig.KILLS_PER_LEVEL.getAsInt()
                 : CombatConfig.ARMOR_HITS_PER_LEVEL.getAsInt();
         int maxLevel = CombatConfig.MAX_MOB_PROGRESSION_LEVEL.getAsInt();
-        boolean weapon = Progression.isEchoWeapon(stack);
+        boolean weapon = Progression.isAwakenedTool(stack);
         if (progression.locked()) {
             int level = progression.level(actionsPerLevel, maxLevel);
             long bonus = Math.round(level * (weapon
@@ -143,7 +142,7 @@ public final class CombatEvents {
         Entity attacker = source.getEntity();
         if (attacker instanceof LivingEntity livingAttacker) {
             ItemStack mainHand = livingAttacker.getMainHandItem();
-            if (Progression.isEchoWeapon(mainHand) || sourceWeapon == null || sourceWeapon.isEmpty()) {
+            if (Progression.isAwakenedTool(mainHand) || sourceWeapon == null || sourceWeapon.isEmpty()) {
                 return mainHand;
             }
         }

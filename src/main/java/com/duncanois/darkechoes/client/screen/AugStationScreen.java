@@ -1,11 +1,15 @@
 package com.duncanois.darkechoes.client.screen;
 
 import com.duncanois.darkechoes.DarkEchoes;
+import com.duncanois.darkechoes.client.ModItemTags;
 import com.duncanois.darkechoes.client.menus.BaseAugStationMenu;
 import com.duncanois.darkechoes.progression.MobProgression;
 import com.duncanois.darkechoes.registry.ModDataComponents;
+import com.duncanois.darkechoes.registry.blocks.TierOneAugStationBlock;
+import com.duncanois.darkechoes.registry.blocks.TierTwoAugStationBlock;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.component.DataComponentType;
@@ -16,6 +20,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 import static com.duncanois.darkechoes.registry.ModDataComponents.AUGMENT_SLOTS;
 
@@ -54,13 +59,10 @@ public class AugStationScreen extends AbstractContainerScreen<BaseAugStationMenu
         super.extractLabels(graphics, xm, ym);
 
         graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY, 0xFF404040, false);
-
     }
 
-//    TODO plz fix client desync
     Button awakenButton = Button.builder(Component.translatable("button.darkechoes.augstation.initawakening"), button -> {
                 menu.awakenGear();
-                menu.slotsChanged(menu.gear_slot.container);
             })
             .size(38, 15)
             .build();
@@ -71,12 +73,31 @@ public class AugStationScreen extends AbstractContainerScreen<BaseAugStationMenu
 
 //        TODO add more item details of adaptation, and make sure to update GUI
         Slot gearSlot = menu.getSlot(0);
-        if (gearSlot.hasItem()) {
-            awakenButton.active = true;
-            ItemStack gear = gearSlot.getItem();
+        ItemStack gear = gearSlot.getItem();
+        Block augStationBlock = menu.augStationBlock;
+//        TODO add proper block check
+        DarkEchoes.LOGGER.info("augStationBlock: {}", augStationBlock);
+        if (!gear.isEmpty()) {
+            if (augStationBlock instanceof TierOneAugStationBlock) {
+                if (gear.is(ModItemTags.TIER_ONE_ARMOR) || gear.is(ModItemTags.TIER_ONE_TOOL)) {
+                    awakenButton.active = true;
+                } else {
+                    awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.incompatible")));
+                }
+            } else if (augStationBlock instanceof TierTwoAugStationBlock) {
+                if (gear.is(ModItemTags.TIER_THREE_ARMOR) || gear.is(ModItemTags.TIER_THREE_TOOL)) {
+                    awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.incompatible")));
+                } else {
+                    awakenButton.active = true;
+                }
+            } else {
+                awakenButton.active = true;
+            }
+
             Integer augment_slots = gear.get(AUGMENT_SLOTS);
             MobProgression mobProgression = gear.get(ModDataComponents.MOB_PROGRESSION);
-            Component mobName = mobProgression != null ? Component.translatable(BuiltInRegistries.ENTITY_TYPE.getValue(Identifier.parse(mobProgression.target())).getDescriptionId()) : Component.literal("None");
+//            TODO add better way to iterate if adaptation's target is pending or not
+            Component mobName = mobProgression != null ? (mobProgression.target().isEmpty() ? Component.translatable(BuiltInRegistries.ENTITY_TYPE.getValue(Identifier.parse(mobProgression.pendingTarget())).getDescriptionId()) : Component.translatable(BuiltInRegistries.ENTITY_TYPE.getValue(Identifier.parse(mobProgression.target())).getDescriptionId())) : Component.translatable("container.augment_station.no_adaptation");
             graphics.text(this.font, gear.getItemName(), this.leftPos + 100, this.topPos + 7, 0xFF404040, false);
             graphics.fakeItem(gearSlot.getItem(), this.leftPos + 112, this.topPos + 25);
             graphics.text(this.font, (augment_slots != null ? "Augment Slots: " + augment_slots : "Not awakened yet!"), this.leftPos + 101, this.topPos + 45, 0xFF404040, false);

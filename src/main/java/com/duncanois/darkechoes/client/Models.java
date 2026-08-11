@@ -30,8 +30,10 @@ public class Models extends ModelProvider {
         itemModels.createFlatItemModel(ModItems.ECHO_BOOTS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.createFlatItemModel(ModItems.ECHO_SWORD.get(), ModelTemplates.FLAT_ITEM);
         itemModels.createFlatItemModel(ModItems.ECHO_AXE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_PICKAXE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_SHOVEL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_HOE.get(), ModelTemplates.FLAT_ITEM);
 
-//        TODO replace the getModelLocation params once we have proper textures
         itemModels.itemModelOutput.accept(ModItems.RESONANCE_CRYSTAL.get(),
                 new CuboidItemModelWrapper.Unbaked(
                         ModelLocationUtils.getModelLocation(ModItems.RESONANCE_CRYSTAL.get()),
@@ -71,6 +73,24 @@ public class Models extends ModelProvider {
         itemModels.itemModelOutput.accept(ModItems.ECHO_AXE.get(),
                 new CuboidItemModelWrapper.Unbaked(
                         ModelLocationUtils.getModelLocation(ModItems.ECHO_AXE.get()),
+                        Optional.empty(),
+                        Collections.emptyList()
+                ));
+        itemModels.itemModelOutput.accept(ModItems.ECHO_PICKAXE.get(),
+                new CuboidItemModelWrapper.Unbaked(
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_PICKAXE.get()),
+                        Optional.empty(),
+                        Collections.emptyList()
+                ));
+        itemModels.itemModelOutput.accept(ModItems.ECHO_SHOVEL.get(),
+                new CuboidItemModelWrapper.Unbaked(
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_SHOVEL.get()),
+                        Optional.empty(),
+                        Collections.emptyList()
+                ));
+        itemModels.itemModelOutput.accept(ModItems.ECHO_HOE.get(),
+                new CuboidItemModelWrapper.Unbaked(
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_HOE.get()),
                         Optional.empty(),
                         Collections.emptyList()
                 ));

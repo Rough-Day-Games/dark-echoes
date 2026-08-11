@@ -19,6 +19,9 @@ public class ModCreativeTab {
                         output.accept(ModItems.RESONANCE_CRYSTAL);
                         output.accept(ModItems.ECHO_SWORD);
                         output.accept(ModItems.ECHO_AXE);
+                        output.accept(ModItems.ECHO_PICKAXE);
+                        output.accept(ModItems.ECHO_SHOVEL);
+                        output.accept(ModItems.ECHO_HOE);
                         output.accept(ModItems.ECHO_HELMET);
                         output.accept(ModItems.ECHO_CHESTPLATE);
                         output.accept(ModItems.ECHO_LEGGINGS);

@@ -19,6 +19,9 @@ public class LangProvider extends LanguageProvider {
         add(ModItems.ECHO_BOOTS.get(), "Echo Boots");
         add(ModItems.ECHO_SWORD.get(), "Echo Sword");
         add(ModItems.ECHO_AXE.get(), "Echo Axe");
+        add(ModItems.ECHO_PICKAXE.get(), "Echo Pickaxe");
+        add(ModItems.ECHO_SHOVEL.get(), "Echo Shovel");
+        add(ModItems.ECHO_HOE.get(), "Echo Hoe");
         add(ModItems.T_ONE_AUGSTATION.get(), "Augmentation Station: Tier One");
         add(ModItems.T_TWO_AUGSTATION.get(), "Augmentation Station: Tier Two");
         add(ModItems.T_THREE_AUGSTATION.get(), "Augmentation Station: Tier Three");
@@ -36,6 +39,8 @@ public class LangProvider extends LanguageProvider {
         add("tooltip.darkechoes.weapon_progression_max", "%s Level %s: +%s%% dmg - Max Level");
         add("container.augment_station", "AugmenStation");
         add("button.darkechoes.augstation.initawakening", "Awaken");
-//        add("dark_echoes_tab.title", "Dark Echoes");
+        add("tooltip.darkechoes.fragile", "Fragile");
+        add("tooltip.darkechoes.weakened", "Weakened");
+        add("container.augment_station.no_adaptation", "None");
     }
 }

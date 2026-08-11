@@ -2,30 +2,22 @@ package com.duncanois.darkechoes.registry.blocks.entities;
 
 import com.duncanois.darkechoes.client.ModItemTags;
 import com.duncanois.darkechoes.client.menus.BaseAugStationMenu;
-import com.duncanois.darkechoes.registry.blocks.TierOneAugStationBlock;
-import com.duncanois.darkechoes.registry.blocks.TierThreeAugStationBlock;
-import com.duncanois.darkechoes.registry.blocks.TierTwoAugStationBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.jspecify.annotations.Nullable;
 
 import static com.duncanois.darkechoes.registry.ModBlocks.*;
 
@@ -53,7 +45,7 @@ public class BaseAugStationBE extends BaseContainerBlockEntity implements Contai
 
     @Override
     protected AbstractContainerMenu createMenu(int i, Inventory inventory) {
-        return new BaseAugStationMenu(i, inventory, this);
+        return new BaseAugStationMenu(i, inventory, this, ContainerLevelAccess.create(level, worldPosition));
     }
 
     @Override
@@ -90,11 +82,8 @@ public class BaseAugStationBE extends BaseContainerBlockEntity implements Contai
         }
     }
 
-//    TODO overkill? maybe not necessary? an attempt to fix client desync
     public static void serverTick(Level level, BlockPos blockPos, BlockState blockState, BaseAugStationBE blockEntity) {
         if (!level.isClientSide()) {
-            blockEntity.setChanged();
-            level.sendBlockUpdated(blockPos, blockState, blockState, Block.UPDATE_ALL);
             setChanged(level, blockPos, blockState);
         }
     }
