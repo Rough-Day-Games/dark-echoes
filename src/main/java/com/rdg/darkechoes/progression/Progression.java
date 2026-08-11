@@ -19,10 +19,6 @@ public final class Progression {
     private Progression() {
     }
 
-//    public static boolean canFuse(ItemStack stack) {
-//        return stack != null && (isDiamondWeapon(stack) || isDiamondArmor(stack));
-//    }
-
     public static boolean isAwakened(ItemStack stack) {
         return isAwakenedTool(stack) || isAwakenedArmor(stack);
     }
@@ -34,13 +30,6 @@ public final class Progression {
     public static boolean isAwakenedArmor(ItemStack stack) {
         return stack != null && stack.has(ModDataComponents.AUGMENT_SLOTS) && stack.is(ModItemTags.AUGMENTABLE_ARMOR);
     }
-
-//    public static ItemStack fuse(ItemStack original) {
-//        Item result = fusedItem(original);
-//        return result == null
-//                ? ItemStack.EMPTY
-//                : TransmuteRecipe.createWithOriginalComponents(new ItemStackTemplate(result), original);
-//    }
 
     public static MobProgression data(ItemStack stack) {
         return stack == null || stack.isEmpty()
@@ -107,27 +96,6 @@ public final class Progression {
         if (!updated.equals(current)) {
             stack.set(ModDataComponents.MOB_PROGRESSION.get(), updated);
         }
-    }
-
-    private static boolean isDiamondWeapon(ItemStack stack) {
-        return stack.is(Items.DIAMOND_SWORD) || stack.is(Items.DIAMOND_AXE);
-    }
-
-    private static boolean isDiamondArmor(ItemStack stack) {
-        return stack.is(Items.DIAMOND_HELMET)
-                || stack.is(Items.DIAMOND_CHESTPLATE)
-                || stack.is(Items.DIAMOND_LEGGINGS)
-                || stack.is(Items.DIAMOND_BOOTS);
-    }
-
-    private static Item fusedItem(ItemStack stack) {
-        if (stack.is(Items.DIAMOND_SWORD)) return ModItems.ECHO_SWORD.get();
-        if (stack.is(Items.DIAMOND_AXE)) return ModItems.ECHO_AXE.get();
-        if (stack.is(Items.DIAMOND_HELMET)) return ModItems.ECHO_HELMET.get();
-        if (stack.is(Items.DIAMOND_CHESTPLATE)) return ModItems.ECHO_CHESTPLATE.get();
-        if (stack.is(Items.DIAMOND_LEGGINGS)) return ModItems.ECHO_LEGGINGS.get();
-        if (stack.is(Items.DIAMOND_BOOTS)) return ModItems.ECHO_BOOTS.get();
-        return null;
     }
 
     private static String entityId(Entity entity) {

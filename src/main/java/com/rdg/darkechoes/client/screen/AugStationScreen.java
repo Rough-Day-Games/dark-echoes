@@ -12,11 +12,9 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -61,7 +59,7 @@ public class AugStationScreen extends AbstractContainerScreen<BaseAugStationMenu
         graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY, 0xFF404040, false);
     }
 
-    Button awakenButton = Button.builder(Component.translatable("button.darkechoes.augstation.initawakening"), button -> {
+    final Button awakenButton = Button.builder(Component.translatable("button.darkechoes.augstation.initawakening"), button -> {
                 menu.awakenGear();
             })
             .size(38, 15)

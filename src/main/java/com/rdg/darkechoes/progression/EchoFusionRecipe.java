@@ -20,7 +20,7 @@ import net.minecraft.world.item.crafting.display.SmithingRecipeDisplay;
 
 import java.util.List;
 import java.util.Optional;
-//
+// TODO might refactor the recipe code if by any chance i cant filter by block when awakening items
 //public final class EchoFusionRecipe extends SimpleSmithingRecipe {
 //    public static final EchoFusionRecipe INSTANCE = new EchoFusionRecipe();
 //    public static final MapCodec<EchoFusionRecipe> MAP_CODEC = MapCodec.unit(INSTANCE);

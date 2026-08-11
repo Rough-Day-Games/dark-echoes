@@ -4,9 +4,6 @@ import com.rdg.darkechoes.client.ModItemTags;
 import com.rdg.darkechoes.helpers.AugStationData;
 import com.rdg.darkechoes.registry.ModDataComponents;
 import com.rdg.darkechoes.registry.ModItems;
-import com.rdg.darkechoes.registry.blocks.BaseAugStationBlock;
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -19,10 +16,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import net.neoforged.neoforge.transfer.item.ItemStackResourceHandler;
 
 import static com.rdg.darkechoes.client.ModMenus.AUGMENT_STATION_MENU;
-import static com.rdg.darkechoes.registry.ModBlocks.T_ONE_AUGSTATION;
 
 public class BaseAugStationMenu extends AbstractContainerMenu {
     public static final int GEAR_SLOT_INDEX = 0;
@@ -95,17 +90,17 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
         boolean isWeakened = awaken_slot.getItem().has(ModDataComponents.WEAKENED);
         int augment_slots = awaken_slot.getItem().has(ModDataComponents.AUGMENT_SLOTS) ? awaken_slot.getItem().get(ModDataComponents.AUGMENT_SLOTS) : 0;
         if (awaken_slot.hasItem()) {
-                if (awaken_slot.getItem().is(Items.ECHO_SHARD)) {
-                    isWeakened = true;
-                    augment_slots--;
-                } else if (awaken_slot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
-                    augment_slots++;
-                }
+            if (awaken_slot.getItem().is(Items.ECHO_SHARD)) {
+                isWeakened = true;
+                augment_slots--;
+            } else if (awaken_slot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
+                augment_slots++;
+            }
         } else {
             isFragile = true;
             augment_slots--;
         }
-            ClientPacketDistributor.sendToServer(new AugStationData(isFragile, isWeakened, augment_slots));
+        ClientPacketDistributor.sendToServer(new AugStationData(isFragile, isWeakened, augment_slots));
     }
 
     public static class GearSlot extends Slot {
