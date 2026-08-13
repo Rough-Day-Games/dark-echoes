@@ -1,11 +1,17 @@
 package com.rdg.darkechoes.registry.blocks;
 
+import com.rdg.darkechoes.client.menus.BaseAugStationMenu;
 import com.rdg.darkechoes.registry.blocks.entities.BaseAugStationBE;
 import com.mojang.math.OctahedralGroup;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -64,7 +70,9 @@ public abstract class BaseAugStationBlock extends BaseEntityBlock {
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof BaseAugStationBE be) {
-                serverPlayer.openMenu(be);
+                serverPlayer.openMenu(new SimpleMenuProvider(
+                        (containerId, playerInv, _) -> be.createMenu(containerId, playerInv, player), Component.translatable("container.augment_station")
+                ), pos);
             }
         }
         return InteractionResult.SUCCESS;

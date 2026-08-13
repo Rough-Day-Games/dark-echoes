@@ -39,8 +39,12 @@ public class LangProvider extends LanguageProvider {
         add("tooltip.darkechoes.weapon_progression_max", "%s Level %s: +%s%% dmg - Max Level");
         add("container.augment_station", "AugmenStation");
         add("button.darkechoes.augstation.initawakening", "Awaken");
+        add("button.darkechoes.augstation.initaugment", "Augment");
         add("tooltip.darkechoes.fragile", "Fragile");
         add("tooltip.darkechoes.weakened", "Weakened");
         add("container.augment_station.no_adaptation", "None");
+        add("container.augment_station.incompatible", "Gear is incompatible with the current tier of AugmenStation!");
+        add("container.augment_station.limit_augment_slots", "This gear's augment slot count has reached its limit!");
+
     }
 }

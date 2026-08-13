@@ -2,10 +2,12 @@ package com.rdg.darkechoes.registry.blocks.entities;
 
 import com.rdg.darkechoes.client.ModItemTags;
 import com.rdg.darkechoes.client.menus.BaseAugStationMenu;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
@@ -19,9 +21,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
+import java.util.Optional;
+
 import static com.rdg.darkechoes.registry.ModBlocks.*;
 
-public class BaseAugStationBE extends BaseContainerBlockEntity implements Container {
+public class BaseAugStationBE extends BaseContainerBlockEntity {
     private NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
 
     public BaseAugStationBE(BlockPos worldPosition, BlockState blockState) {
@@ -45,7 +49,7 @@ public class BaseAugStationBE extends BaseContainerBlockEntity implements Contai
 
     @Override
     protected AbstractContainerMenu createMenu(int i, Inventory inventory) {
-        return new BaseAugStationMenu(i, inventory, this, ContainerLevelAccess.create(level, worldPosition));
+        return new BaseAugStationMenu(i, inventory, this, worldPosition);
     }
 
     @Override
@@ -69,13 +73,6 @@ public class BaseAugStationBE extends BaseContainerBlockEntity implements Contai
     @Override
     public boolean canPlaceItem(int slot, ItemStack itemStack) {
         if (slot == 0) {
-//            Block baseBlock = getBlockState().getBlock();
-//            return switch (baseBlock) {
-//                case TierOneAugStationBlock _ -> itemStack.is(ModItemTags.TIER_ONE_GEAR);
-//                case TierTwoAugStationBlock _ -> itemStack.is(ModItemTags.TIER_TWO_GEAR);
-//                case TierThreeAugStationBlock _ -> itemStack.is(ModItemTags.TIER_THREE_GEAR);
-//                default -> false;
-//            };
             return itemStack.is(ModItemTags.AUGMENTABLE_GEAR);
         } else {
             return itemStack.is(ModItemTags.AWAKENING_ITEMS);

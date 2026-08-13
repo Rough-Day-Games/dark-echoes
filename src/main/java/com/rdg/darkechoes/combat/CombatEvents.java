@@ -41,7 +41,6 @@ public final class CombatEvents {
         if (Boolean.TRUE.equals(weapon.get(ModDataComponents.FRAGILE))) {
             attacker.level().playLocalSound(attacker, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.AMBIENT, 10, 10);
             weapon.hurtAndBreak(4, (LivingEntity) attacker, ((LivingEntity) attacker).getMainHandItem().getEquipmentSlot());
-//            Enchantments.UNBREAKING;
         }
         double outgoing = CombatRules.outgoingMultiplier(attacker, source);
         double incoming = CombatRules.incomingMultiplier(target, source);

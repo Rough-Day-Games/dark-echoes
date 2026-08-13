@@ -1,20 +1,21 @@
 package com.rdg.darkechoes.client.menus;
 
+import com.rdg.darkechoes.DarkEchoes;
 import com.rdg.darkechoes.client.ModItemTags;
 import com.rdg.darkechoes.helpers.AugStationData;
 import com.rdg.darkechoes.registry.ModDataComponents;
 import com.rdg.darkechoes.registry.ModItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import static com.rdg.darkechoes.client.ModMenus.AUGMENT_STATION_MENU;
@@ -25,23 +26,23 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
     private final Container augmentStation;
     public final Slot awaken_slot;
     public final Slot gear_slot;
-    public Block augStationBlock;
+    public final Block augStationBlock;
 
-    public BaseAugStationMenu(int containerId, Inventory playerInv) {
-        this(containerId, playerInv, new SimpleContainer(2), ContainerLevelAccess.NULL);
+    public BaseAugStationMenu(int containerId, Inventory playerInv, FriendlyByteBuf buf) {
+        this(containerId, playerInv, new SimpleContainer(2), buf.readBlockPos());
     }
 
-    public BaseAugStationMenu(int containerId, Inventory playerInv, Container augmentStation, ContainerLevelAccess access) {
+    public BaseAugStationMenu(int containerId, Inventory playerInv, Container augmentStation, BlockPos blockEntityPos) {
         super(AUGMENT_STATION_MENU.get(), containerId);
         checkContainerSize(augmentStation, 2);
         this.augmentStation = augmentStation;
-        augStationBlock = access.evaluate(((level, blockPos) -> level.getBlockState(blockPos).getBlock())).orElse(Blocks.AIR);
-        this.addSlot(new GearSlot(augmentStation, GEAR_SLOT_INDEX, 68, 60));
-        this.addSlot(new AwakenSlot(augmentStation, AWAKEN_SLOT_INDEX, 14, 60));
-        this.addStandardInventorySlots(playerInv, 36, 137);
+        this.augStationBlock = playerInv.player.level().getBlockState(blockEntityPos).getBlock();
+//        DarkEchoes.LOGGER.info("is it a block entity: {}", augStationBlock);
+        this.addSlot(new GearSlot(augmentStation, GEAR_SLOT_INDEX, 145, 53));
+        this.addSlot(new AwakenSlot(augmentStation, AWAKEN_SLOT_INDEX, 91, 53));
+        this.addStandardInventorySlots(playerInv, 181, 287);
         this.awaken_slot = this.slots.get(AWAKEN_SLOT_INDEX);
         this.gear_slot = this.slots.get(GEAR_SLOT_INDEX);
-//        ItemStackResourceHandler
     }
 
     @Override
@@ -85,10 +86,10 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
         return augmentStation.stillValid(player);
     }
 
-    public void awakenGear() {
-        boolean isFragile = awaken_slot.getItem().has(ModDataComponents.FRAGILE);
-        boolean isWeakened = awaken_slot.getItem().has(ModDataComponents.WEAKENED);
-        int augment_slots = awaken_slot.getItem().has(ModDataComponents.AUGMENT_SLOTS) ? awaken_slot.getItem().get(ModDataComponents.AUGMENT_SLOTS) : 0;
+    public void awakenOrAugmentGear() {
+        boolean isFragile = gear_slot.getItem().has(ModDataComponents.FRAGILE);
+        boolean isWeakened = gear_slot.getItem().has(ModDataComponents.WEAKENED);
+        int augment_slots = gear_slot.getItem().has(ModDataComponents.AUGMENT_SLOTS) ? gear_slot.getItem().get(ModDataComponents.AUGMENT_SLOTS) : 0;
         if (awaken_slot.hasItem()) {
             if (awaken_slot.getItem().is(Items.ECHO_SHARD)) {
                 isWeakened = true;
