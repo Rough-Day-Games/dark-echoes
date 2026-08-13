@@ -4,6 +4,7 @@ import com.rdg.darkechoes.DarkEchoes;
 import com.rdg.darkechoes.config.CombatConfig;
 import com.rdg.darkechoes.progression.MobProgression;
 import com.rdg.darkechoes.progression.Progression;
+import com.rdg.darkechoes.progression.ToolProgression;
 import com.rdg.darkechoes.registry.ModDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -84,18 +85,24 @@ public final class CombatEvents {
             event.getToolTip().add(Component.translatable("tooltip.darkechoes.weakened").withStyle(ChatFormatting.GRAY));
         }
         ItemStack stack = event.getItemStack();
-        if (!Progression.isAwakened(stack)) {
+        if (ToolProgression.isProgressionTool(stack)) {
+            event.getToolTip().add(Component.translatable("tooltip.darkechoes.echo_fusion")
+                    .withStyle(ChatFormatting.AQUA));
+            ToolProgression.appendTooltip(stack, event.getToolTip());
+            return;
+        }
+        if (!Progression.isAwakenedCombatWeapon(stack) && !Progression.isAwakenedArmor(stack)) {
             return;
         }
 
         event.getToolTip().add(Component.translatable("tooltip.darkechoes.echo_fusion")
                 .withStyle(ChatFormatting.AQUA));
         MobProgression progression = Progression.data(stack);
-        int actionsPerLevel = Progression.isAwakenedTool(stack)
+        int actionsPerLevel = Progression.isAwakenedCombatWeapon(stack)
                 ? CombatConfig.KILLS_PER_LEVEL.getAsInt()
                 : CombatConfig.ARMOR_HITS_PER_LEVEL.getAsInt();
         int maxLevel = CombatConfig.MAX_MOB_PROGRESSION_LEVEL.getAsInt();
-        boolean weapon = Progression.isAwakenedTool(stack);
+        boolean weapon = Progression.isAwakenedCombatWeapon(stack);
         if (progression.locked()) {
             int level = progression.level(actionsPerLevel, maxLevel);
             long bonus = Math.round(level * (weapon
@@ -141,7 +148,7 @@ public final class CombatEvents {
         Entity attacker = source.getEntity();
         if (attacker instanceof LivingEntity livingAttacker) {
             ItemStack mainHand = livingAttacker.getMainHandItem();
-            if (Progression.isAwakenedTool(mainHand) || sourceWeapon == null || sourceWeapon.isEmpty()) {
+            if (Progression.isAwakenedCombatWeapon(mainHand) || sourceWeapon == null || sourceWeapon.isEmpty()) {
                 return mainHand;
             }
         }

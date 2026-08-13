@@ -18,6 +18,8 @@
   "mod.darkechoes.name": "Dark Echoes",
   "tooltip.darkechoes.armor_progression": "%s Level %s: +%s%% armor - Level %s in %s %s",
   "tooltip.darkechoes.armor_progression_max": "%s Level %s: +%s%% armor - Max Level",
+  "tooltip.darkechoes.block.many": "blocks",
+  "tooltip.darkechoes.block.one": "block",
   "tooltip.darkechoes.echo_fusion": "Echo Fusion",
   "tooltip.darkechoes.fragile": "Fragile",
   "tooltip.darkechoes.hit.many": "hits",
@@ -25,6 +27,9 @@
   "tooltip.darkechoes.kill.many": "kills",
   "tooltip.darkechoes.kill.one": "kill",
   "tooltip.darkechoes.progression_pending": "Progressing against %s - Lock in %s %s",
+  "tooltip.darkechoes.tool_progression": "%s Level %s: +%s%% mining speed - Level %s in %s %s",
+  "tooltip.darkechoes.tool_progression_max": "%s Level %s: +%s%% mining speed - Max Level",
+  "tooltip.darkechoes.tool_progression_pending": "Progressing against %s - Lock in %s %s",
   "tooltip.darkechoes.weakened": "Weakened",
   "tooltip.darkechoes.weapon_progression": "%s Level %s: +%s%% dmg - Level %s in %s %s",
   "tooltip.darkechoes.weapon_progression_max": "%s Level %s: +%s%% dmg - Max Level"

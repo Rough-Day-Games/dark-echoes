@@ -6,6 +6,7 @@ import com.rdg.darkechoes.combat.CombatEvents;
 import com.rdg.darkechoes.combat.CombatRules;
 import com.rdg.darkechoes.config.CombatConfig;
 import com.rdg.darkechoes.helpers.AugStationData;
+import com.rdg.darkechoes.progression.ToolProgressionEvents;
 import com.rdg.darkechoes.registry.*;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
@@ -41,6 +42,7 @@ public final class DarkEchoes {
         modBus.addListener(DarkEchoes::addCreativeTabContents);
         modBus.addListener(DarkEchoes::payloadHandlers);
         NeoForge.EVENT_BUS.register(CombatEvents.class);
+        NeoForge.EVENT_BUS.register(ToolProgressionEvents.class);
     }
 
     private static void addCreativeTabContents(BuildCreativeModeTabContentsEvent event) {

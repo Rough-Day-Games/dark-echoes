@@ -27,6 +27,10 @@ public final class Progression {
         return stack != null && stack.has(ModDataComponents.AUGMENT_SLOTS) && stack.is(ModItemTags.AUGMENTABLE_TOOL);
     }
 
+    public static boolean isAwakenedCombatWeapon(ItemStack stack) {
+        return isAwakenedTool(stack) && !ToolProgression.isProgressionTool(stack);
+    }
+
     public static boolean isAwakenedArmor(ItemStack stack) {
         return stack != null && stack.has(ModDataComponents.AUGMENT_SLOTS) && stack.is(ModItemTags.AUGMENTABLE_ARMOR);
     }
@@ -38,7 +42,7 @@ public final class Progression {
     }
 
     public static int weaponLevel(ItemStack weapon, Entity target) {
-        if (!isAwakenedTool(weapon) || !(target instanceof Mob)) {
+        if (!isAwakenedCombatWeapon(weapon) || !(target instanceof Mob)) {
             return 0;
         }
         MobProgression progression = data(weapon);
@@ -52,7 +56,7 @@ public final class Progression {
     }
 
     public static void recordWeaponKill(ItemStack weapon, LivingEntity target) {
-        if (!isAwakenedTool(weapon) || !(target instanceof Mob)) {
+        if (!isAwakenedCombatWeapon(weapon) || !(target instanceof Mob)) {
             return;
         }
         advance(weapon, entityId(target), CombatConfig.KILLS_PER_LEVEL.getAsInt());

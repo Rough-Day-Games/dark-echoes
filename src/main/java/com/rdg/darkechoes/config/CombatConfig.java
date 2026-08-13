@@ -13,8 +13,11 @@ public final class CombatConfig {
     public static final ModConfigSpec.IntValue MAX_MOB_PROGRESSION_LEVEL;
     public static final ModConfigSpec.IntValue KILLS_PER_LEVEL;
     public static final ModConfigSpec.IntValue ARMOR_HITS_PER_LEVEL;
+    public static final ModConfigSpec.IntValue MAX_TOOL_PROGRESSION_LEVEL;
+    public static final ModConfigSpec.IntValue TOOL_BLOCKS_PER_LEVEL;
     public static final ModConfigSpec.DoubleValue WEAPON_DAMAGE_BONUS_PER_LEVEL;
     public static final ModConfigSpec.DoubleValue ARMOR_REDUCTION_BONUS_PER_LEVEL;
+    public static final ModConfigSpec.DoubleValue TOOL_MINING_SPEED_BONUS_PER_LEVEL;
     public static final ModConfigSpec.BooleanValue DEBUG_LOGGING;
     public static final ModConfigSpec SPEC;
 
@@ -42,11 +45,19 @@ public final class CombatConfig {
 
         KILLS_PER_LEVEL = BUILDER
                 .comment("Matching mob kills required for each fused weapon level.")
-                .defineInRange("killsPerLevel", 2, 1, 10000);
+                .defineInRange("killsPerLevel", 100, 1, 10000);
 
         ARMOR_HITS_PER_LEVEL = BUILDER
                 .comment("Matching mob hits received for each fused armor level.")
-                .defineInRange("armorHitsPerLevel", 2, 1, 10000);
+                .defineInRange("armorHitsPerLevel", 100, 1, 10000);
+
+        MAX_TOOL_PROGRESSION_LEVEL = BUILDER
+                .comment("Maximum block-specific progression level for awakened tools.")
+                .defineInRange("maxToolProgressionLevel", 20, 1, 100);
+
+        TOOL_BLOCKS_PER_LEVEL = BUILDER
+                .comment("Matching block breaks required for each awakened tool level.")
+                .defineInRange("toolBlocksPerLevel", 100, 1, 100000);
 
         WEAPON_DAMAGE_BONUS_PER_LEVEL = BUILDER
                 .comment("Fractional outgoing damage bonus per mob-specific weapon level. 0.05 is 5%.")
@@ -55,6 +66,10 @@ public final class CombatConfig {
         ARMOR_REDUCTION_BONUS_PER_LEVEL = BUILDER
                 .comment("Fractional bonus to vanilla armor reduction per matching equipped armor level. 0.05 is 5%.")
                 .defineInRange("armorReductionBonusPerLevel", 0.05D, 0.0D, 10.0D);
+
+        TOOL_MINING_SPEED_BONUS_PER_LEVEL = BUILDER
+                .comment("Fractional mining speed bonus per matching awakened tool level. 0.05 is 5%.")
+                .defineInRange("toolMiningSpeedBonusPerLevel", 0.05D, 0.0D, 10.0D);
 
         DEBUG_LOGGING = BUILDER
                 .comment("Log damage multiplier and progression decisions.")

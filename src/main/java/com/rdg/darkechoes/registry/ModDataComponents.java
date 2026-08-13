@@ -1,6 +1,7 @@
 package com.rdg.darkechoes.registry;
 
 import com.rdg.darkechoes.DarkEchoes;
+import com.rdg.darkechoes.progression.BlockProgression;
 import com.rdg.darkechoes.progression.MobProgression;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
@@ -22,6 +23,10 @@ public final class ModDataComponents {
             COMPONENTS.registerComponentType("mob_progression", builder -> builder
                     .persistent(MobProgression.CODEC)
                     .networkSynchronized(MobProgression.STREAM_CODEC));
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<BlockProgression>> BLOCK_PROGRESSION =
+            COMPONENTS.registerComponentType("block_progression", builder -> builder
+                    .persistent(BlockProgression.CODEC)
+                    .networkSynchronized(BlockProgression.STREAM_CODEC));
 // TODO might change to something more complicated
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> AUGMENT_SLOTS =
             COMPONENTS.registerComponentType("augment_slots", builder -> builder
