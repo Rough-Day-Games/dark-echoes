@@ -39,6 +39,7 @@ public final class CombatEvents {
         Entity attacker = source.getEntity();
         ItemStack weapon = weapon(source);
 
+        // Causes dereference crash if buttonAwaken is clicked with no item slotted; likely only needs a null check if you're finished with this section
         if (Boolean.TRUE.equals(weapon.get(ModDataComponents.FRAGILE))) {
             attacker.level().playLocalSound(attacker, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.AMBIENT, 10, 10);
             weapon.hurtAndBreak(4, (LivingEntity) attacker, ((LivingEntity) attacker).getMainHandItem().getEquipmentSlot());
