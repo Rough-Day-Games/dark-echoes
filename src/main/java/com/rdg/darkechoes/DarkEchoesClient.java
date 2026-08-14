@@ -1,7 +1,7 @@
 package com.rdg.darkechoes;
 
 import com.rdg.darkechoes.client.ModMenus;
-import com.rdg.darkechoes.client.screen.AugStationScreen;
+import com.rdg.darkechoes.client.screen.BaseAugStationScreen;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -26,6 +26,6 @@ public class DarkEchoesClient {
 
     @SubscribeEvent
     private static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(ModMenus.AUGMENT_STATION_MENU.get(), AugStationScreen::new);
+        event.register(ModMenus.AUGMENT_STATION_MENU.get(), BaseAugStationScreen::new);
     }
 }

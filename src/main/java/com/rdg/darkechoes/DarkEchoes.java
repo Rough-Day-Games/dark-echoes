@@ -6,6 +6,7 @@ import com.rdg.darkechoes.combat.CombatEvents;
 import com.rdg.darkechoes.combat.CombatRules;
 import com.rdg.darkechoes.config.CombatConfig;
 import com.rdg.darkechoes.helpers.AugStationData;
+import com.rdg.darkechoes.helpers.AugStationPageListener;
 import com.rdg.darkechoes.progression.ToolProgressionEvents;
 import com.rdg.darkechoes.registry.*;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -69,6 +70,12 @@ public final class DarkEchoes {
                 AugStationData.TYPE,
                 AugStationData.STREAM_CODEC,
                 AugStationData::handle
+        );
+
+        registrar.playToServer(
+                AugStationPageListener.TYPE,
+                AugStationPageListener.STREAM_CODEC,
+                AugStationPageListener::handle
         );
     }
 }

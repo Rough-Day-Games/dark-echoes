@@ -40,10 +40,11 @@ public final class CombatEvents {
         ItemStack weapon = weapon(source);
 
         // Causes dereference crash if buttonAwaken is clicked with no item slotted; likely only needs a null check if you're finished with this section
-        if (Boolean.TRUE.equals(weapon.get(ModDataComponents.FRAGILE))) {
-            attacker.level().playLocalSound(attacker, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.AMBIENT, 10, 10);
-            weapon.hurtAndBreak(4, (LivingEntity) attacker, ((LivingEntity) attacker).getMainHandItem().getEquipmentSlot());
-        }
+//        TODO oh right, this was a test code, checking if the gear has fragile it would take more durability damage. gonna rework it later~
+//        if (Boolean.TRUE.equals(weapon.get(ModDataComponents.FRAGILE))) {
+//            attacker.level().playLocalSound(attacker, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.AMBIENT, 10, 10);
+//            weapon.hurtAndBreak(4, (LivingEntity) attacker, ((LivingEntity) attacker).getMainHandItem().getEquipmentSlot());
+//        }
         double outgoing = CombatRules.outgoingMultiplier(attacker, source);
         double incoming = CombatRules.incomingMultiplier(target, source);
         double item = CombatRules.itemMultiplier(weapon);
@@ -87,7 +88,7 @@ public final class CombatEvents {
         }
         ItemStack stack = event.getItemStack();
         if (ToolProgression.isProgressionTool(stack)) {
-            event.getToolTip().add(Component.translatable("tooltip.darkechoes.echo_fusion")
+            event.getToolTip().add(Component.translatable("tooltip.darkechoes.awakened")
                     .withStyle(ChatFormatting.AQUA));
             ToolProgression.appendTooltip(stack, event.getToolTip());
             return;
@@ -96,7 +97,7 @@ public final class CombatEvents {
             return;
         }
 
-        event.getToolTip().add(Component.translatable("tooltip.darkechoes.echo_fusion")
+        event.getToolTip().add(Component.translatable("tooltip.darkechoes.awakened")
                 .withStyle(ChatFormatting.AQUA));
         MobProgression progression = Progression.data(stack);
         int actionsPerLevel = Progression.isAwakenedCombatWeapon(stack)
@@ -133,13 +134,13 @@ public final class CombatEvents {
         }
     }
 
-    private static Component targetName(String id) {
+    public static Component targetName(String id) {
         Identifier identifier = Identifier.tryParse(id);
         EntityType<?> type = identifier == null ? null : BuiltInRegistries.ENTITY_TYPE.getValue(identifier);
         return type == null ? Component.literal(id) : type.getDescription();
     }
 
-    private static Component actionName(boolean weapon, int count) {
+    public static Component actionName(boolean weapon, int count) {
         String type = weapon ? "kill" : "hit";
         return Component.translatable("tooltip.darkechoes." + type + (count == 1 ? ".one" : ".many"));
     }

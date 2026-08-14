@@ -20,7 +20,7 @@
   "tooltip.darkechoes.armor_progression_max": "%s Level %s: +%s%% armor - Max Level",
   "tooltip.darkechoes.block.many": "blocks",
   "tooltip.darkechoes.block.one": "block",
-  "tooltip.darkechoes.echo_fusion": "Echo Fusion",
+  "tooltip.darkechoes.awakened": "Awakened",
   "tooltip.darkechoes.fragile": "Fragile",
   "tooltip.darkechoes.hit.many": "hits",
   "tooltip.darkechoes.hit.one": "hit",
@@ -32,5 +32,14 @@
   "tooltip.darkechoes.tool_progression_pending": "Progressing against %s - Lock in %s %s",
   "tooltip.darkechoes.weakened": "Weakened",
   "tooltip.darkechoes.weapon_progression": "%s Level %s: +%s%% dmg - Level %s in %s %s",
-  "tooltip.darkechoes.weapon_progression_max": "%s Level %s: +%s%% dmg - Max Level"
+  "tooltip.darkechoes.weapon_progression_max": "%s Level %s: +%s%% dmg - Max Level",
+  "menu.darkechoes.augment_station.page.awakening": "Awakening",
+  "menu.darkechoes.augment_station.page.adaptation": "Adaptation",
+  "menu.darkechoes.augment_station.page.augmentation": "Augmentation",
+  "button.darkechoes.augstation.initresonance": "Resonate",
+  "container.augment_station.limit_augment_slots": "This gear's augment slot count has reached its limit!",
+  "container.augment_station.incompatible": "Gear is incompatible with the current tier of AugmenStation!",
+  "menu.darkechoes.augment_station.next": "N",
+  "menu.darkechoes.augment_station.prev": "P",
+  "button.darkechoes.augstation.initaugment": "Augment"
 }

@@ -31,7 +31,7 @@ public class LangProvider extends LanguageProvider {
         add("tooltip.darkechoes.armor_progression_max", "%s Level %s: +%s%% armor - Max Level");
         add("tooltip.darkechoes.block.many", "blocks");
         add("tooltip.darkechoes.block.one", "block");
-        add("tooltip.darkechoes.echo_fusion", "Echo Fusion");
+        add("tooltip.darkechoes.awakened", "Awakened");
         add("tooltip.darkechoes.hit.many", "hits");
         add("tooltip.darkechoes.hit.one", "hit");
         add("tooltip.darkechoes.kill.many", "kills");
@@ -44,12 +44,14 @@ public class LangProvider extends LanguageProvider {
         add("tooltip.darkechoes.weapon_progression_max", "%s Level %s: +%s%% dmg - Max Level");
         add("container.augment_station", "AugmenStation");
         add("button.darkechoes.augstation.initawakening", "Awaken");
+        add("button.darkechoes.augstation.initresonance", "Resonate");
         add("button.darkechoes.augstation.initaugment", "Augment");
         add("tooltip.darkechoes.fragile", "Fragile");
         add("tooltip.darkechoes.weakened", "Weakened");
         add("container.augment_station.no_adaptation", "None");
         add("container.augment_station.incompatible", "Gear is incompatible with the current tier of AugmenStation!");
         add("container.augment_station.limit_augment_slots", "This gear's augment slot count has reached its limit!");
-
+        add("menu.darkechoes.augment_station.next", "N");
+        add("menu.darkechoes.augment_station.previous", "P");
     }
 }

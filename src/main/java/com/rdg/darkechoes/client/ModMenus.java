@@ -3,7 +3,6 @@ package com.rdg.darkechoes.client;
 import com.rdg.darkechoes.DarkEchoes;
 import com.rdg.darkechoes.client.menus.BaseAugStationMenu;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredRegister;
