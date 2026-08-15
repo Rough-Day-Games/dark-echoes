@@ -41,5 +41,11 @@
   "container.augment_station.incompatible": "Gear is incompatible with the current tier of AugmenStation!",
   "menu.darkechoes.augment_station.next": "N",
   "menu.darkechoes.augment_station.prev": "P",
-  "button.darkechoes.augstation.initaugment": "Augment"
+  "button.darkechoes.augstation.initaugment": "Augment",
+  "container.augment_station.progression_pending": "Lock in %s %s",
+  "container.augment_station.weapon_progression": "+%s%% dmg - Level %s in %s %s",
+  "container.augment_station.tool_progression": "+%s%% mining speed - Level %s in %s %s",
+  "container.augment_station.weapon_progression_max": "+%s%% dmg - Max Level",
+  "container.augment_station.tool_progression_max": "+%s%% mining speed - Max Level",
+  "container.augment_station.target_details": "%s: Level %s"
 }

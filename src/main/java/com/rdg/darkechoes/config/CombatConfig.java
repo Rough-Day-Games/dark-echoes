@@ -15,6 +15,9 @@ public final class CombatConfig {
     public static final ModConfigSpec.IntValue ARMOR_HITS_PER_LEVEL;
     public static final ModConfigSpec.IntValue MAX_TOOL_PROGRESSION_LEVEL;
     public static final ModConfigSpec.IntValue TOOL_BLOCKS_PER_LEVEL;
+    public static final ModConfigSpec.IntValue MAX_AUGMENT_SLOTS_TIER_ONE;
+    public static final ModConfigSpec.IntValue MAX_AUGMENT_SLOTS_TIER_TWO;
+    public static final ModConfigSpec.IntValue MAX_AUGMENT_SLOTS_TIER_THREE;
     public static final ModConfigSpec.DoubleValue WEAPON_DAMAGE_BONUS_PER_LEVEL;
     public static final ModConfigSpec.DoubleValue ARMOR_REDUCTION_BONUS_PER_LEVEL;
     public static final ModConfigSpec.DoubleValue TOOL_MINING_SPEED_BONUS_PER_LEVEL;
@@ -74,6 +77,18 @@ public final class CombatConfig {
         DEBUG_LOGGING = BUILDER
                 .comment("Log damage multiplier and progression decisions.")
                 .define("debugLogging", false);
+
+        MAX_AUGMENT_SLOTS_TIER_ONE = BUILDER
+                .comment("The max count of augment slots for tier one gear")
+                .defineInRange("maxAugmentSlotsTierOne", 3, -1, 999);
+
+        MAX_AUGMENT_SLOTS_TIER_TWO = BUILDER
+                .comment("The max count of augment slots for tier two gear")
+                .defineInRange("maxAugmentSlotsTierTwo", 6, -1, 999);
+
+        MAX_AUGMENT_SLOTS_TIER_THREE = BUILDER
+                .comment("The max count of augment slots for tier three gear")
+                .defineInRange("maxAugmentSlotsTierThree", 10, -1, 999);
 
         BUILDER.pop();
         SPEC = BUILDER.build();

@@ -40,6 +40,7 @@ public record AugStationData(boolean isFragile, boolean isWeakened,
             gear.set(ModDataComponents.FRAGILE, true);
         }
 
+//        TODO after augment that allows gear to be enchanted is implemented, check here
         if (gear.has(DataComponents.ENCHANTMENTS)) gear.set(DataComponents.ENCHANTMENTS, null);
         if (!awaken_item.isEmpty()) awaken_item.shrink(1);
 

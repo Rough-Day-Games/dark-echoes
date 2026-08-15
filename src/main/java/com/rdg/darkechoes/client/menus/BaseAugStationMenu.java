@@ -25,7 +25,7 @@ import static com.rdg.darkechoes.client.ModMenus.AUGMENT_STATION_MENU;
 public class BaseAugStationMenu extends AbstractContainerMenu {
     public static final int GEAR_SLOT_INDEX = 0;
     public static final int AWAKEN_SLOT_INDEX = 1;
-    public final Slot awaken_slot;
+    public final AwakenSlot awaken_slot;
     public final Slot gear_slot;
     public final Block augStationBlock;
     public final ContainerData augmentStationData;
@@ -46,7 +46,7 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
         this.addSlot(new AwakenSlot(augmentStation, AWAKEN_SLOT_INDEX, 37, 107));
         this.addDataSlots(menuIndex);
         this.addStandardInventorySlots(playerInv, 46, 175);
-        this.awaken_slot = this.slots.get(AWAKEN_SLOT_INDEX);
+        this.awaken_slot = (AwakenSlot) this.slots.get(AWAKEN_SLOT_INDEX);
         this.gear_slot = this.slots.get(GEAR_SLOT_INDEX);
     }
 
@@ -140,13 +140,20 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
         }
     }
 
-    static class AwakenSlot extends Slot {
+    public static class AwakenSlot extends Slot {
+        public boolean active;
+
         public AwakenSlot(Container container, int index, int x, int y) {
             super(container, index, x, y);
         }
 
         public static boolean mayPlaceItem(ItemStack stack) {
             return stack.is(ModItemTags.AWAKENING_ITEMS);
+        }
+
+        @Override
+        public boolean isActive() {
+            return active;
         }
 
         public boolean mayPlace(ItemStack stack) {

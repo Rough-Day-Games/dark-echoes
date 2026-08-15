@@ -51,6 +51,12 @@ public class LangProvider extends LanguageProvider {
         add("container.augment_station.no_adaptation", "None");
         add("container.augment_station.incompatible", "Gear is incompatible with the current tier of AugmenStation!");
         add("container.augment_station.limit_augment_slots", "This gear's augment slot count has reached its limit!");
+        add("container.augment_station.target_details", "%s: Level %s");
+        add("container.augment_station.progression_pending", "Lock in %s %s");
+        add("container.augment_station.weapon_progression", "+%s%% dmg - Level %s in %s %s");
+        add("container.augment_station.tool_progression", "+%s%% mining speed - Level %s in %s %s");
+        add("container.augment_station.weapon_progression_max", "+%s%% dmg - Max Level");
+        add("container.augment_station.tool_progression_max", "+%s%% mining speed - Max Level");
         add("menu.darkechoes.augment_station.next", "N");
         add("menu.darkechoes.augment_station.previous", "P");
     }
