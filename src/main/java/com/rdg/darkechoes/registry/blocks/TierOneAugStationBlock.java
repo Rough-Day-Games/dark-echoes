@@ -8,6 +8,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import static com.rdg.darkechoes.registry.blocks.ModBlockStateProperties.AUG_STATION_PIECE;
+
 public class TierOneAugStationBlock extends BaseAugStationBlock {
     public TierOneAugStationBlock(Properties properties) {
         super(properties);
@@ -20,6 +22,11 @@ public class TierOneAugStationBlock extends BaseAugStationBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(@NonNull BlockPos blockPos, @NonNull BlockState blockState) {
-        return new BaseAugStationBE(blockPos, blockState);
+        BaseAugStationBE newBlockEntity = new BaseAugStationBE(blockPos, blockState);
+        if (blockState.getValue(AUG_STATION_PIECE) == AugStationPiece.BOTTOM_LEFT) {
+            return newBlockEntity;
+        } else  {
+            return null;
+        }
     }
 }
