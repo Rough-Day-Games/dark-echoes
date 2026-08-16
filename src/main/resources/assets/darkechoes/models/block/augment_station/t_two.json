@@ -2,17 +2,17 @@
 	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "darkechoes:block/augment_station/t_one/bottom/vert_cabinet_holder",
-		"1": "darkechoes:block/augment_station/t_one/bottom/main",
-		"2": "darkechoes:block/augment_station/t_one/bottom/cabinet_holder_t",
-		"3": "darkechoes:block/augment_station/t_one/bottom/cabinet_holder_b",
-		"4": "darkechoes:block/augment_station/t_one/bottom/cabinet_frame_l",
-		"5": "darkechoes:block/augment_station/t_one/bottom/cabinet_frame_t",
-		"6": "darkechoes:block/augment_station/t_one/bottom/cabinet_frame_r",
-		"7": "darkechoes:block/augment_station/t_one/bottom/cabinet_frame_b",
-		"8": "darkechoes:block/augment_station/t_one/bottom/cabinet_inner",
-		"9": "darkechoes:block/augment_station/t_one/bottom/handle",
-		"particle": "darkechoes:block/augment_station/t_one/bottom/vert_cabinet_holder"
+		"0": "darkechoes:block/augment_station/t_two/bottom/vert_cabinet_holder",
+		"1": "darkechoes:block/augment_station/t_two/bottom/main",
+		"2": "darkechoes:block/augment_station/t_two/bottom/cabinet_holder_t",
+		"3": "darkechoes:block/augment_station/t_two/bottom/cabinet_holder_b",
+		"4": "darkechoes:block/augment_station/t_two/bottom/cabinet_frame_l",
+		"5": "darkechoes:block/augment_station/t_two/bottom/cabinet_frame_t",
+		"6": "darkechoes:block/augment_station/t_two/bottom/cabinet_frame_r",
+		"7": "darkechoes:block/augment_station/t_two/bottom/cabinet_frame_b",
+		"8": "darkechoes:block/augment_station/t_two/bottom/cabinet_inner",
+		"9": "darkechoes:block/augment_station/t_two/bottom/handle",
+		"particle": "darkechoes:block/augment_station/t_two/bottom/vert_cabinet_holder"
 	},
 	"elements": [
 		{

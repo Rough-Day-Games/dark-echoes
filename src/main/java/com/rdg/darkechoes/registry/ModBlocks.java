@@ -23,6 +23,7 @@ public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(DarkEchoes.MOD_ID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, DarkEchoes.MOD_ID);
 
+//    TODO properly assign destroy time, explosion res according to materials (t1 = wood, t2 = diamond, t3 = netherite/echo/end)
     public static final DeferredBlock<TierOneAugStationBlock> T_ONE_AUGSTATION = BLOCKS.register("augment_station/t_one",
             (registryName) -> new TierOneAugStationBlock(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))

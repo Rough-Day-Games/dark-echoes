@@ -2,13 +2,13 @@
 	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "darkechoes:block/augment_station_v2/top/back",
-		"1": "darkechoes:block/augment_station_v2/top/side",
-		"2": "darkechoes:block/augment_station_v2/top/cupboard_base",
-		"3": "darkechoes:block/augment_station_v2/top/cupboard_inner",
-		"4": "darkechoes:block/augment_station_v2/top/cupboard_frame",
-		"5": "darkechoes:block/augment_station_v2/top/handle",
-		"particle": "darkechoes:block/augment_station_v2/top/back"
+		"0": "darkechoes:block/augment_station/t_two/top/back",
+		"1": "darkechoes:block/augment_station/t_two/top/side",
+		"2": "darkechoes:block/augment_station/t_two/top/cupboard_base",
+		"3": "darkechoes:block/augment_station/t_two/top/cupboard_inner",
+		"4": "darkechoes:block/augment_station/t_two/top/cupboard_frame",
+		"5": "darkechoes:block/augment_station/t_two/top/handle",
+		"particle": "darkechoes:block/augment_station/t_two/top/back"
 	},
 	"elements": [
 		{

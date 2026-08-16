@@ -9,6 +9,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
+import static com.rdg.darkechoes.registry.blocks.ModBlockStateProperties.AUG_STATION_PIECE;
+
 public class TierThreeAugStationBlock extends BaseAugStationBlock implements EntityBlock {
     public TierThreeAugStationBlock(Properties properties) {
         super(properties);
@@ -21,6 +23,11 @@ public class TierThreeAugStationBlock extends BaseAugStationBlock implements Ent
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new BaseAugStationBE(blockPos, blockState);
+        BaseAugStationBE newBlockEntity = new BaseAugStationBE(blockPos, blockState);
+        if (blockState.getValue(AUG_STATION_PIECE) == AugStationPiece.BOTTOM_LEFT) {
+            return newBlockEntity;
+        } else  {
+            return null;
+        }
     }
 }
