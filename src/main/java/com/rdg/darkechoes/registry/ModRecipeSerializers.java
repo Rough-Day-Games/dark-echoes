@@ -2,19 +2,19 @@ package com.rdg.darkechoes.registry;
 
 import com.rdg.darkechoes.DarkEchoes;
 //import com.rdg.darkechoes.progression.EchoFusionRecipe;
+//import com.rdg.darkechoes.recipes.AugmentRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public final class ModRecipes {
+import java.util.function.Supplier;
+
+public final class ModRecipeSerializers {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
             DeferredRegister.create(Registries.RECIPE_SERIALIZER, DarkEchoes.MOD_ID);
 
-//    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<EchoFusionRecipe>> ECHO_FUSION =
-//            SERIALIZERS.register("echo_fusion",
-//                    () -> new RecipeSerializer<>(EchoFusionRecipe.MAP_CODEC, EchoFusionRecipe.STREAM_CODEC));
+//    public static final Supplier<RecipeSerializer<AugmentRecipe>> AUGMENTING = SERIALIZERS.register("augmenting", () -> new RecipeSerializer<>(AugmentRecipe.CODEC, AugmentRecipe.STREAM_CODEC));
 
-    private ModRecipes() {
+    private ModRecipeSerializers() {
     }
 }

@@ -28,7 +28,7 @@ import java.util.Objects;
 import static com.rdg.darkechoes.registry.ModBlocks.AUGSTATION_BE;
 
 public class BaseAugStationBE extends BaseContainerBlockEntity {
-    private NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
+    private NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
     private int menuIndex = 0;
     protected final ContainerData containerData = new ContainerData() {
         {

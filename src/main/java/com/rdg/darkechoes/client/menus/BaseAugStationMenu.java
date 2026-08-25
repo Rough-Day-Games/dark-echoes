@@ -1,8 +1,12 @@
 package com.rdg.darkechoes.client.menus;
 
 import com.rdg.darkechoes.client.ModItemTags;
-import com.rdg.darkechoes.helpers.AugStationData;
+import com.rdg.darkechoes.helpers.AugStationAugment;
+import com.rdg.darkechoes.helpers.AugStationAwaken;
 import com.rdg.darkechoes.helpers.AugStationPageListener;
+//import com.rdg.darkechoes.recipes.AugmentRecipe;
+//import com.rdg.darkechoes.recipes.AugmentRecipeInput;
+//import com.rdg.darkechoes.recipes.AugmentRecipes;
 import com.rdg.darkechoes.registry.ModDataComponents;
 import com.rdg.darkechoes.registry.ModItems;
 import net.minecraft.core.BlockPos;
@@ -17,37 +21,45 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import static com.rdg.darkechoes.client.ModMenus.AUGMENT_STATION_MENU;
+//import static com.rdg.darkechoes.registry.ModRecipeTypes.AUGMENTING;
 
 public class BaseAugStationMenu extends AbstractContainerMenu {
     public static final int GEAR_SLOT_INDEX = 0;
     public static final int AWAKEN_SLOT_INDEX = 1;
+    public static final int AUGMENT_SLOT_INDEX = 2;
     public final AwakenSlot awaken_slot;
     public final Slot gear_slot;
+    public final Slot augment_slot;
     public final Block augStationBlock;
     public final ContainerData augmentStationData;
     private final Container augmentStation;
+    private final Level level;
 
     public BaseAugStationMenu(int containerId, Inventory playerInv, FriendlyByteBuf buf) {
-        this(containerId, playerInv, new SimpleContainer(2), new SimpleContainerData(1), buf.readBlockPos());
+        this(containerId, playerInv, new SimpleContainer(3), new SimpleContainerData(1), buf.readBlockPos());
     }
 
     public BaseAugStationMenu(int containerId, Inventory playerInv, Container augmentStation, ContainerData menuIndex, BlockPos blockEntityPos) {
         super(AUGMENT_STATION_MENU.get(), containerId);
-        checkContainerSize(augmentStation, 2);
+        checkContainerSize(augmentStation, 3);
         checkContainerDataCount(menuIndex, 1);
         this.augmentStation = augmentStation;
         this.augmentStationData = menuIndex;
+        this.level = playerInv.player.level();
         this.augStationBlock = playerInv.player.level().getBlockState(blockEntityPos).getBlock();
         this.addSlot(new GearSlot(augmentStation, GEAR_SLOT_INDEX, 37, 45));
         this.addSlot(new AwakenSlot(augmentStation, AWAKEN_SLOT_INDEX, 37, 107));
+        this.addSlot(new AugmentSlot(augmentStation, AUGMENT_SLOT_INDEX, 37, 107));
         this.addDataSlots(menuIndex);
         this.addStandardInventorySlots(playerInv, 46, 175);
         this.awaken_slot = (AwakenSlot) this.slots.get(AWAKEN_SLOT_INDEX);
         this.gear_slot = this.slots.get(GEAR_SLOT_INDEX);
+        this.augment_slot = this.slots.get(AUGMENT_SLOT_INDEX);
     }
 
     public void openMenuIndex(boolean next) {
@@ -123,8 +135,33 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
             isFragile = true;
             augment_slots--;
         }
-        ClientPacketDistributor.sendToServer(new AugStationData(isFragile, isWeakened, augment_slots));
+        ClientPacketDistributor.sendToServer(new AugStationAwaken(isFragile, isWeakened, augment_slots));
     }
+
+    public void augmentGear() {
+        ClientPacketDistributor.sendToServer(new AugStationAugment(true));
+//        if (!AugmentRecipes.inputs(level).test(augStationBlock.defaultBlockState(), augment_slot.getItem())) return;
+//
+//        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
+//            AugmentRecipeInput input = new AugmentRecipeInput(augStationBlock.defaultBlockState(), gear_slot.getItem(), augment_slot.getItem());
+//
+//            Optional<RecipeHolder<AugmentRecipe>> optional = serverLevel.recipeAccess().getRecipeFor(
+//                    ModRecipeTypes.AUGMENTING.get(),
+//                    input,
+//                    level
+//            );
+//            ItemStack result = optional
+//                    .map(RecipeHolder::value)
+//                    .map(e -> e.assemble(input))
+//                    .orElse(ItemStack.EMPTY);
+//
+//            if (!result.isEmpty()) {
+//                gear_slot.set(result);
+//                gear_slot.setChanged();
+//            }
+//        }
+    }
+
 
     public static class GearSlot extends Slot {
         public GearSlot(Container container, int index, int x, int y) {
@@ -158,6 +195,19 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
 
         public boolean mayPlace(ItemStack stack) {
             return mayPlaceItem(stack);
+        }
+    }
+
+    public static class AugmentSlot extends Slot {
+        public boolean active;
+
+        @Override
+        public boolean isActive() {
+            return active;
+        }
+
+        public AugmentSlot(Container container, int slot, int x, int y) {
+            super(container, slot, x, y);
         }
     }
 }

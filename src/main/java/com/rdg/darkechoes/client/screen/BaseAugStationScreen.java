@@ -14,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
 import static com.rdg.darkechoes.combat.CombatEvents.actionName;
@@ -37,7 +39,7 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
             .size(108, 18)
             .build();
     final Button augmentButton = Button.builder(Component.translatable("button.darkechoes.augstation.initaugment"), button -> {
-//                menu.awakenOrResonateGear()
+                menu.augmentGear();
             })
             .size(108, 18)
             .tooltip(Tooltip.create(Component.literal("Augmentation coming soon~")))
@@ -112,6 +114,7 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
         int menuIndex = menu.augmentStationData.get(0);
         Slot gearSlot = menu.getSlot(0);
         BaseAugStationMenu.AwakenSlot awakenSlot = (BaseAugStationMenu.AwakenSlot) menu.getSlot(1);
+        BaseAugStationMenu.AugmentSlot augmentSlot = (BaseAugStationMenu.AugmentSlot) menu.getSlot(2);
         ItemStack gear = gearSlot.getItem();
         Integer augment_slots = gear.get(AUGMENT_SLOTS);
         Component targetDetails = null;
@@ -121,17 +124,20 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
             awakenButton.setPosition(this.leftPos + 26, this.topPos + 133);
             augmentButton.setPosition(999, 999);
             awakenSlot.active = true;
-            graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.awakening"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF404040);
+            augmentSlot.active = false;
+            graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.awakening"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF8B8B8B);
         } else if (menuIndex == 1) {
             awakenButton.setPosition(999, 999);
             augmentButton.setPosition(999, 999);
             awakenSlot.active = false;
-            graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.adaptation"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF404040);
+            augmentSlot.active = false;
+            graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.adaptation"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF8B8B8B);
         } else if (menuIndex == 2) {
             awakenButton.setPosition(999, 999);
             augmentButton.setPosition(this.leftPos + 26, this.topPos + 133);
             awakenSlot.active = false;
-            graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.augmentation"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF404040);
+            augmentSlot.active = true;
+            graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.augmentation"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF8B8B8B);
         }
 
         MobProgression progression = Progression.data(gear);
@@ -199,15 +205,45 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
                 }
             } else if (menuIndex == 1) {
 //                graphics.drawScrollingString();
+                if (mobName != null) {
                 graphics.text(this.font, mobName, this.leftPos + 62, this.topPos + 57, 0xFF404040, false);
                 graphics.text(this.font, targetDetails, this.leftPos + 62, this.topPos + 73, 0xFF404040, false);
+                }
             } else if (menuIndex == 2) {
 // TODO augmentation menu WIP
+//                62, 58
+                if (!augmentSlot.getItem().is(Items.WRITABLE_BOOK) || augmentSlot.getItem().isEmpty()) {
+                    augmentButton.active = false;
+                    augmentButton.setTooltip(Tooltip.create(Component.literal("WIP, only accepts a book & quill! For now adds the malleable augment.")));
+                } else {
+                    augmentButton.setTooltip(null);
+                    augmentButton.active = true;
+                }
             }
         } else {
             resetButton();
         }
     }
+//
+//    @Override
+//    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+//        int baseX = this.leftPos + 62;
+//        int baseY = this.topPos + 58;
+//
+//        int xSize = 158;
+//        int ySize = 18;
+//
+////        for (int i = 0; i < 3; i++) {
+////        }
+//           double xx = event.x() - (baseX + xSize);
+//           double yy = event.y() - (baseY + ySize);
+//
+////           if (xx >= 0.0 && yy >= 0.0 && xx < xSize && yy < ySize && menu.clickMenuButton()) {
+////
+////           }
+//
+//        return super.mouseClicked(event, doubleClick);
+//    }
 
     public static Component targetDetails(String id, int level) {
         Identifier identifier = Identifier.tryParse(id);

@@ -5,6 +5,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
+import static com.rdg.darkechoes.registry.ModRegistries.BUILDER;
+
+//import static com.rdg.darkechoes.client.AugmentsGen.BUILDER;
+
 @EventBusSubscriber(modid = DarkEchoes.MOD_ID)
 public class DataGen {
     @SubscribeEvent
@@ -13,5 +17,7 @@ public class DataGen {
         event.createProvider(Models::new);
         event.createProvider(LangProvider::new);
         event.createProvider(ModItemTags::new);
+        event.createDatapackRegistryObjects(BUILDER);
+        event.createProvider(ModRecipeProvider.Runner::new);
     }
 }
