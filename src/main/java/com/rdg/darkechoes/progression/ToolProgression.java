@@ -17,16 +17,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 
 public final class ToolProgression {
-    private static final TagKey<Item> PICKAXES = itemTag("tool_progression/pickaxes");
-    private static final TagKey<Item> AXES = itemTag("tool_progression/axes");
-    private static final TagKey<Item> SHOVELS = itemTag("tool_progression/shovels");
-    private static final TagKey<Item> HOES = itemTag("tool_progression/hoes");
+    public static final TagKey<Item> PICKAXES = itemTag("tool_progression/pickaxes");
+    public static final TagKey<Item> AXES = itemTag("tool_progression/axes");
+    public static final TagKey<Item> SHOVELS = itemTag("tool_progression/shovels");
+    public static final TagKey<Item> HOES = itemTag("tool_progression/hoes");
 
     private ToolProgression() {
     }
 
     public static boolean isProgressionTool(ItemStack stack) {
         return Progression.isAwakenedTool(stack) && kind(stack) != ToolKind.NONE;
+    }
+
+    public static boolean isTool(ItemStack stack) {
+        return kind(stack) != ToolKind.NONE;
     }
 
     public static double miningSpeedMultiplier(ItemStack tool, BlockState state) {
@@ -52,7 +56,8 @@ public final class ToolProgression {
         BlockProgression updated = current.advance(
                 blockId(state),
                 CombatConfig.TOOL_BLOCKS_PER_LEVEL.getAsInt(),
-                CombatConfig.MAX_TOOL_PROGRESSION_LEVEL.getAsInt());
+                CombatConfig.MAX_TOOL_PROGRESSION_LEVEL.getAsInt(),
+                current.slots());
         if (!updated.equals(current)) {
             tool.set(ModDataComponents.BLOCK_PROGRESSION.get(), updated);
         }
@@ -86,7 +91,7 @@ public final class ToolProgression {
         return isProgressionTool(tool) && kind(tool).matches(state);
     }
 
-    private static BlockProgression data(ItemStack stack) {
+    public static BlockProgression data(ItemStack stack) {
         return stack.getOrDefault(ModDataComponents.BLOCK_PROGRESSION.get(), BlockProgression.EMPTY);
     }
 
@@ -100,7 +105,7 @@ public final class ToolProgression {
         return block == null ? Component.literal(id) : block.getName();
     }
 
-    private static Component blockName(int count) {
+    public static Component blockName(int count) {
         return Component.translatable("tooltip.darkechoes.block." + (count == 1 ? "one" : "many"));
     }
 

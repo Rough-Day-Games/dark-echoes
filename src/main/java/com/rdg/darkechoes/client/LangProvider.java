@@ -51,13 +51,25 @@ public class LangProvider extends LanguageProvider {
         add("container.augment_station.no_adaptation", "None");
         add("container.augment_station.incompatible", "Gear is incompatible with the current tier of AugmenStation!");
         add("container.augment_station.limit_augment_slots", "This gear's augment slot count has reached its limit!");
-        add("container.augment_station.target_details", "%s: Level %s");
+        add("container.augment_station.target_details", "%s: LV %s");
+        add("container.augment_station.pending_target_details", "%s: Pending");
         add("container.augment_station.progression_pending", "Lock in %s %s");
-        add("container.augment_station.weapon_progression", "+%s%% dmg - Level %s in %s %s");
-        add("container.augment_station.tool_progression", "+%s%% mining speed - Level %s in %s %s");
-        add("container.augment_station.weapon_progression_max", "+%s%% dmg - Max Level");
-        add("container.augment_station.tool_progression_max", "+%s%% mining speed - Max Level");
-        add("menu.darkechoes.augment_station.next", "N");
-        add("menu.darkechoes.augment_station.previous", "P");
+        add("container.augment_station.weapon_progression", "+%s%% dmg - LV %s in %s %s");
+        add("container.augment_station.tool_progression", "+%s%% mining spd - LV %s in %s %s");
+        add("container.augment_station.weapon_progression_max", "+%s%% dmg - Max");
+        add("container.augment_station.tool_progression_max", "+%s%% mining spd - Max");
+        add("container.augment_station.augment_slots", "Augment Slots: %s");
+        add("container.augment_station.adaptation_slots", "Adaptation Slots: %s");
+        add("container.augment_station.gear_not_awakened", "Not awakened yet!");
+        add("menu.darkechoes.augment_station.page.augments", "Augments");
+        add("menu.darkechoes.augment_station.page.awakening",  "Awakening");
+        add("menu.darkechoes.augment_station.page.adaptation", "Adaptation");
+        add("menu.darkechoes.augment_station.page.augmenting", "Augmenting");
+        add("container.augment_station.gear_weakened", "This gear is weakened!");
+        add("container.augment_station.gear_fragile", "This gear is fragile!");
+        add("container.augment_station.fragile_warning", "Will make gear fragile! Are you sure?");
+        add("container.augment_station.weakened_warning", "Will make item weakened! Are you sure?");
+        add("augment.darkechoes.malleable", "Malleable");
+        add("tooltip.darkechoes.malleable_broken", "Limbo!");
     }
 }

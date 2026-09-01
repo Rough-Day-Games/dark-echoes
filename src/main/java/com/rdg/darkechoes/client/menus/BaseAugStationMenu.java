@@ -4,9 +4,6 @@ import com.rdg.darkechoes.client.ModItemTags;
 import com.rdg.darkechoes.helpers.AugStationAugment;
 import com.rdg.darkechoes.helpers.AugStationAwaken;
 import com.rdg.darkechoes.helpers.AugStationPageListener;
-//import com.rdg.darkechoes.recipes.AugmentRecipe;
-//import com.rdg.darkechoes.recipes.AugmentRecipeInput;
-//import com.rdg.darkechoes.recipes.AugmentRecipes;
 import com.rdg.darkechoes.registry.ModDataComponents;
 import com.rdg.darkechoes.registry.ModItems;
 import net.minecraft.core.BlockPos;
@@ -21,12 +18,10 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import static com.rdg.darkechoes.client.ModMenus.AUGMENT_STATION_MENU;
-//import static com.rdg.darkechoes.registry.ModRecipeTypes.AUGMENTING;
 
 public class BaseAugStationMenu extends AbstractContainerMenu {
     public static final int GEAR_SLOT_INDEX = 0;
@@ -38,7 +33,6 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
     public final Block augStationBlock;
     public final ContainerData augmentStationData;
     private final Container augmentStation;
-    private final Level level;
 
     public BaseAugStationMenu(int containerId, Inventory playerInv, FriendlyByteBuf buf) {
         this(containerId, playerInv, new SimpleContainer(3), new SimpleContainerData(1), buf.readBlockPos());
@@ -50,33 +44,19 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
         checkContainerDataCount(menuIndex, 1);
         this.augmentStation = augmentStation;
         this.augmentStationData = menuIndex;
-        this.level = playerInv.player.level();
         this.augStationBlock = playerInv.player.level().getBlockState(blockEntityPos).getBlock();
-        this.addSlot(new GearSlot(augmentStation, GEAR_SLOT_INDEX, 37, 45));
-        this.addSlot(new AwakenSlot(augmentStation, AWAKEN_SLOT_INDEX, 37, 107));
-        this.addSlot(new AugmentSlot(augmentStation, AUGMENT_SLOT_INDEX, 37, 107));
+        this.addSlot(new GearSlot(augmentStation, GEAR_SLOT_INDEX, 37, 35));
+        this.addSlot(new AwakenSlot(augmentStation, AWAKEN_SLOT_INDEX, 37, 97));
+        this.addSlot(new AugmentSlot(augmentStation, AUGMENT_SLOT_INDEX, 37, 97));
         this.addDataSlots(menuIndex);
-        this.addStandardInventorySlots(playerInv, 46, 175);
+        this.addStandardInventorySlots(playerInv, 46, 165);
         this.awaken_slot = (AwakenSlot) this.slots.get(AWAKEN_SLOT_INDEX);
         this.gear_slot = this.slots.get(GEAR_SLOT_INDEX);
         this.augment_slot = this.slots.get(AUGMENT_SLOT_INDEX);
     }
 
-    public void openMenuIndex(boolean next) {
-        int currentIndex = augmentStationData.get(0);
-        if (next) {
-            if (currentIndex >= 2) {
-                ClientPacketDistributor.sendToServer(new AugStationPageListener(0));
-            } else {
-                ClientPacketDistributor.sendToServer(new AugStationPageListener(currentIndex + 1));
-            }
-        } else {
-            if (currentIndex <= 0) {
-                ClientPacketDistributor.sendToServer(new AugStationPageListener(2));
-            } else {
-                ClientPacketDistributor.sendToServer(new AugStationPageListener(currentIndex - 1));
-            }
-        }
+    public void openMenuIndex(int index) {
+        ClientPacketDistributor.sendToServer(new AugStationPageListener(index));
     }
 
     @Override
@@ -140,26 +120,6 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
 
     public void augmentGear() {
         ClientPacketDistributor.sendToServer(new AugStationAugment(true));
-//        if (!AugmentRecipes.inputs(level).test(augStationBlock.defaultBlockState(), augment_slot.getItem())) return;
-//
-//        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
-//            AugmentRecipeInput input = new AugmentRecipeInput(augStationBlock.defaultBlockState(), gear_slot.getItem(), augment_slot.getItem());
-//
-//            Optional<RecipeHolder<AugmentRecipe>> optional = serverLevel.recipeAccess().getRecipeFor(
-//                    ModRecipeTypes.AUGMENTING.get(),
-//                    input,
-//                    level
-//            );
-//            ItemStack result = optional
-//                    .map(RecipeHolder::value)
-//                    .map(e -> e.assemble(input))
-//                    .orElse(ItemStack.EMPTY);
-//
-//            if (!result.isEmpty()) {
-//                gear_slot.set(result);
-//                gear_slot.setChanged();
-//            }
-//        }
     }
 
 

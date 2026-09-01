@@ -1,11 +1,13 @@
 package com.rdg.darkechoes.client;
 
 import com.rdg.darkechoes.DarkEchoes;
+import com.rdg.darkechoes.progression.ToolProgression;
 import com.rdg.darkechoes.registry.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -25,6 +27,10 @@ public class ModItemTags extends ItemTagsProvider {
     public static TagKey<Item> TIER_ONE_TOOL = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "tool/tier_one"));
     public static TagKey<Item> TIER_TWO_TOOL = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "tool/tier_two"));
     public static TagKey<Item> TIER_THREE_TOOL = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "tool/tier_three"));
+    public static TagKey<Item> TIER_ONE_GEAR = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "gear/tier_one"));
+    public static TagKey<Item> TIER_TWO_GEAR = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "gear/tier_two"));
+    public static TagKey<Item> TIER_THREE_GEAR = TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "gear/tier_three"));
+
     public ModItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, DarkEchoes.MOD_ID);
     }
@@ -146,6 +152,40 @@ public class ModItemTags extends ItemTagsProvider {
                 TIER_THREE_TOOL
         );
 
+        tag(TIER_ONE_GEAR).addTag(
+                TIER_ONE_ARMOR
+        );
+        tag(TIER_ONE_GEAR).addTag(
+                TIER_ONE_TOOL
+        );
+        tag(TIER_TWO_GEAR).addTag(
+                TIER_TWO_ARMOR
+        );
+        tag(TIER_TWO_GEAR).addTag(
+                TIER_TWO_TOOL
+        );
+        tag(TIER_THREE_GEAR).addTag(
+                TIER_THREE_ARMOR
+        );
+        tag(TIER_THREE_GEAR).addTag(
+                TIER_THREE_TOOL
+        );
+
+        tag(ToolProgression.PICKAXES).addTag(
+                ItemTags.PICKAXES
+        );
+
+        tag(ToolProgression.SHOVELS).addTag(
+                ItemTags.SHOVELS
+        );
+
+        tag(ToolProgression.AXES).addTag(
+                ItemTags.AXES
+        );
+
+        tag(ToolProgression.HOES).addTag(
+                ItemTags.HOES
+        );
 
         tag(AUGMENTABLE_GEAR).addTag(
                 AUGMENTABLE_ARMOR

@@ -1,10 +1,14 @@
 license="${mod_license}"
 
+[[mixins]]
+config="darkechoes.mixin.json"
+
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
 authors="rdg"
+logoFile = "icon.png"
 description='''
 A configurable combat and damage-type foundation for Dark Echoes.
 '''

@@ -1,19 +1,15 @@
 package com.rdg.darkechoes.registry;
 
+import com.mojang.serialization.Codec;
 import com.rdg.darkechoes.DarkEchoes;
 import com.rdg.darkechoes.helpers.GearAugments;
-import com.rdg.darkechoes.progression.Augment;
 import com.rdg.darkechoes.progression.BlockProgression;
 import com.rdg.darkechoes.progression.MobProgression;
-import com.mojang.serialization.Codec;
-//import com.rdg.darkechoes.registry.augments.Malleable;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.function.Supplier;
 
 public final class ModDataComponents {
     public static final DeferredRegister.DataComponents COMPONENTS =
@@ -34,9 +30,10 @@ public final class ModDataComponents {
             COMPONENTS.registerComponentType("block_progression", builder -> builder
                     .persistent(BlockProgression.CODEC)
                     .networkSynchronized(BlockProgression.STREAM_CODEC));
+//    TODO validate augment slots when adding augments
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> AUGMENT_SLOTS =
             COMPONENTS.registerComponentType("augment_slots", builder -> builder
-                    .persistent(Codec.intRange(-1, 10))
+                    .persistent(Codec.intRange(-1, 999))
                     .networkSynchronized(ByteBufCodecs.VAR_INT));
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> FRAGILE =
             COMPONENTS.registerComponentType("fragile", builder -> builder
@@ -44,9 +41,6 @@ public final class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> WEAKENED =
             COMPONENTS.registerComponentType("weakened", builder -> builder
                     .persistent(Codec.BOOL));
-//    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Augment>> AUGMENTS =
-//            COMPONENTS.registerComponentType("augments", builder -> builder
-//                    .persistent(Augment.DIRECT_CODEC));
 
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<GearAugments>> AUGMENTS =

@@ -2,6 +2,8 @@ package com.rdg.darkechoes.combat;
 
 import com.rdg.darkechoes.DarkEchoes;
 import com.rdg.darkechoes.config.CombatConfig;
+import com.rdg.darkechoes.helpers.AugmentEffectComponents;
+import com.rdg.darkechoes.helpers.AugmentHelper;
 import com.rdg.darkechoes.progression.MobProgression;
 import com.rdg.darkechoes.progression.Progression;
 import com.rdg.darkechoes.progression.ToolProgression;
@@ -10,8 +12,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -38,13 +38,9 @@ public final class CombatEvents {
         DamageSource source = event.getSource();
         Entity attacker = source.getEntity();
         ItemStack weapon = weapon(source);
-
-        // Causes dereference crash if buttonAwaken is clicked with no item slotted; likely only needs a null check if you're finished with this section
-//        TODO oh right, this was a test code, checking if the gear has fragile it would take more durability damage. gonna rework it later~
-//        if (Boolean.TRUE.equals(weapon.get(ModDataComponents.FRAGILE))) {
-//            attacker.level().playLocalSound(attacker, SoundEvents.ENDER_DRAGON_GROWL, SoundSource.AMBIENT, 10, 10);
-//            weapon.hurtAndBreak(4, (LivingEntity) attacker, ((LivingEntity) attacker).getMainHandItem().getEquipmentSlot());
-//        }
+        if (AugmentHelper.has(weapon, AugmentEffectComponents.PREVENT_GEAR_BREAK) && weapon.getDamageValue() >= weapon.getMaxDamage()) {
+            event.setAmount(0);
+        }
         double outgoing = CombatRules.outgoingMultiplier(attacker, source);
         double incoming = CombatRules.incomingMultiplier(target, source);
         double item = CombatRules.itemMultiplier(weapon);
@@ -86,7 +82,13 @@ public final class CombatEvents {
         } else if (Boolean.TRUE.equals(event.getItemStack().get(ModDataComponents.WEAKENED))) {
             event.getToolTip().add(Component.translatable("tooltip.darkechoes.weakened").withStyle(ChatFormatting.GRAY));
         }
+
         ItemStack stack = event.getItemStack();
+        if (AugmentHelper.has(stack, AugmentEffectComponents.PREVENT_GEAR_BREAK) && stack.getDamageValue() >= stack.getMaxDamage()) {
+            event.getToolTip().add(
+                    Component.translatable("tooltip.darkechoes.malleable_broken").withStyle(ChatFormatting.RED)
+            );
+        }
         if (ToolProgression.isProgressionTool(stack)) {
             event.getToolTip().add(Component.translatable("tooltip.darkechoes.awakened")
                     .withStyle(ChatFormatting.AQUA));
@@ -122,14 +124,14 @@ public final class CombatEvents {
                 event.getToolTip().add(Component.translatable(
                                 weapon ? "tooltip.darkechoes.weapon_progression"
                                         : "tooltip.darkechoes.armor_progression",
-                                targetName, level, bonus, level + 1, remaining, actionName(weapon, remaining))
+                                targetName, level, bonus, level + 1, remaining, combatGearActionName(weapon, remaining))
                         .withStyle(ChatFormatting.GRAY));
             }
         } else if (!progression.pendingTarget().isEmpty()) {
             int remaining = actionsPerLevel - progression.pendingActions();
             event.getToolTip().add(Component.translatable(
                             "tooltip.darkechoes.progression_pending",
-                            targetName(progression.pendingTarget()), remaining, actionName(weapon, remaining))
+                            targetName(progression.pendingTarget()), remaining, combatGearActionName(weapon, remaining))
                     .withStyle(ChatFormatting.GRAY));
         }
     }
@@ -140,7 +142,7 @@ public final class CombatEvents {
         return type == null ? Component.literal(id) : type.getDescription();
     }
 
-    public static Component actionName(boolean weapon, int count) {
+    public static Component combatGearActionName(boolean weapon, int count) {
         String type = weapon ? "kill" : "hit";
         return Component.translatable("tooltip.darkechoes." + type + (count == 1 ? ".one" : ".many"));
     }

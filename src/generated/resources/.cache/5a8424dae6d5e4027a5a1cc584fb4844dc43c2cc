@@ -1,4 +1,4 @@
-// 26.1.2	2026-08-11T16:42:46.0248552	Tags for minecraft:item mod id darkechoes
+// 26.1.2	2026-09-01T18:41:53.9665117	Tags for minecraft:item mod id darkechoes
 1de0e8a1bbc6a6eb9cb79c0a3f898b866db1c16c data/darkechoes/tags/item/armor/tier_one.json
 ce15c30f08ddf174e7a6873379b126ec605817e5 data/darkechoes/tags/item/armor/tier_three.json
 f5ea43e47f3b6594181c30ef57af2578f02a82d3 data/darkechoes/tags/item/armor/tier_two.json
@@ -6,6 +6,13 @@ f5ea43e47f3b6594181c30ef57af2578f02a82d3 data/darkechoes/tags/item/armor/tier_tw
 a2a127c358c5d837019fd6222f4dbe45dbfbca2e data/darkechoes/tags/item/augmentable_gear.json
 8181b62a45904f6fa6392e4566955583fb70ca30 data/darkechoes/tags/item/augmentable_tool.json
 6db900209c05d2af4a79e62b7ac4ea0d594f4f83 data/darkechoes/tags/item/awakening_items.json
+a3aa17ac90e0282203b1558ff78208f88cf8da31 data/darkechoes/tags/item/gear/tier_one.json
+776bfefa0e7497a68d5a438062dd958d982a1be0 data/darkechoes/tags/item/gear/tier_three.json
+33f6026b9d245714902d9b26c05fe98803b5e271 data/darkechoes/tags/item/gear/tier_two.json
 cc637e74aa967a6ef4139f54f2701319636f0b99 data/darkechoes/tags/item/tool/tier_one.json
 0ef63a68ddc3493abd59923ec88d108d2579bdff data/darkechoes/tags/item/tool/tier_three.json
 8e540e23998fb370bfdf8117241215b9e3296548 data/darkechoes/tags/item/tool/tier_two.json
+ba9125aa546790a0582445879c658b228dbb763c data/darkechoes/tags/item/tool_progression/axes.json
+1feebc4d4dfb8dd4b39ea79e961a1b31359e0ff3 data/darkechoes/tags/item/tool_progression/hoes.json
+bdb4053d28def340c591bb6cd77b677cfe510db6 data/darkechoes/tags/item/tool_progression/pickaxes.json
+5e7c760621586934c47d721d06be94fdb2693f4e data/darkechoes/tags/item/tool_progression/shovels.json

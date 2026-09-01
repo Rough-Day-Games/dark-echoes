@@ -5,6 +5,7 @@ import com.rdg.darkechoes.registry.ModRegistries;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.util.Unit;
 
 import java.util.function.UnaryOperator;
@@ -18,7 +19,7 @@ public interface AugmentEffectComponents {
         return Registry.register(ModRegistries.AUGMENT_EFFECT_COMPONENT_TYPE, id, builder.apply(DataComponentType.builder()).build());
     }
 
-    static DataComponentType<?> bootstrap(Registry<DataComponentType<?>> registry) {
+    static DataComponentType<?> bootstrap(BootstrapContext<DataComponentType<?>> context) {
         return PREVENT_GEAR_BREAK;
     }
 }

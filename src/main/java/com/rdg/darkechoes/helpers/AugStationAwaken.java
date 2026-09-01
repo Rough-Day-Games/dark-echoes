@@ -1,9 +1,11 @@
 package com.rdg.darkechoes.helpers;
 
 import com.rdg.darkechoes.DarkEchoes;
+import com.rdg.darkechoes.client.ModItemTags;
 import com.rdg.darkechoes.client.menus.BaseAugStationMenu;
+import com.rdg.darkechoes.progression.BlockProgression;
+import com.rdg.darkechoes.progression.MobProgression;
 import com.rdg.darkechoes.registry.ModDataComponents;
-//import com.rdg.darkechoes.registry.augments.Malleable;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -13,6 +15,9 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+
+import static com.rdg.darkechoes.progression.Progression.isCombatGear;
+import static com.rdg.darkechoes.progression.ToolProgression.isTool;
 
 public record AugStationAwaken(boolean isFragile, boolean isWeakened,
                                int augmentSlotCount) implements CustomPacketPayload {
@@ -34,6 +39,11 @@ public record AugStationAwaken(boolean isFragile, boolean isWeakened,
         ItemStack gear = gear_slot.getItem();
         ItemStack awaken_item = awaken_item_slot.getItem();
 
+        if (isTool(gear) && !gear.has(ModDataComponents.BLOCK_PROGRESSION)) {
+            gear.set(ModDataComponents.BLOCK_PROGRESSION, new BlockProgression("", 0, "", 0, gear.is(ModItemTags.TIER_ONE_GEAR) ? 3 : (gear.is(ModItemTags.TIER_TWO_GEAR) ? 6 : (gear.is(ModItemTags.TIER_THREE_GEAR) ? 10 : 0))));
+        } else if (isCombatGear(gear) && !gear.has(ModDataComponents.MOB_PROGRESSION)) {
+            gear.set(ModDataComponents.MOB_PROGRESSION, new MobProgression("", 0, "", 0, gear.is(ModItemTags.TIER_ONE_GEAR) ? 3 : (gear.is(ModItemTags.TIER_TWO_GEAR) ? 6 : (gear.is(ModItemTags.TIER_THREE_GEAR) ? 10 : 0))));
+        }
         gear.set(ModDataComponents.AUGMENT_SLOTS, packet.augmentSlotCount());
         if (packet.isWeakened) {
             gear.set(ModDataComponents.WEAKENED, true);

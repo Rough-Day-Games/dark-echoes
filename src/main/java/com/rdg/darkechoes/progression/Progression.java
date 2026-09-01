@@ -3,17 +3,12 @@ package com.rdg.darkechoes.progression;
 import com.rdg.darkechoes.client.ModItemTags;
 import com.rdg.darkechoes.config.CombatConfig;
 import com.rdg.darkechoes.registry.ModDataComponents;
-import com.rdg.darkechoes.registry.ModItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStackTemplate;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.TransmuteRecipe;
 
 public final class Progression {
     private Progression() {
@@ -29,6 +24,10 @@ public final class Progression {
 
     public static boolean isAwakenedCombatWeapon(ItemStack stack) {
         return isAwakenedTool(stack) && !ToolProgression.isProgressionTool(stack);
+    }
+
+    public static boolean isCombatGear(ItemStack stack) {
+        return stack != null && stack.is(ModItemTags.AUGMENTABLE_GEAR) && !ToolProgression.isProgressionTool(stack);
     }
 
     public static boolean isAwakenedArmor(ItemStack stack) {
@@ -96,7 +95,7 @@ public final class Progression {
     private static void advance(ItemStack stack, String targetId, int actionsPerLevel) {
         MobProgression current = data(stack);
         MobProgression updated = current.advance(
-                targetId, actionsPerLevel, CombatConfig.MAX_MOB_PROGRESSION_LEVEL.getAsInt());
+                targetId, actionsPerLevel, CombatConfig.MAX_MOB_PROGRESSION_LEVEL.getAsInt(), current.slots());
         if (!updated.equals(current)) {
             stack.set(ModDataComponents.MOB_PROGRESSION.get(), updated);
         }

@@ -44,8 +44,6 @@ public record AugStationAugment(boolean active) implements CustomPacketPayload {
         ItemStack augment = augment_slot.getItem();
         GearAugments.Mutable augments = new GearAugments.Mutable(AugmentHelper.getAugments(gear));
         Optional<Holder.Reference<Augment>> malleable = context.player().level().registryAccess().lookupOrThrow(ModRegistries.AUGMENTS_REGISTRY_KEY).get(MALLEABLE);
-//        Holder<DataComponentType<?>> malleable = registry.wrapAsHolder(ModDataComponents.MALLEABLE.get());
-//        Holder.Reference<DataComponentType<?>> malleable = ModRegistries.AUGMENT_EFFECT_COMPONENT_TYPE.getOrThrow(ModDataComponents.MALLEABLE.getKey());
         augments.set(malleable.orElseThrow());
         gear.set(ModDataComponents.AUGMENTS, augments.toImmutable());
 

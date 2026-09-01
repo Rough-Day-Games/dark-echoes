@@ -50,6 +50,7 @@ public static final Codec<Augment> DIRECT_CODEC = RecordCodecBuilder.create(
     public static final Codec<Holder<Augment>> CODEC = RegistryFixedCodec.create(ModRegistries.AUGMENTS_REGISTRY_KEY);
     public static StreamCodec<RegistryFriendlyByteBuf, Holder<Augment>> STREAM_CODEC = ByteBufCodecs.holderRegistry(ModRegistries.AUGMENTS_REGISTRY_KEY);
 
+//    TODO refactor augment definitions
     public record AugmentDefinition(
             HolderSet<Item> supportedItems,
             Optional<HolderSet<Item>> primaryItems,
@@ -72,13 +73,6 @@ public static final Codec<Augment> DIRECT_CODEC = RecordCodecBuilder.create(
     public boolean isSupportedGear(ItemStack gear) {return gear.is(this.definition.supportedItems);}
 
     public boolean canAugment(ItemStack gear) {return this.definition.supportedItems().contains(gear.typeHolder()) && gear.has(ModDataComponents.AUGMENT_SLOTS);}
-
-//    public void modifyDurability(ServerLevel serverLevel, ItemStack gear) {
-//        applyEffects(
-//                getEffects(AugmentEffectComponents.PREVENT_GEAR_BREAK),
-//                itemContext(serverLevel, gear)
-//        );
-//    }
 
     public static <T> void applyEffects(List<ConditionalEffect<T>> effects, LootContext filterData, Augment.GenericAction<T> action) {
         for (ConditionalEffect<T> conditionalEffect : effects) {

@@ -4,12 +4,12 @@ import com.mojang.serialization.Codec;
 import com.rdg.darkechoes.progression.Augment;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class GearAugments {
@@ -34,8 +34,7 @@ public class GearAugments {
             return true;
         } else {
             boolean value;
-            if (obj instanceof GearAugments) {
-                GearAugments that = (GearAugments) obj;
+            if (obj instanceof GearAugments that) {
                 value = this.augments.equals(that.augments);
             } else {
                 value = false;
@@ -47,7 +46,15 @@ public class GearAugments {
 
     @Override
     public String toString() {
-        return "GearAugments{augments=" + String.valueOf(this.augments) + "}";
+        return "GearAugments{augments=" + this.augments + "}";
+    }
+
+    public Set<Holder<Augment>> keySet() {
+        return Collections.unmodifiableSet(this.augments.keySet());
+    }
+
+    public Set<Object2BooleanMap.Entry<Holder<Augment>>> entrySet() {
+        return Collections.unmodifiableSet(this.augments.object2BooleanEntrySet());
     }
 
     private GearAugments(Object2BooleanOpenHashMap<Holder<Augment>> augments) {
@@ -59,7 +66,9 @@ public class GearAugments {
     public static class Mutable {
         private final Object2BooleanOpenHashMap<Holder<Augment>> augments = new Object2BooleanOpenHashMap<>();
 
-        public Mutable(GearAugments augments) {this.augments.putAll(augments.augments);}
+        public Mutable(GearAugments augments) {
+            this.augments.putAll(augments.augments);
+        }
 
         public void set(Holder<Augment> augment) {
             if (this.augments.containsKey(augment)) {
@@ -69,8 +78,12 @@ public class GearAugments {
             }
         }
 
-        public Set<Holder<Augment>> augments() {return  this.augments.keySet();}
+        public Set<Holder<Augment>> augments() {
+            return this.augments.keySet();
+        }
 
-        public GearAugments toImmutable() {return new GearAugments(this.augments);}
+        public GearAugments toImmutable() {
+            return new GearAugments(this.augments);
+        }
     }
 }
