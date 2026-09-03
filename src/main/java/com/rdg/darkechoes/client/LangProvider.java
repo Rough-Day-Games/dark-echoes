@@ -64,7 +64,7 @@ public class LangProvider extends LanguageProvider {
         add("menu.darkechoes.augment_station.page.augments", "Augments");
         add("menu.darkechoes.augment_station.page.awakening",  "Awakening");
         add("menu.darkechoes.augment_station.page.adaptation", "Adaptation");
-        add("menu.darkechoes.augment_station.page.augmenting", "Augmenting");
+        add("menu.darkechoes.augment_station.page.augmentation", "Augmenting");
         add("container.augment_station.gear_weakened", "This gear is weakened!");
         add("container.augment_station.gear_fragile", "This gear is fragile!");
         add("container.augment_station.fragile_warning", "Will make gear fragile! Are you sure?");

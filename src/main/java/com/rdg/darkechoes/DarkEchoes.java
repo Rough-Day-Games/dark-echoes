@@ -8,6 +8,7 @@ import com.rdg.darkechoes.config.CombatConfig;
 import com.rdg.darkechoes.helpers.AugStationAugment;
 import com.rdg.darkechoes.helpers.AugStationAwaken;
 import com.rdg.darkechoes.helpers.AugStationPageListener;
+import com.rdg.darkechoes.helpers.augment_value_effect.LevelBasedValue;
 import com.rdg.darkechoes.progression.Augment;
 import com.rdg.darkechoes.progression.ToolProgressionEvents;
 import com.rdg.darkechoes.registry.*;
@@ -96,9 +97,10 @@ public final class DarkEchoes {
     }
 
     private static void registerRegistries(NewRegistryEvent event) {
-//        event.register(AUGMENTS_REGISTRY);
         event.register(AUGMENT_EFFECT_COMPONENT_TYPE);
         event.register(AUGMENT_PROVIDER_TYPE);
+        event.register(AUGMENT_LEVEL_BASED_VALUE_TYPE);
+        event.register(AUGMENT_VALUE_EFFECT_TYPE);
     }
 
     private static void registerDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
@@ -108,5 +110,11 @@ public final class DarkEchoes {
                 Augment.DIRECT_CODEC,
                 builder -> builder.maxId(256)
         );
+//        event.dataPackRegistry(
+//                AUGMENT_LEVEL_BASED_VALUE_TYPE_KEY,
+//                LevelBasedValue.CODEC,
+//                LevelBasedValue.CODEC,
+//                builder -> builder.maxId(256)
+//        );
     }
 }

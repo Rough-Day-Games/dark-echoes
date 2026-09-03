@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:netherite_pickaxe",
+    "minecraft:netherite_axe",
+    "minecraft:netherite_shovel",
+    "minecraft:netherite_hoe",
+    "darkechoes:echo_axe",
+    "darkechoes:echo_pickaxe",
+    "darkechoes:echo_shovel",
+    "darkechoes:echo_hoe"
+  ]
+}

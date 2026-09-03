@@ -1,0 +1,10 @@
+{
+  "augment_source": "#darkechoes:augment_sources/malleable",
+  "description": {
+    "translate": "augment.darkechoes.malleable"
+  },
+  "effects": {
+    "minecraft:prevent_gear_break": {}
+  },
+  "supported_items": "#darkechoes:augmentable"
+}

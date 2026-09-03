@@ -1,0 +1,7 @@
+{
+  "augment_source": "#darkechoes:earth_shatterer_sources",
+  "description": {
+    "translate": "augment.darkechoes.earth_shatterer"
+  },
+  "supported_items": "#darkechoes:augmentable/tool"
+}

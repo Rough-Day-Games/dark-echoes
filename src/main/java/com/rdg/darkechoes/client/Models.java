@@ -6,14 +6,20 @@ import com.rdg.darkechoes.registry.ModItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.client.renderer.block.dispatch.Variant;
+import net.minecraft.client.renderer.block.dispatch.multipart.CombinedCondition;
 import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class Models extends ModelProvider {
@@ -95,8 +101,35 @@ public class Models extends ModelProvider {
                         Collections.emptyList()
                 ));
 
+//        TODO how can i make such blockstate jsons that has so many states and different models as well?
         blockModels.createNonTemplateModelBlock(ModBlocks.T_ONE_AUGSTATION.get());
         blockModels.createNonTemplateModelBlock(ModBlocks.T_TWO_AUGSTATION.get());
         blockModels.createNonTemplateModelBlock(ModBlocks.T_THREE_AUGSTATION.get());
+//
+//        Identifier t1StationModel = TexturedModel.CUBE.create(ModBlocks.T_ONE_AUGSTATION.get(), blockModels.modelOutput);
+//        Identifier t2StationModel = TexturedModel.CUBE.create(ModBlocks.T_TWO_AUGSTATION.get(), blockModels.modelOutput);
+//        Identifier t3StationModel = TexturedModel.CUBE.create(ModBlocks.T_THREE_AUGSTATION.get(), blockModels.modelOutput);
+//
+//        // Create a common variant to transform
+//        Variant t1Variant = new Variant(t1StationModel);
+//        Variant t2Variant = new Variant(t2StationModel);
+//        Variant t3Variant = new Variant(t3StationModel);
+//
+//        // Generate a multipart
+//        blockModels.blockStateOutput.accept(
+//                MultiPartGenerator.multiPart(ModBlocks.T_ONE_AUGSTATION.get())
+//                        // Provide the base model
+//                        .with(BlockModelGenerators.variant(t1Variant))
+//                        // Add conditions for variant to appear
+//                        .with(
+//                                new CombinedCondition(
+//                                        CombinedCondition.Operation.AND,
+//                                        List.of(
+//                                                BlockModelGenerators.condition().term(BlockStateProperties.FACING, Direction.NORTH).build()
+//                                        )
+//                                ),
+//                                // Supply variant to mutate
+//                                BlockModelGenerators.variant(t1Variant)
+//                        ));
     }
 }

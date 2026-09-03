@@ -1,0 +1,10 @@
+{
+  "augment_source": "#darkechoes:augment_sources/magic_reborn",
+  "description": {
+    "translate": "augment.darkechoes.magic_reborn"
+  },
+  "effects": {
+    "minecraft:allow_enchants": {}
+  },
+  "supported_items": "#darkechoes:augmentable"
+}

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.rdg.darkechoes.helpers.AugmentEffectComponents;
+import com.rdg.darkechoes.helpers.AugmentValueEffect;
 import com.rdg.darkechoes.registry.ModDataComponents;
 import com.rdg.darkechoes.registry.ModRegistries;
 import net.minecraft.core.Holder;
@@ -54,13 +55,13 @@ public static final Codec<Augment> DIRECT_CODEC = RecordCodecBuilder.create(
     public record AugmentDefinition(
             HolderSet<Item> supportedItems,
             Optional<HolderSet<Item>> primaryItems,
-            BlockState requiredAugStationTier
+            HolderSet<Item> augmentSource
     ) {
         public static final MapCodec<Augment.AugmentDefinition> CODEC = RecordCodecBuilder.mapCodec(
                 inst -> inst.group(
                         RegistryCodecs.homogeneousList(Registries.ITEM).fieldOf("supported_items").forGetter(Augment.AugmentDefinition::supportedItems),
                         RegistryCodecs.homogeneousList(Registries.ITEM).optionalFieldOf("primary_items").forGetter(Augment.AugmentDefinition::primaryItems),
-                        BlockState.CODEC.fieldOf("required_aug_station_tier").forGetter(Augment.AugmentDefinition::requiredAugStationTier)
+                        RegistryCodecs.homogeneousList(Registries.ITEM).fieldOf("augment_source").forGetter(Augment.AugmentDefinition::augmentSource)
                 ).apply(inst, Augment.AugmentDefinition::new)
         );
     }
@@ -72,7 +73,7 @@ public static final Codec<Augment> DIRECT_CODEC = RecordCodecBuilder.create(
 
     public boolean isSupportedGear(ItemStack gear) {return gear.is(this.definition.supportedItems);}
 
-    public boolean canAugment(ItemStack gear) {return this.definition.supportedItems().contains(gear.typeHolder()) && gear.has(ModDataComponents.AUGMENT_SLOTS);}
+    public boolean canAugment(ItemStack gear) {return this.definition.supportedItems().contains(gear.typeHolder()) && gear.has(ModDataComponents.AUGMENT_SLOTS) && !gear.has(ModDataComponents.FRAGILE);}
 
     public static <T> void applyEffects(List<ConditionalEffect<T>> effects, LootContext filterData, Augment.GenericAction<T> action) {
         for (ConditionalEffect<T> conditionalEffect : effects) {
@@ -102,8 +103,8 @@ public static final Codec<Augment> DIRECT_CODEC = RecordCodecBuilder.create(
 
     public static AugmentDefinition definition(HolderSet<Item> supportedItems,
                                                Optional<HolderSet<Item>> primaryItems,
-                                               BlockState requiredAugStationTier) {
-        return new AugmentDefinition(supportedItems, primaryItems, requiredAugStationTier);
+                                               HolderSet<Item> augmentSource) {
+        return new AugmentDefinition(supportedItems, primaryItems, augmentSource);
     }
 
     public static class Builder {
@@ -120,10 +121,12 @@ public static final Codec<Augment> DIRECT_CODEC = RecordCodecBuilder.create(
             return this;
         }
 
-        public <E> Builder withEffect(DataComponentType<List<ConditionalEffect<E>>> type, E effect) {
-            this.getEffectsList(type).add(new ConditionalEffect<>(effect, Optional.empty()));
+        public <E> Builder withEffect(DataComponentType<E> type, E effect) {
+            this.effectMapBuilder.set(type, effect);
             return this;
         }
+
+//        public <E> Builder withEffect
 
         public Builder withEffect(DataComponentType<Unit> type) {
             this.effectMapBuilder.set(type, Unit.INSTANCE);

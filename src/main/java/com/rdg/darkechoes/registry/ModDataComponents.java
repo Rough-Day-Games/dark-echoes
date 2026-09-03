@@ -48,6 +48,9 @@ public final class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> MALLEABLE =
             AUGMENT_COMPONENT_TYPES.registerComponentType("malleable",
                     builder -> builder.persistent(Codec.BOOL));
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> MAGIC_REBORN =
+            AUGMENT_COMPONENT_TYPES.registerComponentType("magic_reborn",
+                    builder -> builder.persistent(Codec.BOOL));
 
     private ModDataComponents() {
     }

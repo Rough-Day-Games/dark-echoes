@@ -294,7 +294,6 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
                 }
             } else if (menuIndex == 3) {
                 Set<Holder<Augment>> augments = gear.get(ModDataComponents.AUGMENTS) != null ? gear.get(ModDataComponents.AUGMENTS).keySet() : Collections.emptySet();
-//                DarkEchoes.LOGGER.info("augments, or something: {}", augments);
                 int index = 0;
                 for (Holder<Augment> aug : augments) {
                     index++;
