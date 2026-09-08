@@ -6,10 +6,18 @@ import com.rdg.darkechoes.registry.ModRegistries;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.CommonHooks;
 import org.apache.commons.lang3.mutable.MutableBoolean;
+
+import java.util.Map;
+import java.util.Optional;
 
 public class AugmentHelper {
     public static void setAugments(ItemStack itemStack, GearAugments augments) {
@@ -40,8 +48,30 @@ public class AugmentHelper {
         }
     }
 
-    public static void getAllAugments(HolderLookup.RegistryLookup<Augment> augments) {
+    public static HolderSet<Item> getAugmentSourceOfAugment(RegistryAccess access, ItemStack augmentSource) {
+        for (Map.Entry<ResourceKey<Augment>, Augment> augment : access.lookupOrThrow(ModRegistries.AUGMENTS_REGISTRY_KEY).entrySet()) {
+            if (augmentSource.is(augment.getValue().definition().augmentSource())) return augment.getValue().definition().augmentSource();
+        }
+        return HolderSet.empty();
+    }
 
+    public static Component getAugmentName(RegistryAccess access, ItemStack augmentSource) {
+        for (Map.Entry<ResourceKey<Augment>, Augment> augment : access.lookupOrThrow(ModRegistries.AUGMENTS_REGISTRY_KEY).entrySet()) {
+            if (augment.getValue().definition().augmentSource().contains(augmentSource.typeHolder())) {
+                return augment.getValue().desc();
+            }
+        }
+        return Component.empty();
+    }
+
+    public static Optional<Holder.Reference<Augment>> getAugmentToAdd(RegistryAccess access, ItemStack gear, ItemStack augmentSource) {
+        HolderLookup.RegistryLookup<Augment> augmentLookup = access.lookupOrThrow(ModRegistries.AUGMENTS_REGISTRY_KEY);
+        for (Map.Entry<ResourceKey<Augment>, Augment> augment : access.lookupOrThrow(ModRegistries.AUGMENTS_REGISTRY_KEY).entrySet()) {
+            if (augment.getValue().canAugment(gear, augmentSource)) {
+                return augmentLookup.get(augment.getKey());
+            }
+        }
+        return Optional.empty();
     }
 
     @FunctionalInterface

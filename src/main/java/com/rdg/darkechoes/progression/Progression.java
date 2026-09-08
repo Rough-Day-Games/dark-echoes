@@ -1,7 +1,7 @@
 package com.rdg.darkechoes.progression;
 
 import com.rdg.darkechoes.client.ModItemTags;
-import com.rdg.darkechoes.config.CombatConfig;
+import com.rdg.darkechoes.config.ServerConfig;
 import com.rdg.darkechoes.registry.ModDataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
@@ -10,12 +10,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 
+import static com.rdg.darkechoes.helpers.GearHelper.assessMaxLevel;
+
 public final class Progression {
     private Progression() {
     }
 
     public static boolean isAwakened(ItemStack stack) {
-        return isAwakenedTool(stack) || isAwakenedArmor(stack);
+        return isAwakenedTool(stack) || isAwakenedArmor(stack) || isAwakenedCombatWeapon(stack);
     }
 
     public static boolean isAwakenedTool(ItemStack stack) {
@@ -23,7 +25,7 @@ public final class Progression {
     }
 
     public static boolean isAwakenedCombatWeapon(ItemStack stack) {
-        return isAwakenedTool(stack) && !ToolProgression.isProgressionTool(stack);
+        return stack != null && stack.has(ModDataComponents.AUGMENT_SLOTS) && stack.is(ModItemTags.AUGMENTABLE_WEAPON);
     }
 
     public static boolean isCombatGear(ItemStack stack) {
@@ -44,21 +46,22 @@ public final class Progression {
         if (!isAwakenedCombatWeapon(weapon) || !(target instanceof Mob)) {
             return 0;
         }
+        int maxLevelProgression = assessMaxLevel(weapon);
         MobProgression progression = data(weapon);
         return progression.target().equals(entityId(target))
-                ? progression.level(CombatConfig.KILLS_PER_LEVEL.getAsInt(), CombatConfig.MAX_MOB_PROGRESSION_LEVEL.getAsInt())
+                ? progression.level(ServerConfig.KILLS_PER_LEVEL.getAsInt(), maxLevelProgression)
                 : 0;
     }
 
     public static double weaponDamageMultiplier(ItemStack weapon, Entity target) {
-        return 1.0D + weaponLevel(weapon, target) * CombatConfig.WEAPON_DAMAGE_BONUS_PER_LEVEL.getAsDouble();
+        return 1.0D + weaponLevel(weapon, target) * ServerConfig.WEAPON_DAMAGE_BONUS_PER_LEVEL.getAsDouble();
     }
 
     public static void recordWeaponKill(ItemStack weapon, LivingEntity target) {
         if (!isAwakenedCombatWeapon(weapon) || !(target instanceof Mob)) {
             return;
         }
-        advance(weapon, entityId(target), CombatConfig.KILLS_PER_LEVEL.getAsInt());
+        advance(weapon, entityId(target), ServerConfig.KILLS_PER_LEVEL.getAsInt());
     }
 
     public static int equippedArmorLevels(LivingEntity wearer, Entity attacker) {
@@ -69,11 +72,12 @@ public final class Progression {
         int levels = 0;
         for (EquipmentSlot slot : armorSlots()) {
             ItemStack stack = wearer.getItemBySlot(slot);
+            int maxLevelProgression = assessMaxLevel(stack);
             MobProgression progression = data(stack);
             if (isAwakenedArmor(stack) && progression.target().equals(targetId)) {
                 levels += progression.level(
-                        CombatConfig.ARMOR_HITS_PER_LEVEL.getAsInt(),
-                        CombatConfig.MAX_MOB_PROGRESSION_LEVEL.getAsInt());
+                        ServerConfig.ARMOR_HITS_PER_LEVEL.getAsInt(),
+                        maxLevelProgression);
             }
         }
         return levels;
@@ -87,15 +91,16 @@ public final class Progression {
         for (EquipmentSlot slot : armorSlots()) {
             ItemStack stack = wearer.getItemBySlot(slot);
             if (isAwakenedArmor(stack)) {
-                advance(stack, targetId, CombatConfig.ARMOR_HITS_PER_LEVEL.getAsInt());
+                advance(stack, targetId, ServerConfig.ARMOR_HITS_PER_LEVEL.getAsInt());
             }
         }
     }
 
     private static void advance(ItemStack stack, String targetId, int actionsPerLevel) {
+        int maxLevelProgression = assessMaxLevel(stack);
         MobProgression current = data(stack);
         MobProgression updated = current.advance(
-                targetId, actionsPerLevel, CombatConfig.MAX_MOB_PROGRESSION_LEVEL.getAsInt(), current.slots());
+                targetId, actionsPerLevel, maxLevelProgression, current.slots());
         if (!updated.equals(current)) {
             stack.set(ModDataComponents.MOB_PROGRESSION.get(), updated);
         }

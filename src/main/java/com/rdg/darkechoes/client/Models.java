@@ -6,20 +6,12 @@ import com.rdg.darkechoes.registry.ModItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.client.data.models.model.TexturedModel;
-import net.minecraft.client.renderer.block.dispatch.Variant;
-import net.minecraft.client.renderer.block.dispatch.multipart.CombinedCondition;
 import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
-import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 public class Models extends ModelProvider {
@@ -39,6 +31,12 @@ public class Models extends ModelProvider {
         itemModels.createFlatItemModel(ModItems.ECHO_PICKAXE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.createFlatItemModel(ModItems.ECHO_SHOVEL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.createFlatItemModel(ModItems.ECHO_HOE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_SPEAR.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.TIER_ONE_REPAIR_KIT.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.TIER_TWO_REPAIR_KIT.get(),   ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.TIER_THREE_REPAIR_KIT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_UPGRADE_SMITHING_TEMPLATE.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.WARDEN_TOTEM.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.itemModelOutput.accept(ModItems.RESONANCE_CRYSTAL.get(),
                 new CuboidItemModelWrapper.Unbaked(
@@ -100,6 +98,48 @@ public class Models extends ModelProvider {
                         Optional.empty(),
                         Collections.emptyList()
                 ));
+        itemModels.itemModelOutput.accept(ModItems.ECHO_SPEAR.get(),
+                new CuboidItemModelWrapper.Unbaked(
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_SPEAR.get()),
+                        Optional.empty(),
+                        Collections.emptyList()
+                ));
+        itemModels.itemModelOutput.accept(ModItems.TIER_ONE_REPAIR_KIT.get(),
+                new CuboidItemModelWrapper.Unbaked(
+                        ModelLocationUtils.getModelLocation(ModItems.TIER_ONE_REPAIR_KIT.get()),
+                        Optional.empty(),
+                        Collections.emptyList()
+                ));
+        itemModels.itemModelOutput.accept(ModItems.TIER_TWO_REPAIR_KIT.get(),
+                new CuboidItemModelWrapper.Unbaked(
+                        ModelLocationUtils.getModelLocation(ModItems.TIER_TWO_REPAIR_KIT.get()),
+                        Optional.empty(),
+                        Collections.emptyList()
+                ));
+        itemModels.itemModelOutput.accept(ModItems.TIER_THREE_REPAIR_KIT.get(),
+                new CuboidItemModelWrapper.Unbaked(
+                        ModelLocationUtils.getModelLocation(ModItems.TIER_THREE_REPAIR_KIT.get()),
+                        Optional.empty(),
+                        Collections.emptyList()
+                ));
+        itemModels.itemModelOutput.accept(ModItems.ECHO_UPGRADE_SMITHING_TEMPLATE.get(),
+                new CuboidItemModelWrapper.Unbaked(
+                        ModelLocationUtils.getModelLocation(ModItems.ECHO_UPGRADE_SMITHING_TEMPLATE.get()),
+                        Optional.empty(),
+                        Collections.emptyList()
+                ));
+        itemModels.itemModelOutput.accept(ModItems.WARDEN_TOTEM.get(),
+                new CuboidItemModelWrapper.Unbaked(
+                        ModelLocationUtils.getModelLocation(ModItems.WARDEN_TOTEM.get()),
+                        Optional.empty(),
+                        Collections.emptyList()
+                ));
+
+        blockModels.registerSimpleItemModel(ModItems.T_ONE_AUGSTATION.get(), ModelLocationUtils.getModelLocation(ModItems.T_ONE_AUGSTATION.get()));
+        blockModels.registerSimpleItemModel(ModItems.T_TWO_AUGSTATION.get(), ModelLocationUtils.getModelLocation(ModItems.T_TWO_AUGSTATION.get()));
+        blockModels.registerSimpleItemModel(ModItems.T_THREE_AUGSTATION.get(), ModelLocationUtils.getModelLocation(ModItems.T_THREE_AUGSTATION.get()));
+
+
 
 //        TODO how can i make such blockstate jsons that has so many states and different models as well?
         blockModels.createNonTemplateModelBlock(ModBlocks.T_ONE_AUGSTATION.get());
@@ -118,7 +158,7 @@ public class Models extends ModelProvider {
 //        // Generate a multipart
 //        blockModels.blockStateOutput.accept(
 //                MultiPartGenerator.multiPart(ModBlocks.T_ONE_AUGSTATION.get())
-//                        // Provide the base model
+//                        // Provide the tierOneValue model
 //                        .with(BlockModelGenerators.variant(t1Variant))
 //                        // Add conditions for variant to appear
 //                        .with(

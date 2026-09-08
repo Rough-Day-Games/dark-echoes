@@ -1,13 +1,16 @@
 package com.rdg.darkechoes;
 
 import com.rdg.darkechoes.client.ModMenus;
+import com.rdg.darkechoes.client.renderer.armor.EchoArmorRenderer;
 import com.rdg.darkechoes.client.screen.BaseAugStationScreen;
+import com.rdg.darkechoes.registry.ModItems;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;

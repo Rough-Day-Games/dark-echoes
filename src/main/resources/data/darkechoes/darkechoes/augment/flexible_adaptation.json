@@ -1,0 +1,13 @@
+{
+  "augment_source": "#darkechoes:augment_sources/flexible",
+  "description": {
+    "translate": "augment.darkechoes.flexible_adaptation"
+  },
+  "effects": {
+    "minecraft:extra_adaptation": {
+      "type": "darkechoes:add",
+      "value": 1
+    }
+  },
+  "supported_items": "#darkechoes:augmentable"
+}

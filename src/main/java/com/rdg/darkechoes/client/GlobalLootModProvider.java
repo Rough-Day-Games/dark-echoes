@@ -5,6 +5,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 import net.neoforged.neoforge.common.loot.LootModifier;
@@ -24,6 +25,13 @@ public class GlobalLootModProvider extends GlobalLootModifierProvider {
                 new WardenLootModifier(new LootItemCondition[]{
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, 0.2F, 0.1F).build(),
                         LootTableIdCondition.builder(Identifier.parse("minecraft:entities/warden")).build()
+                }, LootModifier.DEFAULT_PRIORITY)
+        );
+        this.add(
+                "ancient_city_loot_modifier",
+                new AncientCityLootModifier(new LootItemCondition[]{
+                        LootItemRandomChanceCondition.randomChance(0.1f).build(),
+                        LootTableIdCondition.builder(Identifier.parse("minecraft:chests/ancient_city")).build()
                 }, LootModifier.DEFAULT_PRIORITY)
         );
     }

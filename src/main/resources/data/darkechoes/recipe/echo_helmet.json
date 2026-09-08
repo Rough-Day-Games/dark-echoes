@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "darkechoes:resonance_crystal",
+  "base": "minecraft:diamond_helmet",
+  "result": {
+    "id": "darkechoes:echo_helmet"
+  },
+  "template": "darkechoes:echo_upgrade_smithing_template"
+}

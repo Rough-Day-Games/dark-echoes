@@ -1,16 +1,10 @@
 {
+  "augment_source": "#darkechoes:augment_sources/malleable",
   "description": {
     "translate": "augment.darkechoes.malleable"
   },
   "effects": {
     "minecraft:prevent_gear_break": {}
   },
-  "required_aug_station_tier": {
-    "Name": "darkechoes:augment_station/t_one",
-    "Properties": {
-      "aug_station_piece": "bottom_left",
-      "facing": "north"
-    }
-  },
-  "supported_items": "#darkechoes:augmentable_gear"
+  "supported_items": "#darkechoes:augmentable"
 }

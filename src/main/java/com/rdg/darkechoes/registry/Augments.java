@@ -64,6 +64,7 @@ public class Augments {
                         AugmentEffectComponents.ALLOW_ENCHANTS
                 )
         );
+
         register(
                 context,
                 FLEXIBLE_ADAPTATION,
@@ -75,7 +76,7 @@ public class Augments {
                         )
                 ).withEffect(AugmentEffectComponents.EXTRA_ADAPTATION, new AddValue(LevelBasedValue.constant(1)))
         );
-
+//        TODO rework both flexible and earth shatterer to be stackable as well? not the earth shatterer rn
         register(
                 context,
                 EARTH_SHATTERER,
@@ -85,7 +86,7 @@ public class Augments {
                                 Optional.empty(),
                                 items.getOrThrow(ModItemTags.EARTH_SHATTERER_SOURCES)
                         )
-                )
+                ).withEffect(AugmentEffectComponents.LARGER_BLOCK_BREAK_RADIUS)
         );
 
         register(
@@ -97,7 +98,7 @@ public class Augments {
                                 Optional.empty(),
                                 items.getOrThrow(ModItemTags.HEAVENS_AUGMENT_SOURCES)
                         )
-                )
+                ).withEffect(AugmentEffectComponents.GROW_WINGS)
         );
 
         register(
@@ -109,7 +110,7 @@ public class Augments {
                                 Optional.empty(),
                                 items.getOrThrow(ModItemTags.ECHO_SENSE_SOURCES)
                         )
-                )
+                ).withEffect(AugmentEffectComponents.SEE_ENTITIES_THROUGH_BLOCKS)
         );
 
         register(
@@ -121,7 +122,7 @@ public class Augments {
                                 Optional.empty(),
                                 items.getOrThrow(ModItemTags.LOW_GRAVITY_SOURCES)
                         )
-                )
+                ).withEffect(AugmentEffectComponents.PREVENT_FALL_DAMAGE)
         );
     }
 

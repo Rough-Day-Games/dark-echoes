@@ -1,0 +1,10 @@
+{
+  "augment_source": "#darkechoes:augment_sources/earth_shatterer",
+  "description": {
+    "translate": "augment.darkechoes.earth_shatterer"
+  },
+  "effects": {
+    "minecraft:larger_block_break_radius": {}
+  },
+  "supported_items": "#darkechoes:augmentable/tool"
+}

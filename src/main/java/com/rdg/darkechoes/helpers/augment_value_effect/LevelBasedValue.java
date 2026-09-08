@@ -5,8 +5,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.rdg.darkechoes.registry.ModRegistries;
-import net.minecraft.core.Registry;
-import net.minecraft.data.worldgen.BootstrapContext;
 
 public interface LevelBasedValue {
     Codec<LevelBasedValue> DISPATCH_CODEC = ModRegistries.AUGMENT_LEVEL_BASED_VALUE_TYPE.byNameCodec().dispatch(LevelBasedValue::codec, (c) -> c);
@@ -21,6 +19,8 @@ public interface LevelBasedValue {
     });
 
     static Constant constant(int value) {return new Constant(value);}
+
+    static DefinedPerTier definedPerTier(int tierOneValue, int tierTwoValue, int tierThreeValue) {return new DefinedPerTier(tierOneValue, tierTwoValue, tierThreeValue);}
 
     int calculate(int originalValue);
 
@@ -37,6 +37,20 @@ public interface LevelBasedValue {
         static {
             CODEC = Codec.INT.xmap(Constant::new, Constant::value);
             TYPED_CODEC = RecordCodecBuilder.mapCodec((i) -> i.group(Codec.INT.fieldOf("value").forGetter(Constant::value)).apply(i, Constant::new));
+        }
+    }
+
+    record DefinedPerTier(int tierOneValue, int tierTwoValue, int tierThreeValue) implements LevelBasedValue {
+        public static final MapCodec<DefinedPerTier> CODEC = RecordCodecBuilder.mapCodec((i) -> i.group(Codec.INT.fieldOf("tier_one_value").forGetter(DefinedPerTier::tierOneValue), Codec.INT.fieldOf("tier_two_value").forGetter(DefinedPerTier::tierTwoValue), Codec.INT.fieldOf("tier_three_value").forGetter(DefinedPerTier::tierThreeValue)).apply(i, DefinedPerTier::new));
+
+        @Override
+        public int calculate(int originalValue) {
+            return this.tierOneValue + this.tierTwoValue * (originalValue - 1);
+        }
+
+        @Override
+        public MapCodec<DefinedPerTier> codec() {
+            return CODEC;
         }
     }
 }

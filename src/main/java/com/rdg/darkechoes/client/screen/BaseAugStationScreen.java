@@ -4,7 +4,8 @@ import com.mojang.blaze3d.platform.cursor.CursorTypes;
 import com.rdg.darkechoes.DarkEchoes;
 import com.rdg.darkechoes.client.ModItemTags;
 import com.rdg.darkechoes.client.menus.BaseAugStationMenu;
-import com.rdg.darkechoes.config.CombatConfig;
+import com.rdg.darkechoes.config.CommonConfig;
+import com.rdg.darkechoes.config.ServerConfig;
 import com.rdg.darkechoes.progression.*;
 import com.rdg.darkechoes.registry.ModDataComponents;
 import com.rdg.darkechoes.registry.ModItems;
@@ -17,20 +18,26 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Collections;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.rdg.darkechoes.combat.CombatEvents.combatGearActionName;
+import static com.rdg.darkechoes.helpers.AugmentHelper.*;
+import static com.rdg.darkechoes.helpers.GearHelper.assessMaxLevel;
 import static com.rdg.darkechoes.progression.Progression.isCombatGear;
 import static com.rdg.darkechoes.progression.ToolProgression.blockName;
 import static com.rdg.darkechoes.progression.ToolProgression.isTool;
@@ -46,7 +53,9 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
             .build();
     final Button augmentButton = Button.builder(Component.translatable("button.darkechoes.augstation.initaugment"), _ -> menu.augmentGear())
             .size(108, 18)
-            .tooltip(Tooltip.create(Component.literal("Augmentation coming soon~")))
+            .build();
+    final Button amendButton = Button.builder(Component.translatable("button.darkechoes.augstation.amend"), _ -> menu.amendGear())
+            .size(108, 18)
             .build();
 
     public BaseAugStationScreen(BaseAugStationMenu menu, Inventory inventory, Component title) {
@@ -104,7 +113,7 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
             );
         }
 
-        for (int i = 0; i <= 3; i++) {
+        for (int i = 0; i <= 4; i++) {
             extractTabButton(graphics, mouseX, mouseY, i);
         }
     }
@@ -132,8 +141,11 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
         ItemStack gear = gearSlot.getItem();
         awakenButton.active = !gear.isEmpty();
         augmentButton.active = false;
+        amendButton.active = false;
         awakenButton.setTooltip(null);
         awakenButton.setMessage(Component.translatable("button.darkechoes.augstation.initawakening"));
+        augmentButton.setTooltip(null);
+        amendButton.setTooltip(null);
     }
 
     @Override
@@ -141,6 +153,12 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
         super.extractLabels(graphics, xm, ym);
 
         graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY, 0xFF404040, false);
+    }
+
+    private void hideButtons() {
+        awakenButton.setPosition(999, 999);
+        augmentButton.setPosition(999, 999);
+        amendButton.setPosition(999, 999);
     }
 
     @Override
@@ -152,6 +170,7 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
         Slot gearSlot = menu.getSlot(0);
         BaseAugStationMenu.AwakenSlot awakenSlot = (BaseAugStationMenu.AwakenSlot) menu.getSlot(1);
         BaseAugStationMenu.AugmentSlot augmentSlot = (BaseAugStationMenu.AugmentSlot) menu.getSlot(2);
+        BaseAugStationMenu.AmendSlot amendSlot = (BaseAugStationMenu.AmendSlot) menu.getSlot(3);
         ItemStack gear = gearSlot.getItem();
         Integer augment_slots = gear.get(AUGMENT_SLOTS);
         Component targetDetails = null;
@@ -160,27 +179,39 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
         if (menuIndex == 0) {
             awakenButton.setPosition(this.leftPos + 26, this.topPos + 123);
             augmentButton.setPosition(999, 999);
+            amendButton.setPosition(999, 999);
             awakenSlot.active = true;
             augmentSlot.active = false;
+            amendSlot.active = false;
             graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.awakening"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF8B8B8B);
         } else if (menuIndex == 1) {
-            awakenButton.setPosition(999, 999);
-            augmentButton.setPosition(999, 999);
+            hideButtons();
             awakenSlot.active = false;
             augmentSlot.active = false;
+            amendSlot.active = false;
             graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.adaptation"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF8B8B8B);
         } else if (menuIndex == 2) {
             awakenButton.setPosition(999, 999);
             augmentButton.setPosition(this.leftPos + 26, this.topPos + 123);
+            amendButton.setPosition(999, 999);
             awakenSlot.active = false;
             augmentSlot.active = true;
+            amendSlot.active = false;
             graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.augmentation"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF8B8B8B);
         } else if (menuIndex == 3) {
-            awakenButton.setPosition(999, 999);
-            augmentButton.setPosition(999, 999);
+            hideButtons();
             awakenSlot.active = false;
             augmentSlot.active = false;
+            amendSlot.active = false;
             graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.augments"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF8B8B8B);
+        } else if (menuIndex == 4) {
+            awakenButton.setPosition(999, 999);
+            augmentButton.setPosition(999, 999);
+            amendButton.setPosition(this.leftPos + 26, this.topPos + 123);
+            awakenSlot.active = false;
+            augmentSlot.active = false;
+            amendSlot.active = true;
+            graphics.centeredText(this.font, Component.translatable("menu.darkechoes.augment_station.page.amendment"), this.leftPos + pageTitleX, this.topPos + pageTitleY, 0xFF8B8B8B);
         }
         MobProgression mobProgression = null;
         BlockProgression blockProgression = null;
@@ -188,15 +219,15 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
         if (isCombatGear(gear)) {
             mobProgression = Progression.data(gear);
             int actionsPerLevel = Progression.isAwakenedCombatWeapon(gear)
-                    ? CombatConfig.KILLS_PER_LEVEL.getAsInt()
-                    : CombatConfig.ARMOR_HITS_PER_LEVEL.getAsInt();
-            int maxLevel = CombatConfig.MAX_MOB_PROGRESSION_LEVEL.getAsInt();
+                    ? ServerConfig.KILLS_PER_LEVEL.getAsInt()
+                    : ServerConfig.ARMOR_HITS_PER_LEVEL.getAsInt();
+            int maxLevel = assessMaxLevel(gear);
             boolean weapon = Progression.isAwakenedCombatWeapon(gear);
             if (mobProgression.locked()) {
                 int level = mobProgression.level(actionsPerLevel, maxLevel);
                 long bonus = Math.round(level * (weapon
-                        ? CombatConfig.WEAPON_DAMAGE_BONUS_PER_LEVEL.getAsDouble()
-                        : CombatConfig.ARMOR_REDUCTION_BONUS_PER_LEVEL.getAsDouble()) * 100.0D);
+                        ? ServerConfig.WEAPON_DAMAGE_BONUS_PER_LEVEL.getAsDouble()
+                        : ServerConfig.ARMOR_REDUCTION_BONUS_PER_LEVEL.getAsDouble()) * 100.0D);
                 targetName = targetDetails(mobProgression.target(), level, true);
                 if (level >= maxLevel) {
                     targetDetails = Component.translatable(
@@ -215,11 +246,11 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
             }
         } else if (isTool(gear)) {
             blockProgression = ToolProgression.data(gear);
-            int actionsPerLevel = CombatConfig.TOOL_BLOCKS_PER_LEVEL.getAsInt();
-            int maxLevel = CombatConfig.MAX_TOOL_PROGRESSION_LEVEL.getAsInt();
+            int actionsPerLevel = ServerConfig.TOOL_BLOCKS_PER_LEVEL.getAsInt();
+            int maxLevel = assessMaxLevel(gear);
             if (blockProgression.locked()) {
                 int level = blockProgression.level(actionsPerLevel, maxLevel);
-                long bonus = Math.round(level * CombatConfig.TOOL_MINING_SPEED_BONUS_PER_LEVEL.getAsDouble() * 100.0D);
+                long bonus = Math.round(level * ServerConfig.TOOL_MINING_SPEED_BONUS_PER_LEVEL.getAsDouble() * 100.0D);
                 targetName = targetDetails(blockProgression.target(), level, false);
                 if (level >= maxLevel) {
                     targetDetails = Component.translatable(
@@ -242,13 +273,13 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
 
         if (!gear.isEmpty()) {
             if (be instanceof TierOneAugStationBlock) {
-                if (gear.is(ModItemTags.TIER_ONE_ARMOR) || gear.is(ModItemTags.TIER_ONE_TOOL)) {
+                if (gear.is(ModItemTags.TIER_ONE_GEAR)) {
                     resetButton();
                 } else {
                     incompatibleItem();
                 }
             } else if (be instanceof TierTwoAugStationBlock) {
-                if (gear.is(ModItemTags.TIER_THREE_ARMOR) || gear.is(ModItemTags.TIER_THREE_TOOL)) {
+                if (gear.is(ModItemTags.TIER_THREE_GEAR)) {
                     incompatibleItem();
                 } else {
                     resetButton();
@@ -265,18 +296,24 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
                     graphics.text(this.font, Component.translatable("container.augment_station.gear_weakened"), this.leftPos + 62, this.topPos + 82, 0xFFAAAAAA, false);
                 } else if (gear.has(ModDataComponents.FRAGILE)) {
                     graphics.text(this.font, Component.translatable("container.augment_station.gear_fragile"), this.leftPos + 62, this.topPos + 82, 0xFFFF5555, false);
+                    graphics.text(this.font, Component.translatable("container.augment_station.cannot_gain_augment_slots"), this.leftPos + 62, this.topPos + 98, 0xFFFF5555, false);
+                    augmentButton.active = false;
                 }
                 augmentSlotsLimit(gear);
 
                 if (augment_slots != null) {
                     awakenButton.setMessage(Component.translatable("button.darkechoes.augstation.initresonance"));
+                    if (!gear.has(ModDataComponents.FRAGILE) && !awakenSlot.getItem().is(ModItemTags.TRUE_AWAKENERS)) {
+                        awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.proceed_with_true_awakeners")));
+                    }
+                } else {
+                    if (awakenSlot.getItem().is(ModItemTags.FRAGILE_AWAKENERS)) {
+                        awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.fragile_warning")));
+                    } else if (awakenSlot.getItem().is(ModItemTags.WEAKENED_AWAKENERS)) {
+                        awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.weakened_warning")));
+                    }
                 }
 
-                if (!awakenSlot.hasItem()) {
-                    awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.fragile_warning")));
-                } else if (awakenSlot.getItem().is(Items.ECHO_SHARD)) {
-                    awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.weakened_warning")));
-                }
             } else if (menuIndex == 1) {
 //                graphics.drawScrollingString();
 //                TODO once multi-target adaptation is implemented, iterate through adaptations
@@ -285,19 +322,39 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
                     graphics.text(this.font, targetDetails, this.leftPos + 62, this.topPos + 63, 0xFF404040, false);
                 }
             } else if (menuIndex == 2) {
-                if (!augmentSlot.getItem().is(Items.WRITABLE_BOOK) || augmentSlot.getItem().isEmpty() || !gear.has(AUGMENT_SLOTS)) {
-                    augmentButton.active = false;
-                    augmentButton.setTooltip(Tooltip.create(Component.literal("WIP, only accepts a book & quill! For now adds the malleable augment.")));
-                } else {
-                    augmentButton.setTooltip(null);
-                    augmentButton.active = true;
+                graphics.text(this.font, (!gear.has(AUGMENT_SLOTS) || augment_slots <= 0 ? Component.translatable("container.augment_station.no_augment_slots") : Component.translatable("container.augment_station.augment_slots_left", Objects.requireNonNull(augment_slots))), this.leftPos + 62, this.topPos + 47, 0xFF404040, false);
+                ItemStack augmentSource = augmentSlot.getItem();
+                RegistryAccess access = this.menu.level.registryAccess();
+                HolderSet<Item> canAugment = getAugmentSourceOfAugment(access, augmentSource);
+                augmentButton.active = !augmentSource.isEmpty() && gear.has(AUGMENT_SLOTS) && gear.get(AUGMENT_SLOTS) > 0;
+                if (!augmentSource.isEmpty()) {
+                    Component augmentName = getAugmentName(access, augmentSource);
+                    Optional<Holder.Reference<Augment>> toBeAddedAugment = getAugmentToAdd(access, gear, augmentSource);
+                    graphics.text(this.font, Component.translatable("container.augment_station.add_augment", augmentName), this.leftPos + 62, this.topPos + 63, 0xFF404040, false);
+                    if (toBeAddedAugment.isEmpty()) {
+                        graphics.text(this.font, Component.translatable("container.augment_station.incompatible_augment"), this.leftPos + 62, this.topPos + 79, 0xFFFF5555, false);
+                        graphics.text(this.font, Component.translatable("container.augment_station.required_gear_type", canAugment.unwrapKey().get().toString()), this.leftPos + 62, this.topPos + 95, 0xFFFF5555, false);
+                        augmentButton.active = false;
+                    }
                 }
+
             } else if (menuIndex == 3) {
                 Set<Holder<Augment>> augments = gear.get(ModDataComponents.AUGMENTS) != null ? gear.get(ModDataComponents.AUGMENTS).keySet() : Collections.emptySet();
                 int index = 0;
                 for (Holder<Augment> aug : augments) {
                     index++;
-                    graphics.text(this.font, aug.value().desc(), this.leftPos + 62, this.topPos + 47 * index, 0xFF404040, false);
+                    graphics.text(this.font, aug.value().desc(), this.leftPos + 62, this.topPos + 34 + (16 * index), 0xFF404040, false);
+                }
+            } else if (menuIndex == 4) {
+                graphics.text(this.font, Component.literal("wat u wanna mend, ha?"), this.leftPos + 62, this.topPos + 47, 0xFF404040, false);
+                if (gear.is(ModItemTags.TIER_ONE_GEAR) && !amendSlot.getItem().is(ModItemTags.TIER_ONE_MENDER) && !amendSlot.getItem().isEmpty()) {
+                    gearTierTooHigh();
+                } else if (gear.is(ModItemTags.TIER_TWO_GEAR) && amendSlot.getItem().is(ModItemTags.TIER_THREE_MENDER) && !amendSlot.getItem().isEmpty()) {
+                    gearTierTooHigh();
+                } else if (amendSlot.getItem().isEmpty()) {
+                    resetButton();
+                } else {
+                    amendButton.active = true;
                 }
             }
         } else {
@@ -311,7 +368,7 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
         double mouseY = event.y() - this.topPos;
         int menuIndex = this.menu.augmentStationData.get(0);
         if (event.button() == 0) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
                 int baseY = 4 + (26 * i);
                 if (mouseX > 256 && mouseY > baseY && mouseX < 288 && mouseY < baseY + 26) {
                     if (i != menuIndex) {
@@ -330,21 +387,26 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
         awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.incompatible")));
     }
 
+    private void gearTierTooHigh() {
+        amendButton.active = false;
+        amendButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.gear_tier_too_high")));
+    }
+
     private void augmentSlotsLimit(ItemStack gear) {
         Integer augment_slots = gear.get(AUGMENT_SLOTS);
         Slot awakenSlot = menu.getSlot(1);
-        if ((gear.is(ModItemTags.TIER_ONE_ARMOR) || gear.is(ModItemTags.TIER_ONE_TOOL)) && augment_slots != null && augment_slots >= CombatConfig.MAX_AUGMENT_SLOTS_TIER_ONE.getAsInt() && awakenSlot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
+        if (gear.is(ModItemTags.TIER_ONE_GEAR) && augment_slots != null && augment_slots >= CommonConfig.MAX_AUGMENT_SLOTS_TIER_ONE.getAsInt() && awakenSlot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
             awakenButton.active = false;
             awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.limit_augment_slots")));
-        } else if ((gear.is(ModItemTags.TIER_TWO_ARMOR) || gear.is(ModItemTags.TIER_TWO_TOOL)) && augment_slots != null && augment_slots >= CombatConfig.MAX_AUGMENT_SLOTS_TIER_TWO.getAsInt() && awakenSlot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
+        } else if (gear.is(ModItemTags.TIER_TWO_GEAR) && augment_slots != null && augment_slots >= CommonConfig.MAX_AUGMENT_SLOTS_TIER_TWO.getAsInt() && awakenSlot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
             awakenButton.active = false;
             awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.limit_augment_slots")));
-        } else if ((gear.is(ModItemTags.TIER_THREE_ARMOR) || gear.is(ModItemTags.TIER_THREE_TOOL)) && augment_slots != null && augment_slots >= CombatConfig.MAX_AUGMENT_SLOTS_TIER_THREE.getAsInt() && awakenSlot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
+        } else if (gear.is(ModItemTags.TIER_THREE_GEAR) && augment_slots != null && augment_slots >= CommonConfig.MAX_AUGMENT_SLOTS_TIER_THREE.getAsInt() && awakenSlot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
             awakenButton.active = false;
             awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.limit_augment_slots")));
-        } else if (augment_slots != null && augment_slots <= -1 && !awakenSlot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
+        } else if (augment_slots != null && !awakenSlot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
             awakenButton.active = false;
-            awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.limit_augment_slots")));
+            awakenButton.setTooltip(Tooltip.create(Component.translatable("container.augment_station.proceed_with_true_awakeners")));
         }
     }
 
@@ -355,7 +417,10 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
         awakenButton.setPosition(this.leftPos + 26, this.topPos + 123);
         augmentButton.active = false;
         augmentButton.setPosition(this.leftPos + 26, this.topPos + 123);
+        amendButton.active = false;
+        amendButton.setPosition(this.leftPos + 26, this.topPos + 123);
         this.addRenderableWidget(awakenButton);
         this.addRenderableWidget(augmentButton);
+        this.addRenderableWidget(amendButton);
     }
 }

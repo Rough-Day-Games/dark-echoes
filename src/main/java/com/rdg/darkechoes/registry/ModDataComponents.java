@@ -14,8 +14,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ModDataComponents {
     public static final DeferredRegister.DataComponents COMPONENTS =
             DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, DarkEchoes.MOD_ID);
-    public static final DeferredRegister.DataComponents AUGMENT_COMPONENT_TYPES =
-            DeferredRegister.createDataComponents(ModRegistries.AUGMENT_EFFECT_COMPONENT_TYPE_KEY, DarkEchoes.MOD_ID);
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> PROGRESSION_LEVEL =
             COMPONENTS.registerComponentType("progression_level", builder -> builder
@@ -30,7 +28,6 @@ public final class ModDataComponents {
             COMPONENTS.registerComponentType("block_progression", builder -> builder
                     .persistent(BlockProgression.CODEC)
                     .networkSynchronized(BlockProgression.STREAM_CODEC));
-//    TODO validate augment slots when adding augments
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> AUGMENT_SLOTS =
             COMPONENTS.registerComponentType("augment_slots", builder -> builder
                     .persistent(Codec.intRange(-1, 999))
@@ -42,15 +39,8 @@ public final class ModDataComponents {
             COMPONENTS.registerComponentType("weakened", builder -> builder
                     .persistent(Codec.BOOL));
 
-
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<GearAugments>> AUGMENTS =
             COMPONENTS.registerComponentType("augments", b -> b.persistent(GearAugments.CODEC).networkSynchronized(GearAugments.STREAM_CODEC).cacheEncoding());
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> MALLEABLE =
-            AUGMENT_COMPONENT_TYPES.registerComponentType("malleable",
-                    builder -> builder.persistent(Codec.BOOL));
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> MAGIC_REBORN =
-            AUGMENT_COMPONENT_TYPES.registerComponentType("magic_reborn",
-                    builder -> builder.persistent(Codec.BOOL));
 
     private ModDataComponents() {
     }

@@ -1,7 +1,0 @@
-{
-  "augment_source": "#darkechoes:heavens_augment_sources",
-  "description": {
-    "translate": "augment.darkechoes.heavens"
-  },
-  "supported_items": "#darkechoes:augmentable/armor/chestplates"
-}

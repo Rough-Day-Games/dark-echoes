@@ -7,7 +7,6 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import static com.rdg.darkechoes.registry.ModRegistries.BUILDER;
 
-//import static com.rdg.darkechoes.client.AugmentsGen.BUILDER;
 
 @EventBusSubscriber(modid = DarkEchoes.MOD_ID)
 public class DataGen {

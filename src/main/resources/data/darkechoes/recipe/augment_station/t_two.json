@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "darkechoes",
+  "key": {
+    "L": "#darkechoes:stripped_logs",
+    "M": "minecraft:diamond",
+    "P": "minecraft:smooth_stone",
+    "S": "minecraft:smithing_table",
+    "T": "#minecraft:logs"
+  },
+  "pattern": [
+    "LTL",
+    "LML",
+    "PSP"
+  ],
+  "result": {
+    "id": "darkechoes:augment_station/t_two"
+  }
+}

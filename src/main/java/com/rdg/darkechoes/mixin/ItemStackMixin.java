@@ -3,15 +3,10 @@ package com.rdg.darkechoes.mixin;
 import com.rdg.darkechoes.helpers.AugmentEffectComponents;
 import com.rdg.darkechoes.helpers.AugmentHelper;
 import com.rdg.darkechoes.registry.ModDataComponents;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.PatchedDataComponentMap;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
-import net.minecraft.world.item.component.TooltipProvider;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,9 +37,6 @@ public abstract class ItemStackMixin {
     @Shadow
     @Final
     private PatchedDataComponentMap components;
-
-    @Shadow
-    public abstract <T extends TooltipProvider> void addToTooltip(DataComponentType<T> type, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag);
 
     @Shadow
     public abstract int getMaxDamage();

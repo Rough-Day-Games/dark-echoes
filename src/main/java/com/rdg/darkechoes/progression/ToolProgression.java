@@ -1,7 +1,7 @@
 package com.rdg.darkechoes.progression;
 
 import com.rdg.darkechoes.DarkEchoes;
-import com.rdg.darkechoes.config.CombatConfig;
+import com.rdg.darkechoes.config.ServerConfig;
 import com.rdg.darkechoes.registry.ModDataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
+
+import static com.rdg.darkechoes.helpers.GearHelper.assessMaxLevel;
 
 public final class ToolProgression {
     public static final TagKey<Item> PICKAXES = itemTag("tool_progression/pickaxes");
@@ -43,9 +45,9 @@ public final class ToolProgression {
             return 1.0D;
         }
         int level = progression.level(
-                CombatConfig.TOOL_BLOCKS_PER_LEVEL.getAsInt(),
-                CombatConfig.MAX_TOOL_PROGRESSION_LEVEL.getAsInt());
-        return 1.0D + level * CombatConfig.TOOL_MINING_SPEED_BONUS_PER_LEVEL.getAsDouble();
+                ServerConfig.TOOL_BLOCKS_PER_LEVEL.getAsInt(),
+                assessMaxLevel(tool));
+        return 1.0D + level * ServerConfig.TOOL_MINING_SPEED_BONUS_PER_LEVEL.getAsDouble();
     }
 
     public static void recordBlockBreak(ItemStack tool, BlockState state) {
@@ -55,8 +57,8 @@ public final class ToolProgression {
         BlockProgression current = data(tool);
         BlockProgression updated = current.advance(
                 blockId(state),
-                CombatConfig.TOOL_BLOCKS_PER_LEVEL.getAsInt(),
-                CombatConfig.MAX_TOOL_PROGRESSION_LEVEL.getAsInt(),
+                ServerConfig.TOOL_BLOCKS_PER_LEVEL.getAsInt(),
+                assessMaxLevel(tool),
                 current.slots());
         if (!updated.equals(current)) {
             tool.set(ModDataComponents.BLOCK_PROGRESSION.get(), updated);
@@ -65,11 +67,11 @@ public final class ToolProgression {
 
     public static void appendTooltip(ItemStack tool, List<Component> tooltip) {
         BlockProgression progression = data(tool);
-        int blocksPerLevel = CombatConfig.TOOL_BLOCKS_PER_LEVEL.getAsInt();
-        int maxLevel = CombatConfig.MAX_TOOL_PROGRESSION_LEVEL.getAsInt();
+        int blocksPerLevel = ServerConfig.TOOL_BLOCKS_PER_LEVEL.getAsInt();
+        int maxLevel = assessMaxLevel(tool);
         if (progression.locked()) {
             int level = progression.level(blocksPerLevel, maxLevel);
-            long bonus = Math.round(level * CombatConfig.TOOL_MINING_SPEED_BONUS_PER_LEVEL.getAsDouble() * 100.0D);
+            long bonus = Math.round(level * ServerConfig.TOOL_MINING_SPEED_BONUS_PER_LEVEL.getAsDouble() * 100.0D);
             Component targetName = blockName(progression.target());
             if (level >= maxLevel) {
                 tooltip.add(Component.translatable("tooltip.darkechoes.tool_progression_max", targetName, level, bonus));

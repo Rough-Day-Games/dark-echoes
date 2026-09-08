@@ -1,0 +1,10 @@
+{
+  "augment_source": "#darkechoes:augment_sources/low_gravity",
+  "description": {
+    "translate": "augment.darkechoes.low_gravity"
+  },
+  "effects": {
+    "minecraft:prevent_fall_damage": {}
+  },
+  "supported_items": "#darkechoes:augmentable/combat_gear/armor/boots"
+}

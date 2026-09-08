@@ -1,6 +1,8 @@
 package com.rdg.darkechoes.client.menus;
 
+import com.rdg.darkechoes.DarkEchoes;
 import com.rdg.darkechoes.client.ModItemTags;
+import com.rdg.darkechoes.helpers.AugStationAmend;
 import com.rdg.darkechoes.helpers.AugStationAugment;
 import com.rdg.darkechoes.helpers.AugStationAwaken;
 import com.rdg.darkechoes.helpers.AugStationPageListener;
@@ -18,6 +20,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
@@ -27,32 +30,38 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
     public static final int GEAR_SLOT_INDEX = 0;
     public static final int AWAKEN_SLOT_INDEX = 1;
     public static final int AUGMENT_SLOT_INDEX = 2;
+    public static final int AMEND_SLOT_INDEX = 3;
     public final AwakenSlot awaken_slot;
     public final Slot gear_slot;
     public final Slot augment_slot;
+    public final Slot amend_slot;
     public final Block augStationBlock;
     public final ContainerData augmentStationData;
+    public final Level level;
     private final Container augmentStation;
 
     public BaseAugStationMenu(int containerId, Inventory playerInv, FriendlyByteBuf buf) {
-        this(containerId, playerInv, new SimpleContainer(3), new SimpleContainerData(1), buf.readBlockPos());
+        this(containerId, playerInv, new SimpleContainer(4), new SimpleContainerData(1), buf.readBlockPos());
     }
 
     public BaseAugStationMenu(int containerId, Inventory playerInv, Container augmentStation, ContainerData menuIndex, BlockPos blockEntityPos) {
         super(AUGMENT_STATION_MENU.get(), containerId);
-        checkContainerSize(augmentStation, 3);
+        checkContainerSize(augmentStation, 4);
         checkContainerDataCount(menuIndex, 1);
         this.augmentStation = augmentStation;
         this.augmentStationData = menuIndex;
-        this.augStationBlock = playerInv.player.level().getBlockState(blockEntityPos).getBlock();
+        this.level = playerInv.player.level();
+        this.augStationBlock = this.level.getBlockState(blockEntityPos).getBlock();
         this.addSlot(new GearSlot(augmentStation, GEAR_SLOT_INDEX, 37, 35));
         this.addSlot(new AwakenSlot(augmentStation, AWAKEN_SLOT_INDEX, 37, 97));
         this.addSlot(new AugmentSlot(augmentStation, AUGMENT_SLOT_INDEX, 37, 97));
+        this.addSlot(new AmendSlot(augmentStation, AMEND_SLOT_INDEX, 37, 97));
         this.addDataSlots(menuIndex);
         this.addStandardInventorySlots(playerInv, 46, 165);
         this.awaken_slot = (AwakenSlot) this.slots.get(AWAKEN_SLOT_INDEX);
         this.gear_slot = this.slots.get(GEAR_SLOT_INDEX);
         this.augment_slot = this.slots.get(AUGMENT_SLOT_INDEX);
+        this.amend_slot = this.slots.get(AMEND_SLOT_INDEX);
     }
 
     public void openMenuIndex(int index) {
@@ -66,17 +75,25 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
         if (slot != null && slot.hasItem()) {
             ItemStack stack = slot.getItem();
             selected = stack.copy();
-            if (slotIndex == GEAR_SLOT_INDEX || slotIndex == AWAKEN_SLOT_INDEX) {
-                if (!this.moveItemStackTo(stack, 3, 37, false)) {
+            if (slotIndex == GEAR_SLOT_INDEX || slotIndex == AWAKEN_SLOT_INDEX || slotIndex == AUGMENT_SLOT_INDEX || slotIndex == AMEND_SLOT_INDEX) {
+                if (!this.moveItemStackTo(stack, 4, 39, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (slotIndex >= 2 && slotIndex < 38) {
+            } else if (slotIndex >= 3 && slotIndex < 40) {
                 if (GearSlot.mayPlaceItem(selected)) {
                     if (!moveItemStackTo(stack, GEAR_SLOT_INDEX, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (AwakenSlot.mayPlaceItem(selected)) {
                     if (!moveItemStackTo(stack, AWAKEN_SLOT_INDEX, 2, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (AugmentSlot.mayPlaceItem(selected)) {
+                    if (!moveItemStackTo(stack, AUGMENT_SLOT_INDEX, 3, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (AmendSlot.mayPlaceItem(selected)) {
+                    if (!moveItemStackTo(stack, AMEND_SLOT_INDEX, 4, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
@@ -105,10 +122,9 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
         boolean isWeakened = gear_slot.getItem().has(ModDataComponents.WEAKENED);
         int augment_slots = gear_slot.getItem().has(ModDataComponents.AUGMENT_SLOTS) ? gear_slot.getItem().get(ModDataComponents.AUGMENT_SLOTS) : 0;
         if (awaken_slot.hasItem()) {
-            if (awaken_slot.getItem().is(Items.ECHO_SHARD)) {
+            if (awaken_slot.getItem().is(ModItemTags.WEAKENED_AWAKENERS)) {
                 isWeakened = true;
-                augment_slots--;
-            } else if (awaken_slot.getItem().is(ModItems.RESONANCE_CRYSTAL)) {
+            } else if (awaken_slot.getItem().is(ModItemTags.TRUE_AWAKENERS)) {
                 augment_slots++;
             }
         } else {
@@ -119,9 +135,12 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
     }
 
     public void augmentGear() {
-        ClientPacketDistributor.sendToServer(new AugStationAugment(true));
+        ClientPacketDistributor.sendToServer(new AugStationAugment(augment_slot.getItem()));
     }
 
+    public void amendGear() {
+        ClientPacketDistributor.sendToServer(new AugStationAmend(amend_slot.getItem()));
+    }
 
     public static class GearSlot extends Slot {
         public GearSlot(Container container, int index, int x, int y) {
@@ -161,12 +180,41 @@ public class BaseAugStationMenu extends AbstractContainerMenu {
     public static class AugmentSlot extends Slot {
         public boolean active;
 
+        public static boolean mayPlaceItem(ItemStack stack) {return stack.is(ModItemTags.AUGMENT_SOURCES);}
+
+        @Override
+        public boolean mayPlace(ItemStack itemStack) {
+            return mayPlaceItem(itemStack);
+        }
+
         @Override
         public boolean isActive() {
             return active;
         }
 
         public AugmentSlot(Container container, int slot, int x, int y) {
+            super(container, slot, x, y);
+        }
+    }
+
+    public static class AmendSlot extends Slot {
+        public boolean active;
+
+        public static boolean mayPlaceItem(ItemStack stack) {
+            return stack.is(ModItemTags.AMENDMENT_ITEMS);
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack itemStack) {
+            return mayPlaceItem(itemStack);
+        }
+
+        @Override
+        public boolean isActive() {
+            return active;
+        }
+
+        public AmendSlot(Container container, int slot, int x, int y) {
             super(container, slot, x, y);
         }
     }

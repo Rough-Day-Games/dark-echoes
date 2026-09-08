@@ -1,16 +1,13 @@
 package com.rdg.darkechoes.combat;
 
 import com.rdg.darkechoes.DarkEchoes;
-import com.rdg.darkechoes.config.CombatConfig;
+import com.rdg.darkechoes.config.ServerConfig;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -24,11 +21,11 @@ public final class CombatRules {
 
     public static void reload() {
         List<DamageRule> incoming = parseDamageRules(
-                CombatConfig.INCOMING_DAMAGE_MULTIPLIERS.get(), "incomingDamageMultipliers");
+                ServerConfig.INCOMING_DAMAGE_MULTIPLIERS.get(), "incomingDamageMultipliers");
         List<DamageRule> outgoing = parseDamageRules(
-                CombatConfig.OUTGOING_DAMAGE_MULTIPLIERS.get(), "outgoingDamageMultipliers");
+                ServerConfig.OUTGOING_DAMAGE_MULTIPLIERS.get(), "outgoingDamageMultipliers");
         List<ItemRule> items = parseItemRules(
-                CombatConfig.ITEM_DAMAGE_MULTIPLIERS.get(), "itemDamageMultipliers");
+                ServerConfig.ITEM_DAMAGE_MULTIPLIERS.get(), "itemDamageMultipliers");
 
         snapshot = new Snapshot(incoming, outgoing, items);
         DarkEchoes.LOGGER.info("Loaded Dark Echoes combat rules: {} incoming, {} outgoing, {} item",

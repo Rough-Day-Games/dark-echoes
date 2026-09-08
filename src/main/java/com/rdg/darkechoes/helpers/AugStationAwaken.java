@@ -3,6 +3,7 @@ package com.rdg.darkechoes.helpers;
 import com.rdg.darkechoes.DarkEchoes;
 import com.rdg.darkechoes.client.ModItemTags;
 import com.rdg.darkechoes.client.menus.BaseAugStationMenu;
+import com.rdg.darkechoes.config.CommonConfig;
 import com.rdg.darkechoes.progression.BlockProgression;
 import com.rdg.darkechoes.progression.MobProgression;
 import com.rdg.darkechoes.registry.ModDataComponents;
@@ -14,6 +15,8 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import static com.rdg.darkechoes.progression.Progression.isCombatGear;
@@ -40,9 +43,9 @@ public record AugStationAwaken(boolean isFragile, boolean isWeakened,
         ItemStack awaken_item = awaken_item_slot.getItem();
 
         if (isTool(gear) && !gear.has(ModDataComponents.BLOCK_PROGRESSION)) {
-            gear.set(ModDataComponents.BLOCK_PROGRESSION, new BlockProgression("", 0, "", 0, gear.is(ModItemTags.TIER_ONE_GEAR) ? 3 : (gear.is(ModItemTags.TIER_TWO_GEAR) ? 6 : (gear.is(ModItemTags.TIER_THREE_GEAR) ? 10 : 0))));
+            gear.set(ModDataComponents.BLOCK_PROGRESSION, new BlockProgression("", 0, "", 0, gear.is(ModItemTags.TIER_ONE_GEAR) ? CommonConfig.INITIAL_ADAPTATION_SLOT_TIER_ONE.getAsInt() : (gear.is(ModItemTags.TIER_TWO_GEAR) ? CommonConfig.INITIAL_ADAPTATION_SLOT_TIER_TWO.getAsInt() : (gear.is(ModItemTags.TIER_THREE_GEAR) ? CommonConfig.INITIAL_ADAPTATION_SLOT_TIER_THREE.getAsInt() : 0))));
         } else if (isCombatGear(gear) && !gear.has(ModDataComponents.MOB_PROGRESSION)) {
-            gear.set(ModDataComponents.MOB_PROGRESSION, new MobProgression("", 0, "", 0, gear.is(ModItemTags.TIER_ONE_GEAR) ? 3 : (gear.is(ModItemTags.TIER_TWO_GEAR) ? 6 : (gear.is(ModItemTags.TIER_THREE_GEAR) ? 10 : 0))));
+            gear.set(ModDataComponents.MOB_PROGRESSION, new MobProgression("", 0, "", 0, gear.is(ModItemTags.TIER_ONE_GEAR) ? CommonConfig.INITIAL_ADAPTATION_SLOT_TIER_ONE.getAsInt() : (gear.is(ModItemTags.TIER_TWO_GEAR) ? CommonConfig.INITIAL_ADAPTATION_SLOT_TIER_TWO.getAsInt() : (gear.is(ModItemTags.TIER_THREE_GEAR) ? CommonConfig.INITIAL_ADAPTATION_SLOT_TIER_THREE.getAsInt() : 0))));
         }
         gear.set(ModDataComponents.AUGMENT_SLOTS, packet.augmentSlotCount());
         if (packet.isWeakened) {
@@ -51,8 +54,19 @@ public record AugStationAwaken(boolean isFragile, boolean isWeakened,
             gear.set(ModDataComponents.FRAGILE, true);
         }
 
-//        TODO after augment that allows gear to be enchanted is implemented, check here
-        if (gear.has(DataComponents.ENCHANTMENTS)) gear.set(DataComponents.ENCHANTMENTS, null);
+        if (gear.has(DataComponents.ENCHANTMENTS) && AugmentHelper.has(gear, AugmentEffectComponents.ALLOW_ENCHANTS)) {
+            ItemEnchantments enchants = EnchantmentHelper.getEnchantmentsForCrafting(gear);
+            DarkEchoes.LOGGER.info("gear got enchantments and has allow enchants");
+            if (enchants != ItemEnchantments.EMPTY) {
+                gear.set(DataComponents.ENCHANTMENTS, new ItemEnchantments.Mutable(enchants).toImmutable());
+            } else {
+                gear.set(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
+            }
+        } else if (gear.has(DataComponents.ENCHANTMENTS)) {
+            DarkEchoes.LOGGER.info("gear got enchantments, will delete");
+            gear.set(DataComponents.ENCHANTMENTS, null);
+        }
+
         if (!awaken_item.isEmpty()) awaken_item.shrink(1);
 
         gear_slot.setChanged();

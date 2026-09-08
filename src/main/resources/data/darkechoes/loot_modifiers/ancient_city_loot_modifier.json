@@ -1,0 +1,13 @@
+{
+  "type": "darkechoes:ancient_city_loot_modifier",
+  "conditions": [
+    {
+      "chance": 0.1,
+      "condition": "minecraft:random_chance"
+    },
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/ancient_city"
+    }
+  ]
+}

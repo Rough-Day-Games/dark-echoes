@@ -1,0 +1,10 @@
+{
+  "augment_source": "#darkechoes:augment_sources/heavens_augment",
+  "description": {
+    "translate": "augment.darkechoes.heavens"
+  },
+  "effects": {
+    "minecraft:grow_wings": {}
+  },
+  "supported_items": "#darkechoes:augmentable/combat_gear/armor/chestplates"
+}

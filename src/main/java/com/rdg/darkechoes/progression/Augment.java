@@ -73,7 +73,9 @@ public static final Codec<Augment> DIRECT_CODEC = RecordCodecBuilder.create(
 
     public boolean isSupportedGear(ItemStack gear) {return gear.is(this.definition.supportedItems);}
 
-    public boolean canAugment(ItemStack gear) {return this.definition.supportedItems().contains(gear.typeHolder()) && gear.has(ModDataComponents.AUGMENT_SLOTS) && !gear.has(ModDataComponents.FRAGILE);}
+    public boolean canAugment(ItemStack gear, ItemStack augmentSource) {
+        return this.definition.supportedItems().contains(gear.typeHolder()) && gear.has(ModDataComponents.AUGMENT_SLOTS) && !gear.has(ModDataComponents.FRAGILE) && this.definition.augmentSource().contains(augmentSource.typeHolder());
+    }
 
     public static <T> void applyEffects(List<ConditionalEffect<T>> effects, LootContext filterData, Augment.GenericAction<T> action) {
         for (ConditionalEffect<T> conditionalEffect : effects) {
@@ -125,8 +127,6 @@ public static final Codec<Augment> DIRECT_CODEC = RecordCodecBuilder.create(
             this.effectMapBuilder.set(type, effect);
             return this;
         }
-
-//        public <E> Builder withEffect
 
         public Builder withEffect(DataComponentType<Unit> type) {
             this.effectMapBuilder.set(type, Unit.INSTANCE);

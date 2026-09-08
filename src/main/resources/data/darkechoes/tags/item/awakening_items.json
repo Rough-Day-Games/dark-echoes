@@ -1,6 +1,7 @@
 {
   "values": [
-    "darkechoes:resonance_crystal",
-    "minecraft:echo_shard"
+    "#darkechoes:fragile_awakeners",
+    "#darkechoes:weakened_awakeners",
+    "#darkechoes:true_awakeners"
   ]
 }

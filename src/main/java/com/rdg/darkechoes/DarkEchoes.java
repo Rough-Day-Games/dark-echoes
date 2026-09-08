@@ -4,14 +4,17 @@ import com.mojang.logging.LogUtils;
 import com.rdg.darkechoes.client.ModMenus;
 import com.rdg.darkechoes.combat.CombatEvents;
 import com.rdg.darkechoes.combat.CombatRules;
-import com.rdg.darkechoes.config.CombatConfig;
+import com.rdg.darkechoes.config.ServerConfig;
+import com.rdg.darkechoes.config.CommonConfig;
+import com.rdg.darkechoes.helpers.AugStationAmend;
 import com.rdg.darkechoes.helpers.AugStationAugment;
 import com.rdg.darkechoes.helpers.AugStationAwaken;
 import com.rdg.darkechoes.helpers.AugStationPageListener;
-import com.rdg.darkechoes.helpers.augment_value_effect.LevelBasedValue;
+import com.rdg.darkechoes.helpers.augment_value_effect.AddValue;
 import com.rdg.darkechoes.progression.Augment;
 import com.rdg.darkechoes.progression.ToolProgressionEvents;
 import com.rdg.darkechoes.registry.*;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
@@ -25,6 +28,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 
 import static com.rdg.darkechoes.registry.ModRegistries.*;
@@ -35,9 +39,7 @@ public final class DarkEchoes {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public DarkEchoes(IEventBus modBus, ModContainer modContainer) {
-//        Augments.AUGMENTS.register(modBus);
         ModDataComponents.COMPONENTS.register(modBus);
-        ModDataComponents.AUGMENT_COMPONENT_TYPES.register(modBus);
         ModCreativeTab.CREATIVE_MODE_TABS.register(modBus);
         ModCodec.GLOBAL_LOOT_MOD_SERIALIZERS.register(modBus);
         ModItems.ITEMS.register(modBus);
@@ -46,13 +48,15 @@ public final class DarkEchoes {
         ModBlocks.BLOCK_ENTITY_TYPES.register(modBus);
         ModBlocks.BLOCK_TYPE.register(modBus);
         ModMenus.MENU_TYPE.register(modBus);
-        modContainer.registerConfig(ModConfig.Type.SERVER, CombatConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
         modBus.addListener(DarkEchoes::onConfigLoading);
         modBus.addListener(DarkEchoes::onConfigReloading);
         modBus.addListener(DarkEchoes::addCreativeTabContents);
         modBus.addListener(DarkEchoes::payloadHandlers);
         modBus.addListener(DarkEchoes::registerRegistries);
         modBus.addListener(DarkEchoes::registerDatapackRegistries);
+        modBus.addListener(DarkEchoes::registerAugmentValueEffectTypes);
         NeoForge.EVENT_BUS.register(CombatEvents.class);
         NeoForge.EVENT_BUS.register(ToolProgressionEvents.class);
     }
@@ -64,13 +68,13 @@ public final class DarkEchoes {
     }
 
     private static void onConfigLoading(ModConfigEvent.Loading event) {
-        if (event.getConfig().getSpec() == CombatConfig.SPEC) {
+        if (event.getConfig().getSpec() == ServerConfig.SPEC) {
             CombatRules.reload();
         }
     }
 
     private static void onConfigReloading(ModConfigEvent.Reloading event) {
-        if (event.getConfig().getSpec() == CombatConfig.SPEC) {
+        if (event.getConfig().getSpec() == ServerConfig.SPEC) {
             CombatRules.reload();
         }
     }
@@ -87,6 +91,12 @@ public final class DarkEchoes {
                 AugStationAugment.TYPE,
                 AugStationAugment.STREAM_CODEC,
                 AugStationAugment::handle
+        );
+
+        registrar.playToServer(
+                AugStationAmend.TYPE,
+                AugStationAmend.STREAM_CODEC,
+                AugStationAmend::handle
         );
 
         registrar.playToServer(
@@ -110,11 +120,11 @@ public final class DarkEchoes {
                 Augment.DIRECT_CODEC,
                 builder -> builder.maxId(256)
         );
-//        event.dataPackRegistry(
-//                AUGMENT_LEVEL_BASED_VALUE_TYPE_KEY,
-//                LevelBasedValue.CODEC,
-//                LevelBasedValue.CODEC,
-//                builder -> builder.maxId(256)
-//        );
+    }
+
+    private static void registerAugmentValueEffectTypes(RegisterEvent event) {
+        event.register(AUGMENT_VALUE_EFFECT_TYPE_KEY, registry -> {
+            registry.register(Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "add"), AddValue.CODEC);
+        });
     }
 }

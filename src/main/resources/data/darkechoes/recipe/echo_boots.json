@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "darkechoes:resonance_crystal",
+  "base": "minecraft:diamond_boots",
+  "result": {
+    "id": "darkechoes:echo_boots"
+  },
+  "template": "darkechoes:echo_upgrade_smithing_template"
+}

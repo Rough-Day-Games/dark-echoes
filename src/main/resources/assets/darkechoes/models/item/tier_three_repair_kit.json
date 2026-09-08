@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "darkechoes:item/tier_three_repair_kit"
+  }
+}

@@ -15,6 +15,10 @@ public interface AugmentEffectComponents {
     Codec<DataComponentMap> CODEC = DataComponentMap.makeCodec(COMPONENT_CODEC);
     DataComponentType<Unit> PREVENT_GEAR_BREAK = register("prevent_gear_break", (b) -> b.persistent(Unit.CODEC));
     DataComponentType<Unit> ALLOW_ENCHANTS = register("allow_enchants", (b) -> b.persistent(Unit.CODEC));
+    DataComponentType<Unit> LARGER_BLOCK_BREAK_RADIUS = register("larger_block_break_radius", (b) -> b.persistent(Unit.CODEC));
+    DataComponentType<Unit> GROW_WINGS = register("grow_wings", (b) -> b.persistent(Unit.CODEC));
+    DataComponentType<Unit> PREVENT_FALL_DAMAGE = register("prevent_fall_damage", (b) -> b.persistent(Unit.CODEC));
+    DataComponentType<Unit> SEE_ENTITIES_THROUGH_BLOCKS = register("see_entities_through_blocks", (b) -> b.persistent(Unit.CODEC));
     DataComponentType<AugmentValueEffect> EXTRA_ADAPTATION = register("extra_adaptation", (b) -> b.persistent(AugmentValueEffect.CODEC));
 //    DataComponentType<Unit>
 

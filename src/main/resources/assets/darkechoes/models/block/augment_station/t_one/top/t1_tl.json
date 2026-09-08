@@ -12,7 +12,7 @@
 		"9": "darkechoes:block/augment_station/t_one/top/cupboard_frame_b",
 		"10": "darkechoes:block/augment_station/t_one/top/cupboard_frame_r",
 		"11": "darkechoes:block/augment_station/t_one/top/cupboard_frame_l",
-		"particle": "darkechoes:block/augment_station/t_one/top/back"
+		"particle": "darkechoes:block/augment_station/t_one/bottom/stripped_oak_log"
 	},
 	"elements": [
 		{

@@ -1,0 +1,10 @@
+{
+  "augment_source": "#darkechoes:augment_sources/echo_sense",
+  "description": {
+    "translate": "augment.darkechoes.echo_sense"
+  },
+  "effects": {
+    "minecraft:see_entities_through_blocks": {}
+  },
+  "supported_items": "#darkechoes:echo_sense_compatible"
+}

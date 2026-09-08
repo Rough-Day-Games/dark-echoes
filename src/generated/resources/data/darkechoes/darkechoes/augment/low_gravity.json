@@ -1,7 +1,0 @@
-{
-  "augment_source": "#darkechoes:low_gravity_sources",
-  "description": {
-    "translate": "augment.darkechoes.low_gravity"
-  },
-  "supported_items": "#darkechoes:augmentable/armor/boots"
-}

@@ -1,6 +1,7 @@
 package com.rdg.darkechoes.registry;
 
 import com.rdg.darkechoes.DarkEchoes;
+import com.rdg.darkechoes.client.AncientCityLootModifier;
 import com.rdg.darkechoes.client.WardenLootModifier;
 import com.mojang.serialization.MapCodec;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
@@ -15,4 +16,6 @@ public class ModCodec {
 
     public static final Supplier<MapCodec<WardenLootModifier>> WARDEN_LOOT_MODIFIER =
             GLOBAL_LOOT_MOD_SERIALIZERS.register("warden_loot_modifier", () -> WardenLootModifier.CODEC);
+    public static final Supplier<MapCodec<AncientCityLootModifier>> ANCIENT_CITY_LOOT_MODIFIER =
+            GLOBAL_LOOT_MOD_SERIALIZERS.register("ancient_city_loot_modifier", () -> AncientCityLootModifier.CODEC);
 }

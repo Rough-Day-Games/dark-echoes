@@ -22,6 +22,7 @@ public class ModCreativeTab {
                         output.accept(ModItems.ECHO_PICKAXE);
                         output.accept(ModItems.ECHO_SHOVEL);
                         output.accept(ModItems.ECHO_HOE);
+                        output.accept(ModItems.ECHO_SPEAR);
                         output.accept(ModItems.ECHO_HELMET);
                         output.accept(ModItems.ECHO_CHESTPLATE);
                         output.accept(ModItems.ECHO_LEGGINGS);
@@ -29,6 +30,10 @@ public class ModCreativeTab {
                         output.accept(ModItems.T_ONE_AUGSTATION);
                         output.accept(ModItems.T_TWO_AUGSTATION);
                         output.accept(ModItems.T_THREE_AUGSTATION);
+                        output.accept(ModItems.TIER_ONE_REPAIR_KIT);
+                        output.accept(ModItems.TIER_TWO_REPAIR_KIT);
+                        output.accept(ModItems.TIER_THREE_REPAIR_KIT);
+                        output.accept(ModItems.ECHO_UPGRADE_SMITHING_TEMPLATE);
                     })
                     .build());
 }

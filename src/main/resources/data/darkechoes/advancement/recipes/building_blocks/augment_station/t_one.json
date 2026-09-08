@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "darkechoes:augment_station/t_one"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "smithing_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:smithing_table"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "smithing_table"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "darkechoes:augment_station/t_one"
+    ]
+  }
+}
