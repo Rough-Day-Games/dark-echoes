@@ -26,12 +26,12 @@ public class Models extends ModelProvider {
         itemModels.createFlatItemModel(ModItems.ECHO_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.createFlatItemModel(ModItems.ECHO_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.createFlatItemModel(ModItems.ECHO_BOOTS.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_SWORD.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_AXE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_PICKAXE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_SHOVEL.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_HOE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.createFlatItemModel(ModItems.ECHO_SPEAR.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.createFlatItemModel(ModItems.ECHO_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateSpear(ModItems.ECHO_SPEAR.get());
         itemModels.createFlatItemModel(ModItems.TIER_ONE_REPAIR_KIT.get(),  ModelTemplates.FLAT_ITEM);
         itemModels.createFlatItemModel(ModItems.TIER_TWO_REPAIR_KIT.get(),   ModelTemplates.FLAT_ITEM);
         itemModels.createFlatItemModel(ModItems.TIER_THREE_REPAIR_KIT.get(), ModelTemplates.FLAT_ITEM);
@@ -95,12 +95,6 @@ public class Models extends ModelProvider {
         itemModels.itemModelOutput.accept(ModItems.ECHO_HOE.get(),
                 new CuboidItemModelWrapper.Unbaked(
                         ModelLocationUtils.getModelLocation(ModItems.ECHO_HOE.get()),
-                        Optional.empty(),
-                        Collections.emptyList()
-                ));
-        itemModels.itemModelOutput.accept(ModItems.ECHO_SPEAR.get(),
-                new CuboidItemModelWrapper.Unbaked(
-                        ModelLocationUtils.getModelLocation(ModItems.ECHO_SPEAR.get()),
                         Optional.empty(),
                         Collections.emptyList()
                 ));

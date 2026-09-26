@@ -34,6 +34,7 @@ public class ModCreativeTab {
                         output.accept(ModItems.TIER_TWO_REPAIR_KIT);
                         output.accept(ModItems.TIER_THREE_REPAIR_KIT);
                         output.accept(ModItems.ECHO_UPGRADE_SMITHING_TEMPLATE);
+                        output.accept(ModItems.WARDEN_TOTEM);
                     })
                     .build());
 }

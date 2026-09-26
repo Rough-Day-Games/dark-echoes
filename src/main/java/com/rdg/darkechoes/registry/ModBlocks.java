@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -27,23 +28,26 @@ public class ModBlocks {
     public static final DeferredBlock<TierOneAugStationBlock> T_ONE_AUGSTATION = BLOCKS.register("augment_station/t_one",
             (registryName) -> new TierOneAugStationBlock(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                    .mapColor(MapColor.WOOD)
+                    .requiresCorrectToolForDrops()
                     .destroyTime(2.0f)
-                    .explosionResistance(10.0f)
                     .sound(SoundType.WOOD))
     );
     public static final DeferredBlock<TierTwoAugStationBlock> T_TWO_AUGSTATION = BLOCKS.register("augment_station/t_two",
             (registryName) -> new TierTwoAugStationBlock(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
-                    .destroyTime(4.0f)
-                    .explosionResistance(10.0f)
-                    .sound(SoundType.METAL))
+                    .mapColor(MapColor.STONE)
+                    .requiresCorrectToolForDrops()
+                    .strength(5f, 6f)
+                    .sound(SoundType.STONE))
     );
     public static final DeferredBlock<TierThreeAugStationBlock> T_THREE_AUGSTATION = BLOCKS.register("augment_station/t_three",
             (registryName) -> new TierThreeAugStationBlock(BlockBehaviour.Properties.of()
                     .setId(ResourceKey.create(Registries.BLOCK, registryName))
-                    .destroyTime(6.0f)
-                    .explosionResistance(50.0f)
-                    .sound(SoundType.METAL)
+                    .mapColor(MapColor.COLOR_BLACK)
+                    .requiresCorrectToolForDrops()
+                    .strength(50f, 1200f)
+                    .sound(SoundType.DEEPSLATE)
             )
     );
     public static final Supplier<BlockEntityType<BaseAugStationBE>> AUGSTATION_BE = BLOCK_ENTITY_TYPES.register(

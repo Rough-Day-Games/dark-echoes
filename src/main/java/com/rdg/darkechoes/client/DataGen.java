@@ -15,6 +15,7 @@ public class DataGen {
         event.createProvider(GlobalLootModProvider::new);
         event.createProvider(Models::new);
         event.createProvider(LangProvider::new);
+        event.createProvider(ModBlockTags::new);
         event.createProvider(ModItemTags::new);
         event.createDatapackRegistryObjects(BUILDER);
         event.createProvider(ModRecipeProvider.Runner::new);

@@ -14,9 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -106,6 +104,28 @@ public abstract class BaseAugStationBlock extends BaseEntityBlock {
             level.setBlock(pos.offset(0, 0, 1), state.setValue(CORNER, AugStationPiece.BOTTOM_RIGHT), 3);
             level.setBlock(pos.offset(0, 1, 1), state.setValue(CORNER, AugStationPiece.TOP_RIGHT), 3);
         }
+    }
+
+    @Override
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        if (mirror != Mirror.NONE) {
+            state.rotate(mirror.getRotation(state.getValue(FACING)));
+            if (state.getValue(AUG_STATION_PIECE) == AugStationPiece.BOTTOM_LEFT) {
+                return state.setValue(AUG_STATION_PIECE, AugStationPiece.BOTTOM_RIGHT);
+            } else if (state.getValue(AUG_STATION_PIECE) == AugStationPiece.TOP_LEFT) {
+                return state.setValue(AUG_STATION_PIECE, AugStationPiece.TOP_RIGHT);
+            } else if (state.getValue(AUG_STATION_PIECE) == AugStationPiece.BOTTOM_RIGHT) {
+                return state.setValue(AUG_STATION_PIECE, AugStationPiece.BOTTOM_LEFT);
+            } else if (state.getValue(AUG_STATION_PIECE) == AugStationPiece.TOP_RIGHT) {
+                return state.setValue(AUG_STATION_PIECE, AugStationPiece.TOP_LEFT);
+            }
+        }
+        return mirror == Mirror.NONE ? state : state.rotate(mirror.getRotation(state.getValue(FACING))).cycle(CORNER);
     }
 
     @Override
@@ -349,6 +369,12 @@ public abstract class BaseAugStationBlock extends BaseEntityBlock {
             }
         }
         return super.playerWillDestroy(level, pos, state, player);
+    }
+
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        super.onPlace(state, level, pos, oldState, movedByPiston);
+
     }
 
     @Override

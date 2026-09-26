@@ -31,7 +31,7 @@ public class LangProvider extends LanguageProvider {
         add(ModItems.TIER_ONE_REPAIR_KIT.get(), "Repair Kit: Tier One");
         add(ModItems.TIER_TWO_REPAIR_KIT.get(), "Repair Kit: Tier Two");
         add(ModItems.TIER_THREE_REPAIR_KIT.get(), "Repair Kit: Tier Three");
-        add(ModItems.ECHO_UPGRADE_SMITHING_TEMPLATE.get(), "Echo Upgrade Smithing Template");
+        add(ModItems.ECHO_UPGRADE_SMITHING_TEMPLATE.get(), "Echo Upgrade");
         add(ModItems.WARDEN_TOTEM.get(), "Totem of the Warden");
         add(ModItems.T_ONE_AUGSTATION.get(), "Augmentation Station: Tier One");
         add(ModItems.T_TWO_AUGSTATION.get(), "Augmentation Station: Tier Two");

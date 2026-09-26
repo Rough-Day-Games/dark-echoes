@@ -346,7 +346,7 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
                     graphics.text(this.font, aug.value().desc(), this.leftPos + 62, this.topPos + 34 + (16 * index), 0xFF404040, false);
                 }
             } else if (menuIndex == 4) {
-                graphics.text(this.font, Component.literal("wat u wanna mend, ha?"), this.leftPos + 62, this.topPos + 47, 0xFF404040, false);
+                graphics.text(this.font, Component.literal("i have no idea what text to place here"), this.leftPos + 62, this.topPos + 47, 0xFF404040, false);
                 if (gear.is(ModItemTags.TIER_ONE_GEAR) && !amendSlot.getItem().is(ModItemTags.TIER_ONE_MENDER) && !amendSlot.getItem().isEmpty()) {
                     gearTierTooHigh();
                 } else if (gear.is(ModItemTags.TIER_TWO_GEAR) && amendSlot.getItem().is(ModItemTags.TIER_THREE_MENDER) && !amendSlot.getItem().isEmpty()) {
@@ -360,6 +360,12 @@ public class BaseAugStationScreen extends AbstractContainerScreen<BaseAugStation
         } else {
             resetButton();
         }
+
+        graphics.blit(RenderPipelines.GUI_TEXTURED, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "textures/item/resonance_crystal.png"), this.leftPos + 261, this.topPos + 8, 0, 0, 16, 16, 16, 16);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "textures/gui/container/adaptation_icon.png"), this.leftPos + 261, this.topPos + 34, 0, 0, 16, 16, 16, 16);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "textures/gui/container/augmentation_icon.png"), this.leftPos + 261, this.topPos + 60, 0, 0, 16, 16, 16, 16);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "textures/gui/container/augments_icon.png"), this.leftPos + 261, this.topPos + 86, 0, 0, 16, 16, 16, 16);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, Identifier.fromNamespaceAndPath(DarkEchoes.MOD_ID, "textures/item/tier_three_repair_kit.png"), this.leftPos + 261, this.topPos + 112, 0, 0, 16, 16, 16, 16);
     }
 
     @Override
