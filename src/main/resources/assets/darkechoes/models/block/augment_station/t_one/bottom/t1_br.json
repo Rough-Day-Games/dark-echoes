@@ -17,7 +17,7 @@
 		"17": "darkechoes:block/augment_station/t_one/bottom/counter",
 		"18": "darkechoes:block/augment_station/t_one/bottom/pin",
 		"20": "darkechoes:block/augment_station/t_one/bottom/stripped_oak_log",
-		"particle": "darkechoes:block/augment_station/t_one/bottom/face_n"
+		"particle": "darkechoes:block/augment_station/t_one/bottom/stripped_oak_log"
 	},
 	"elements": [
 		{

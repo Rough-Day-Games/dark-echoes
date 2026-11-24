@@ -2,7 +2,7 @@
 	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "darkechoes:block/augment_station/t_one/top/side",
+		"1": "darkechoes:block/augment_station/t_one/bottom/stripped_oak_log",
 		"2": "darkechoes:block/augment_station/t_one/top/cupboard_base",
 		"3": "darkechoes:block/augment_station/t_one/top/cupboard_inner",
 		"4": "darkechoes:block/augment_station/t_one/bottom/cabinet_frame_l",

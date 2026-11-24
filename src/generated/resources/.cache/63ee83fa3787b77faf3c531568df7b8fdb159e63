@@ -1,0 +1,5 @@
+// 26.1.2	2026-09-26T21:07:27.0301723	Tags for minecraft:block mod id darkechoes
+44620e383eb532eec6e4e92b7eff9e5dd982a280 data/minecraft/tags/block/incorrect_for_copper_tool.json
+e1c8ae2a2a6942d50d0115bcbbbe6c71af0357d7 data/minecraft/tags/block/incorrect_for_diamond_tool.json
+0ff28a7e99c1c5572bf3931ad434825731996488 data/minecraft/tags/block/mineable/axe.json
+e1c8ae2a2a6942d50d0115bcbbbe6c71af0357d7 data/minecraft/tags/block/mineable/pickaxe.json

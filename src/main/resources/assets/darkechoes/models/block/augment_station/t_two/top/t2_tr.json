@@ -10,7 +10,7 @@
 		"11": "darkechoes:block/augment_station/t_two/top/cupboard_frame_l",
 		"12": "darkechoes:block/augment_station/t_two/top/spruce_planks",
 		"13": "darkechoes:block/augment_station/t_two/top/stripped_spruce_log",
-		"particle": "darkechoes:block/augment_station/t_two/top/back"
+		"particle": "darkechoes:block/augment_station/t_two/bottom/stripped_spruce_log"
 	},
 	"elements": [
 		{

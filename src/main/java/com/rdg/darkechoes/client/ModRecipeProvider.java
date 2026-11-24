@@ -81,6 +81,46 @@ public class ModRecipeProvider extends RecipeProvider {
                 .group(DarkEchoes.MOD_ID)
                 .unlockedBy("echo_smithing_template", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.ECHO_UPGRADE_SMITHING_TEMPLATE.get()))
                 .save(output);
+
+        ShapedRecipeBuilder.shaped(
+                this.registries.lookupOrThrow(Registries.ITEM),
+                RecipeCategory.MISC,
+                ModItems.TIER_ONE_REPAIR_KIT.get()
+        )
+                .pattern("WWW")
+                .pattern("WCW")
+                .pattern("WWW")
+                .define('W', ItemTags.PLANKS)
+                .define('C', ModItemTags.TIER_ONE_MENDER_MATERIAL)
+                .group(DarkEchoes.MOD_ID)
+                .unlockedBy("tier_one_augmenstation", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.T_ONE_AUGSTATION))
+                .save(output);
+        ShapedRecipeBuilder.shaped(
+                        this.registries.lookupOrThrow(Registries.ITEM),
+                        RecipeCategory.MISC,
+                        ModItems.TIER_TWO_REPAIR_KIT.get()
+                )
+                .pattern("SSS")
+                .pattern("SDS")
+                .pattern("SSS")
+                .define('S', Items.SMOOTH_STONE)
+                .define('D', ModItemTags.TIER_TWO_MENDER_MATERIAL)
+                .group(DarkEchoes.MOD_ID)
+                .unlockedBy("tier_two_augmenstation", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.T_TWO_AUGSTATION))
+                .save(output);
+        ShapedRecipeBuilder.shaped(
+                        this.registries.lookupOrThrow(Registries.ITEM),
+                        RecipeCategory.MISC,
+                        ModItems.TIER_THREE_REPAIR_KIT.get()
+                )
+                .pattern("DDD")
+                .pattern("DND")
+                .pattern("DDD")
+                .define('D', Items.DEEPSLATE)
+                .define('N', ModItemTags.TIER_THREE_MENDER_MATERIAL)
+                .group(DarkEchoes.MOD_ID)
+                .unlockedBy("tier_three_augmenstation", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.T_THREE_AUGSTATION))
+                .save(output);
     }
 
     public static class Runner extends RecipeProvider.Runner {

@@ -30,6 +30,10 @@ sourceSets.main.resources {
     srcDir('src/generated/resources')
 }
 
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 neoForge {
     version = project.neo_version
 

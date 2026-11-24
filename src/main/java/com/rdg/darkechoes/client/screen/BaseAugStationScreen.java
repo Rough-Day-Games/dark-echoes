@@ -35,7 +35,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.rdg.darkechoes.combat.CombatEvents.combatGearActionName;
+import static com.rdg.darkechoes.events.EventHandlers.combatGearActionName;
 import static com.rdg.darkechoes.helpers.AugmentHelper.*;
 import static com.rdg.darkechoes.helpers.GearHelper.assessMaxLevel;
 import static com.rdg.darkechoes.progression.Progression.isCombatGear;

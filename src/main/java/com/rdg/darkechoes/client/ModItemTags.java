@@ -38,6 +38,9 @@ public class ModItemTags extends ItemTagsProvider {
     public static TagKey<Item> TIER_ONE_MENDER = create("tier_one_mender");
     public static TagKey<Item> TIER_TWO_MENDER = create("tier_two_mender");
     public static TagKey<Item> TIER_THREE_MENDER = create("tier_three_mender");
+    public static TagKey<Item> TIER_ONE_MENDER_MATERIAL = create("tier_one_mender_material");
+    public static TagKey<Item> TIER_TWO_MENDER_MATERIAL = create("tier_two_mender_material");
+    public static TagKey<Item> TIER_THREE_MENDER_MATERIAL = create("tier_three_mender_material");
 
     public static TagKey<Item> ECHO_SENSE_COMPATIBLE = create("echo_sense_compatible");
     public static TagKey<Item> AUGMENTABLE_GEAR = create("augmentable");
@@ -122,13 +125,23 @@ public class ModItemTags extends ItemTagsProvider {
         tag(TIER_ONE_MENDER).add(
                 ModItems.TIER_ONE_REPAIR_KIT.get()
         );
+        tag(TIER_ONE_MENDER_MATERIAL).add(
+                Items.COPPER_INGOT
+        );
 
         tag(TIER_TWO_MENDER).add(
                 ModItems.TIER_TWO_REPAIR_KIT.get()
         );
+        tag(TIER_TWO_MENDER_MATERIAL).add(
+                Items.DIAMOND
+        );
 
         tag(TIER_THREE_MENDER).add(
                 ModItems.TIER_THREE_REPAIR_KIT.get()
+        );
+        tag(TIER_THREE_MENDER_MATERIAL).add(
+                Items.NETHERITE_INGOT,
+                ModItems.RESONANCE_CRYSTAL.get()
         );
 
         tag(AMENDMENT_ITEMS).addTags(

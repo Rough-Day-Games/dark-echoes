@@ -1,0 +1,4 @@
+// 26.1.2	2026-09-28T19:37:49.6226547	Loot Tables
+cf7244a830ed9d5a0cfb1c9d6803b685fddb7ded data/darkechoes/loot_table/blocks/augment_station/t_one.json
+9b5fcbda77dac10ef3786701594e2c5958589fd5 data/darkechoes/loot_table/blocks/augment_station/t_three.json
+e26f0394666efdf9f4eaff3a3951aea70db0e789 data/darkechoes/loot_table/blocks/augment_station/t_two.json

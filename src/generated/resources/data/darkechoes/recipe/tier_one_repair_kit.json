@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "darkechoes",
+  "key": {
+    "C": "#darkechoes:tier_one_mender_material",
+    "W": "#minecraft:planks"
+  },
+  "pattern": [
+    "WWW",
+    "WCW",
+    "WWW"
+  ],
+  "result": {
+    "id": "darkechoes:tier_one_repair_kit"
+  }
+}

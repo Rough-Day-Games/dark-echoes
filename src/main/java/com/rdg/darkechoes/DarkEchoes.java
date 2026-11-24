@@ -2,7 +2,6 @@ package com.rdg.darkechoes;
 
 import com.mojang.logging.LogUtils;
 import com.rdg.darkechoes.client.ModMenus;
-import com.rdg.darkechoes.combat.CombatEvents;
 import com.rdg.darkechoes.combat.CombatRules;
 import com.rdg.darkechoes.config.ServerConfig;
 import com.rdg.darkechoes.config.CommonConfig;
@@ -12,7 +11,6 @@ import com.rdg.darkechoes.helpers.AugStationAwaken;
 import com.rdg.darkechoes.helpers.AugStationPageListener;
 import com.rdg.darkechoes.helpers.augment_value_effect.AddValue;
 import com.rdg.darkechoes.progression.Augment;
-import com.rdg.darkechoes.progression.ToolProgressionEvents;
 import com.rdg.darkechoes.registry.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -22,7 +20,6 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -57,8 +54,6 @@ public final class DarkEchoes {
         modBus.addListener(DarkEchoes::registerRegistries);
         modBus.addListener(DarkEchoes::registerDatapackRegistries);
         modBus.addListener(DarkEchoes::registerAugmentValueEffectTypes);
-        NeoForge.EVENT_BUS.register(CombatEvents.class);
-        NeoForge.EVENT_BUS.register(ToolProgressionEvents.class);
     }
 
     private static void addCreativeTabContents(BuildCreativeModeTabContentsEvent event) {

@@ -1,4 +1,4 @@
-// 26.1.2	2026-09-08T22:24:56.2182186	Dark Echoes Recipe Provider
+// 26.1.2	2026-09-28T20:25:25.8448251	Dark Echoes Recipe Provider
 aca2aa732fd930c037ed667c334d64eda9d7c2c0 data/darkechoes/advancement/recipes/building_blocks/augment_station/t_one.json
 4c85b8a54b57118f57dee9914da4652bf862ddf9 data/darkechoes/advancement/recipes/building_blocks/augment_station/t_two.json
 0618969bb536d07d5402c073eeb1a88f9631da36 data/darkechoes/advancement/recipes/combat/echo_boots.json
@@ -8,6 +8,9 @@ aca2aa732fd930c037ed667c334d64eda9d7c2c0 data/darkechoes/advancement/recipes/bui
 96d310e96e3126fca3faf6f64e927630e3f07839 data/darkechoes/advancement/recipes/combat/echo_spear.json
 e6c5faac5a85b9cb683ec747cd1d16c1d50acf1c data/darkechoes/advancement/recipes/combat/echo_sword.json
 3906311a62a5b2e8b695b076ba738cd62129299b data/darkechoes/advancement/recipes/misc/echo_upgrade_smithing_template.json
+3e2e86e00e0718468d544abebd3bc3e35d74d39a data/darkechoes/advancement/recipes/misc/tier_one_repair_kit.json
+3047662bbf51d6aedadda8bd381418628783816b data/darkechoes/advancement/recipes/misc/tier_three_repair_kit.json
+f4e8928951b9e3cf880c3d59a433030a555d2794 data/darkechoes/advancement/recipes/misc/tier_two_repair_kit.json
 a2a1ba94cd3cec469f716b0860fbc0ff61ed073b data/darkechoes/advancement/recipes/tools/echo_axe.json
 d4c530ff1dacfa996fdf736a5b836dfba43141a3 data/darkechoes/advancement/recipes/tools/echo_hoe.json
 9c1fb7224bf577418f05fda77f3bd111b06f0ee4 data/darkechoes/advancement/recipes/tools/echo_pickaxe.json
@@ -25,3 +28,6 @@ be402dd1f19c3d8711ab6a8f7317c437ca2718a4 data/darkechoes/recipe/echo_shovel.json
 589564b741e3758290594ba0fa62e4b7e5499b72 data/darkechoes/recipe/echo_spear.json
 0a4c0654e6373e402c4220c776ec12ee7de4b514 data/darkechoes/recipe/echo_sword.json
 93d048704e66fd708e53fa7503a588f2432a64bb data/darkechoes/recipe/echo_upgrade_smithing_template.json
+77fcec954356e00ddc10907738f17adabda3cd2f data/darkechoes/recipe/tier_one_repair_kit.json
+a93dfba6f6a7f453223f543e8a8834933acffdff data/darkechoes/recipe/tier_three_repair_kit.json
+e5b05ce3e54027a7c6cb9cd5965c22e6a76ac65c data/darkechoes/recipe/tier_two_repair_kit.json

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "darkechoes",
+  "key": {
+    "D": "minecraft:deepslate",
+    "N": "#darkechoes:tier_three_mender_material"
+  },
+  "pattern": [
+    "DDD",
+    "DND",
+    "DDD"
+  ],
+  "result": {
+    "id": "darkechoes:tier_three_repair_kit"
+  }
+}

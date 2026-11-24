@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "darkechoes:item/echo_pickaxe"
+  }
+}

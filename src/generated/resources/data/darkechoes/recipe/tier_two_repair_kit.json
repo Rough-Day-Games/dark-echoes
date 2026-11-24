@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "darkechoes",
+  "key": {
+    "D": "#darkechoes:tier_two_mender_material",
+    "S": "minecraft:smooth_stone"
+  },
+  "pattern": [
+    "SSS",
+    "SDS",
+    "SSS"
+  ],
+  "result": {
+    "id": "darkechoes:tier_two_repair_kit"
+  }
+}

@@ -1,4 +1,4 @@
-// 26.1.2	2026-09-08T22:24:56.2156692	Tags for minecraft:item mod id darkechoes
+// 26.1.2	2026-09-28T20:25:25.8438233	Tags for minecraft:item mod id darkechoes
 f628221e8cf3e6e044f685dcc37f00fecb4c3afc data/darkechoes/tags/item/amendment_items.json
 1de0e8a1bbc6a6eb9cb79c0a3f898b866db1c16c data/darkechoes/tags/item/armor/tier_one.json
 ce15c30f08ddf174e7a6873379b126ec605817e5 data/darkechoes/tags/item/armor/tier_three.json
@@ -30,8 +30,11 @@ eccc6fe3fe534e0331bf48c62c551341a8a8d7d1 data/darkechoes/tags/item/gear/tier_two
 cab4a32121155915be51dfd6fa3afd0c871e32da data/darkechoes/tags/item/repairs_echo_armor.json
 33a99b88e218228f95b640f59463da9a92ea97d0 data/darkechoes/tags/item/stripped_logs.json
 27f1dd657d3979b654dffdc9554fd1cfd156f31e data/darkechoes/tags/item/tier_one_mender.json
+6222fd0d7d2ce08ee1f70be68a61f4e167dda650 data/darkechoes/tags/item/tier_one_mender_material.json
 80032922b59e56f7f925cc2e79a3c350025111c7 data/darkechoes/tags/item/tier_three_mender.json
+ab84fd78e8236f94112348b3595c2ad4f66ddbec data/darkechoes/tags/item/tier_three_mender_material.json
 233919a298d0ba23417a72fdbd1d5d4079445449 data/darkechoes/tags/item/tier_two_mender.json
+fdab8ddd5529ae14b26bc1853b004131135318a4 data/darkechoes/tags/item/tier_two_mender_material.json
 e733972efa6e2622e61d3d362efc3423e140858d data/darkechoes/tags/item/tool/tier_one.json
 409b4ec902072e33699b41cdd232fa4cf458474d data/darkechoes/tags/item/tool/tier_three.json
 4f0a564c1ac0361fe7473d6d4aeb677e3e69d965 data/darkechoes/tags/item/tool/tier_two.json
